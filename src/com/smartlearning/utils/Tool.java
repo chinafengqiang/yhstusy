@@ -16,7 +16,11 @@ import android.provider.MediaStore.Images;
 import android.widget.Toast;
 
 import com.smartlearning.ui.MediaScanner;
-
+/**
+ * 
+ * @author sara
+ * 
+ */
 public class Tool {
 
 	public static void ShowMessage(Context context, String msg) {
