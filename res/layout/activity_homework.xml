@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <RelativeLayout android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:background="@drawable/bg_top_title"
+  	android:layout_alignParentTop="true"
+  	android:id="@+id/bg_top_title">  
+  	<Button android:id="@+id/detail_return_btn"
+  		android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+  		android:background="@drawable/common_button_selector"
+  		android:layout_centerVertical="true"
+  		android:layout_alignParentLeft="true"
+ 	 	android:layout_marginLeft="4dp"
+ 		android:text="返回"
+  		android:textColor="#FFFFFF"
+  		android:textSize="13sp"/>
+ 	 <TextView android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:layout_centerInParent="true"
+  		android:textSize="18sp"
+  		android:textColor="#FFFFFF"/>
+  	</RelativeLayout>
+  	
+   <LinearLayout android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:orientation="vertical"
+      android:layout_below="@id/bg_top_title">
+  	      	<GridView   
+    android:id="@+id/gridview3"  
+    android:layout_width="fill_parent"   
+    android:layout_height="fill_parent"  
+    android:numColumns="auto_fit"  
+    android:verticalSpacing="5dp"  
+    android:horizontalSpacing="5dp"  
+    android:columnWidth="90dp"  
+    android:stretchMode="columnWidth"  
+    android:gravity="center"  
+    android:background="#c3eafe"
+/>
+  	</LinearLayout>
+  	<LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:background="@drawable/main_menu_backgroud"
+	    android:orientation="horizontal" 
+	    android:layout_below="@id/gridview3"
+	    android:id="@+id/videocenter_bottom_menu">
+  	<Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/bottom_book" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="作业测试"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/bottom_sort_selector"
+		android:layout_weight="1" />
+  	<Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/btnupload_book" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="上传作业"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/more_update_selector"
+		android:layout_weight="1" />
+  	<Button android:textSize="14.0sp" 
+				android:gravity="center" 
+	    		android:id="@+id/main_bottom_download" 
+				android:layout_width="50.0dip" 
+				android:layout_height="wrap_content" 
+				android:text="下载管理"
+				android:background="@null"
+				android:textColor="#FFFFFF"
+				android:drawableTop="@drawable/main_menu_downloadmanage_selector"
+				android:layout_weight="1" />
+	</LinearLayout>
+ </RelativeLayout>
+ 
+  	
+
+  
+

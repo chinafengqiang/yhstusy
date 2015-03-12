@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <!-- 通知标题 -->
+
+    <LinearLayout
+        android:id="@+id/llay_head"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="#f6f7f7"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip" >
+
+        <Button
+            android:id="@+id/inform_show_back"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:drawableLeft="@drawable/button_refresh"
+            android:text="返回"
+            android:textColor="#444444"
+            android:textSize="14.0sp" />
+
+        <TextView
+            android:id="@+id/inform_show_title"
+            style="@style/inform_head_title"
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/llay_head"
+        android:background="#c3eafe"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <!-- 通知的完整内容 -->
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/llay_head"
+        android:padding="5dip"
+        android:scrollbars="vertical" >
+
+        <TextView
+            android:id="@+id/inform_show_content"
+            style="@style/showContentStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+    <!-- listView 的下拉回弹刷新 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <!-- 写评论 -->
+
+        <EditText
+            android:id="@+id/inform_show_edt_advice"
+            android:layout_width="fill_parent"
+            android:layout_height="133dp"
+            android:hint="@string/inform_show_advice" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_head"
+            android:paddingLeft="30dip"
+            android:paddingRight="30dip" >
+
+            <!-- 返回 -->
+
+            <!-- 评论 -->
+
+            <Button
+                android:id="@+id/inform_show_advice"
+                style="@style/textStyle"
+                android:layout_width="55dp"
+                android:layout_height="40dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_head"
+                android:text="@string/inform_show_advice" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+          <ListView
+               android:layout_below="@+id/scrollView1"
+              android:id="@+id/pulltorefreshlistview"
+              android:layout_width="wrap_content"
+              android:layout_height="350dp"
+              android:background="#ffffff" >
+
+		   </ListView>
+
+
+</RelativeLayout>

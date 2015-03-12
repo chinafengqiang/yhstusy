@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <com.smartlearning.common.SlidingMenuView
+        android:id="@+id/sliding_menu_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+       <LinearLayout 
+        	android:id="@+id/sliding_tab"
+        	android:background="#c3eafe"
+        	android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:padding="10dip"
+        	android:layout_height="fill_parent">
+        	
+             <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/button2"
+                    android:onClick="changeTab2"
+                    android:layout_width="142dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/button1"
+                    android:layout_marginTop="60dp"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|center_horizontal|left"
+                    android:paddingLeft="10dp"
+                    android:textColor="#444444"
+                    android:drawableLeft="@drawable/icon_mode_normal"
+                    android:background="#c3eafe"
+                    android:text="版本信息"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/button1"
+                    android:onClick="changeTab3"
+                    android:layout_width="142dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="63dp"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|center_horizontal|left"
+                    android:paddingLeft="10dp"
+                    android:layout_below="@+id/btnhidden"
+                    android:text="软件下载"
+                    android:background="#c3eafe"
+                    android:textColor="#444444"
+                    android:drawableLeft="@drawable/icon_ok"
+                    android:textSize="16sp" />
+                
+            </RelativeLayout>
+    	</LinearLayout>
+    	
+        <FrameLayout 
+        	android:id="@+id/sliding_body"
+            android:layout_width="fill_parent"
+        	android:layout_height="fill_parent">
+    	</FrameLayout>
+        
+    </com.smartlearning.common.SlidingMenuView>
+
+</RelativeLayout>

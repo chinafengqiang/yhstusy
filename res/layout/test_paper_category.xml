@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+  	
+ <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentBottom="true"
+    android:background="#c3eafe"
+    android:orientation="vertical" >    
+
+      <LinearLayout
+        android:id="@+id/titleImg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/maintopbg"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+           <TextView
+			    android:id="@+id/title"
+			    android:layout_width="0dp"
+			    android:layout_height="75dp"
+			    android:layout_weight="0.80"
+			    android:gravity="center"
+			    android:layout_marginLeft="204dp"
+			    android:text="作业分类展现"
+			    android:textColor="#000000"
+			    android:textSize="20sp" />
+           
+            <Button android:textSize="14.0sp" 
+			android:layout_centerVertical="true"
+  			android:layout_alignParentLeft="true"
+		   	android:id="@+id/inform_refresh" 
+			android:layout_width="80dp" 
+			android:layout_height="wrap_content" 
+			android:layout_marginLeft="304dp"
+			android:text="同步"
+			android:background="@null"
+			android:textColor="#444444"
+			android:drawableLeft="@drawable/button_refresh"
+			 />
+        </LinearLayout>
+    	</LinearLayout>
+    
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f6f7f7"
+        android:orientation="vertical" >
+    </LinearLayout>
+  	
+   <LinearLayout android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:orientation="vertical">
+  	   <com.smartlearningclient.tree.TreeView
+        android:id="@+id/frame_listview_address"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal" />
+  	      	</LinearLayout>
+  	</LinearLayout>
+  
+ </RelativeLayout>

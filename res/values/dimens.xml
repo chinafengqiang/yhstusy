@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- 试卷名称宽和高 -->
+    <dimen name="test_paper_item_name_width">150px</dimen>
+    <dimen name="test_paper_item_category_width">170px</dimen>
+    <dimen name="test_paper_item_doImage_width">50px</dimen>
+    <dimen name="test_paper_item_doImage_height">40px</dimen>
+    
+</resources>

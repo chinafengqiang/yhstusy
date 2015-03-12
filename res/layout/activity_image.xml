@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>     
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"     
+        android:orientation="vertical"     
+        android:layout_width="fill_parent"     
+        android:layout_height="fill_parent"     
+        android:id="@+id/layout1"     
+            >     
+         
+     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"     
+                android:layout_width="fill_parent"     
+                android:layout_height="fill_parent"     
+             android:id="@+id/rl"    
+                >     
+                 
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"            
+                android:layout_width="fill_parent"     
+                android:layout_height="fill_parent"        
+                android:layout_weight="19"     
+                android:scrollbars="none"     
+                android:fadingEdge="vertical" 
+                android:layout_gravity="center"    
+                android:gravity="center" 
+    
+             >     
+                
+        <HorizontalScrollView        
+                android:layout_height="fill_parent"     
+                android:layout_width="fill_parent" 
+                android:scrollbars="none" 
+                 android:layout_gravity="center"    
+                android:gravity="center"    
+                android:id="@+id/hs" 
+                 
+                    >     
+                <LinearLayout 
+                        android:orientation="horizontal"     
+                        android:layout_width="fill_parent"     
+                        android:layout_height="fill_parent"     
+                        android:id="@+id/layoutImage"    
+                        android:layout_gravity="center"    
+                        android:gravity="center"     
+                        >     
+                        <ImageView    
+                            android:layout_gravity="center"    
+                            android:gravity="center"     
+                                android:id="@+id/myImageView"     
+                                android:layout_width="fill_parent"     
+                                android:layout_height="fill_parent"     
+                                android:layout_weight="39"     
+                                android:paddingTop="5dip"     
+                                android:paddingBottom="5dip"    
+                 
+                                />     
+                </LinearLayout>     
+        </HorizontalScrollView >     
+        </ScrollView>    
+         
+            
+                 
+             <ZoomControls android:id="@+id/zoomcontrol" 
+      android:layout_width="wrap_content" android:layout_height="wrap_content" 
+      android:layout_centerHorizontal="true" 
+            android:layout_alignParentBottom="true" 
+      > 
+    </ZoomControls> 
+        </RelativeLayout>     
+
+</FrameLayout>    

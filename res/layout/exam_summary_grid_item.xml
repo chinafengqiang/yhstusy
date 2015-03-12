@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="100dip"
+    android:id="@+id/name"
+    android:gravity="center"
+    android:padding="15dip"
+    android:textColor="@anim/exam_summary_grid_text_color"
+    android:textSize="22.0dip" />

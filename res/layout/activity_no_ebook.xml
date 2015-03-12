@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+     <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="不存在您有权限的电子书或重新点击右上方刷新按钮重新获取。"
+        android:textSize="18sp"
+        android:textColor="#668899"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+       />
+ 
+</LinearLayout>

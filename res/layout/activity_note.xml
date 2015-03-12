@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <RelativeLayout android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:background="@drawable/bg_top_title"
+  	android:layout_alignParentTop="true"
+  	android:id="@+id/bg_top_title">  
+  	<Button android:id="@+id/detail_return_btn"
+  		android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+  		android:background="@drawable/common_button_selector"
+  		android:layout_centerVertical="true"
+  		android:layout_alignParentLeft="true"
+ 	 	android:layout_marginLeft="4dp"
+ 		android:text="返回"
+  		android:textColor="#FFFFFF"
+  		android:textSize="13sp"/>
+ 	 <TextView android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:layout_centerInParent="true"
+  		android:textSize="18sp"
+  		android:textColor="#FFFFFF"/>
+  	<Button android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:id="@+id/detail_home_btn"
+ 	    android:background="@drawable/btn_home_selector"
+  		android:layout_centerVertical="true"
+  		android:layout_alignParentRight="true"
+  		android:layout_marginRight="4dp"/>
+  	</RelativeLayout>
+ 
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bg_top_title"
+        android:layout_marginRight="96dp"
+        android:text="内容" />
+
+    <TextView
+        android:id="@+id/createTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/content"
+        android:layout_alignBottom="@+id/content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="26dp"
+        android:text="时间" />
+         
+    <LinearLayout
+        android:id="@+id/bg_top_titles2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/content"
+        android:background="#c3eafe"
+        android:orientation="vertical" >
+
+  	   <ListView
+  	       android:id="@+id/listView"
+  	       android:layout_width="fill_parent"
+  	       android:layout_height="230dp"
+  	       android:cacheColorHint="#00000000"
+  	       android:drawSelectorOnTop="false"
+  	       android:scrollbars="vertical" />
+
+  	   <EditText
+  	       android:id="@+id/txtNote"
+  	       android:layout_width="fill_parent"
+  	       android:layout_height="106dp"
+  	       android:layout_marginLeft="8dp"
+  	       android:layout_marginRight="8dp"
+  	       android:layout_marginTop="20dp"
+  	       android:ems="10"
+  	       android:visibility="gone"
+  	       android:textColor="#222222" >
+
+  	       <requestFocus />
+  	   </EditText>
+         
+</LinearLayout>
+     
+
+	<LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:background="@drawable/main_menu_backgroud"
+	    android:orientation="horizontal" 
+	    android:layout_below="@id/listView"
+	    android:id="@+id/videocenter_bottom_menu">
+  	<Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/bottom_book" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="我的电子书"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/bottom_sort_selector"
+		android:layout_weight="1" />
+  	
+  	<Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/bottom_note" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="我的笔记"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/bottom_order_selector"
+		android:layout_weight="1" />
+  	
+  	<Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/bottom_add" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="添加"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/bottom_order_selector"
+		android:layout_weight="1" />
+  	 <Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/bottom_save" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="保存"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/bottom_order_selector"
+		android:layout_weight="1" />
+  	  <Button android:textSize="14.0sp" 
+		android:gravity="center" 
+	   	android:id="@+id/bottom_cancel" 
+		android:layout_width="50dp" 
+		android:layout_height="wrap_content" 
+		android:text="取消"
+		android:background="@null"
+		android:textColor="#FFFFFF"
+		android:drawableTop="@drawable/bottom_order_selector"
+		android:layout_weight="1" />
+  	
+	</LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/btnOpenNote" android:title="打开笔记">
+    </item>
+    <item android:id="@+id/btnSaveNote" android:title="保存"></item>
+
+</menu>

@@ -1,0 +1,141 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>  
+    
+    <style name="Animation.SlideInOut" parent="@android:style/Animation">
+        <item name="android:windowExitAnimation">@anim/playingmenu_out</item>
+    </style>
+    <style name="Animation.AlphaIn" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/playingmenubg_in</item>
+        <item name="android:windowExitAnimation">@anim/playingmenubg_out</item>
+    </style>
+    <style name="Animation.batteryInfoPW"  parent="@android:style/Animation">
+         <item name="android:windowEnterAnimation">@anim/playingmenubg_in</item>
+         <item name="android:windowExitAnimation">@anim/playingmenubg_out</item>
+    </style>
+     <style name="Animation.controlPW"  parent="@android:style/Animation">
+         <item name="android:windowEnterAnimation">@anim/playingmenubg_in</item>
+         <item name="android:windowExitAnimation">@anim/playingmenubg_out1</item>
+    </style>
+    <style name="Animation.Popup" parent="@android:style/Animation">
+        <item name="android:windowExitAnimation">@anim/popup_out</item>
+    </style>
+    <style name="Animation.UpBanner" parent="@android:style/Animation">
+        <item name="android:windowExitAnimation">@anim/upbanner_out</item>
+    </style>
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">@drawable/header_shape</item>
+    </style>
+    <style name="FileBrowserTitle" parent="@android:style/Theme">
+        <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
+    </style>
+    
+        <style name="informTextStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    
+    <style name="listContentStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    
+    <style name="informTimeStyle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:singleLine">true</item>
+    </style>
+     <style name="inform_head_title">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">23sp</item>
+    </style>
+     <style name="showContentStyle">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+        <style name="textStyle">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    
+    <style name="inform_item_image_style">
+        <item name="android:background">#000000</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    
+    <style name="style1" >
+     <item name="android:layout_width">wrap_content</item>
+     <item name="android:layout_height">wrap_content</item>
+     <item name="android:textSize">18sp</item>
+     <item name="android:text">A</item>
+    </style>
+     <style name="style2" >
+     <item name="android:layout_width">wrap_content</item>
+     <item name="android:layout_height">wrap_content</item>
+     <item name="android:textSize">18sp</item>
+     <item name="android:text">B</item>
+    </style>
+      <style name="style3" >
+     <item name="android:layout_width">wrap_content</item>
+     <item name="android:layout_height">wrap_content</item>
+     <item name="android:textSize">18sp</item>
+     <item name="android:text">C</item>
+    </style>
+      <style name="style4" >
+     <item name="android:layout_width">wrap_content</item>
+     <item name="android:layout_height">wrap_content</item>
+     <item name="android:textSize">18sp</item>
+     <item name="android:text">D</item>
+    </style>
+    <style name="style5" >
+     <item name="android:layout_width">wrap_content</item>
+     <item name="android:layout_height">wrap_content</item>
+     <item name="android:textSize">18sp</item>
+     <item name="android:text">对</item>
+    </style>
+    <style name="style6" >
+     <item name="android:layout_width">wrap_content</item>
+     <item name="android:layout_height">wrap_content</item>
+     <item name="android:textSize">18sp</item>
+     <item name="android:text">错</item>
+    </style>
+	
+        <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <!--<item name="android:windowBackground">@color/transparent</item>背景透明   去掉背景色边框也就去掉了 -->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+        <!--<item name="android:windowContentOverlay">@null</item> -->
+    </style>
+</resources>

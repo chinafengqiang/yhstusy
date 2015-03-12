@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:id="@+id/subjectLayout"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+  <!-- 题序  -->
+  <TextView
+  	android:id="@+id/subjectIndex"
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:layout_marginTop="5dip"
+  	android:textSize="6pt"
+  	android:textColor="@color/processTextColor"
+  />
+  
+ <com.example.scaletest.ScaleView.ScaleView
+		        android:id="@+id/inform_unread_img"
+		        android:layout_width="match_parent"
+		        android:layout_height="300dp"/>
+  
+  <!-- 显示答案内容 -->
+  <LinearLayout 
+  	android:id="@+id/answerLayout" 
+  	android:layout_width="fill_parent" 
+  	android:layout_height="fill_parent"
+  	android:padding="30dip"
+  	/>
+  
+    <!-- 显示答案内容 -->
+  <LinearLayout 
+  	android:id="@+id/favorLayout" 
+  	android:layout_width="fill_parent" 
+  	android:layout_height="fill_parent"
+  	android:padding="30dip"
+  	/>
+	
+</LinearLayout>

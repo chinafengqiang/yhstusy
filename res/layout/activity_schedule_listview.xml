@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#CD3700"
+        android:textSize="20sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day1"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#000000"
+        android:textSize="17sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day2"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#CD3700"
+        android:textSize="20sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day3"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#000000"
+        android:textSize="17sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day4"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#CD3700"
+        android:textSize="20sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day5"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#000000"
+        android:textSize="17sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day6"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#CD3700"
+        android:textSize="20sp" >
+    </TextView>
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8B8"
+        android:visibility="visible" >
+    </View>
+
+    <TextView
+        android:id="@+id/day7"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#000000"
+        android:textSize="17sp" >
+    </TextView>
+
+</LinearLayout>

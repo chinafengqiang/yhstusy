@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.smartlearning"
+    android:versionCode="94"
+    android:versionName="2.50">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="16" />
+
+    <application
+        android:name="com.smartlearning.crash.CrashApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.smartlearning.ui.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.RegisterActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.ScheduleActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.LearningFileActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.LessonResourceActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.VedioPlayActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.TextReadActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.PageTurn"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.MyVideoActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".ui.VideoCenterActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.DetailActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.player.MiniPlayer"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.CoursePlanActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+           <activity
+            android:name="com.smartlearning.player.ZoomActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.HomeWorkActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+          <activity
+            android:name="com.smartlearning.ui.MyBookListActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.MyHomeWorkListActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.MyCourselistActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.OnlineForumActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.ForumShowActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.UploadActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.SelectPicActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.BookCategoryTreeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.TeachingCategoryActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.TeachingMessageActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.MessageShowActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.InitilizeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.TestPaperActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.TestPaperTreeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.TestPaperQuestionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.testActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+           <activity
+            android:name="com.smartlearning.ui.TestPaperQuestionByUseActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+             <activity
+            android:name="com.smartlearning.ui.UserTestPaperResult"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.QuestionSingle"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.examSummary"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.AboutActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+            <activity
+            android:name="com.smartlearning.ui.VersionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.ToolDownActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.myFavortActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.ui.StudentFileActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+          <activity
+            android:name="com.smartlearning.ui.MyTestPaperQuestionByFavorActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.AllTestPaperShowActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.LearningFileByUseActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.smartlearning.ui.PlayVideo"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.crop.CropMainActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+         <activity
+            android:name="com.smartlearning.crop.CropActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+       <activity android:label="PlayingActivity"
+            android:name="com.smartlearning.ui.VideoViewPlayingActivity" 
+            android:configChanges="keyboardHidden|orientation" 
+            android:screenOrientation="landscape"
+            android:exported="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter >              
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        
+                <activity
+            android:name="com.smartlearning.ui.BookCategoryListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+                        <activity
+            android:name="com.smartlearning.ui.PagerListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="reversePortrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+    </application>
+         
+    
+<!-- 访问网络的权限 -->
+<uses-permission android:name="android.permission.INTERNET" />
+<permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS"></permission>
+  <!-- 在SDCard中创建与删除文件权限 -->
+<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+<!-- 往SDCard写入数据权限 -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<!-- 是否有网络的权限 -->
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission> 
+
+<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+</manifest>

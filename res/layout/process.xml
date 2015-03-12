@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 	考试过程中的界面布局文件 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/activityBGColor"
+    android:orientation="vertical" >
+
+    <!-- 主界面部分 -->
+    
+  <LinearLayout
+      android:id="@+id/titleImg"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/maintopbg"
+      android:gravity="center_horizontal"
+      android:orientation="horizontal" >
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_weight="0.61"
+          android:orientation="horizontal" >
+
+          <Button
+              android:id="@+id/inform_refresh"
+              android:layout_width="80dp"
+              android:layout_height="wrap_content"
+              android:background="@null"
+              android:drawableLeft="@drawable/button_refresh"
+              android:text="同步"
+              android:layout_marginLeft="10dp"
+              android:textColor="#444444"
+              android:textSize="14.0sp" />
+
+          <TextView
+              android:id="@+id/title"
+              android:layout_width="0dp"
+              android:layout_height="75dp"
+              android:layout_marginLeft="50dp"
+              android:layout_weight="0.80"
+              android:gravity="center"
+              android:text="试卷列表"
+              android:textColor="#000000"
+              android:textSize="20sp" />
+
+          <Button
+              android:id="@+id/submitButton"
+              android:layout_width="80dp"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="204dp"
+              android:background="@null"
+              android:drawableLeft="@drawable/bottom_tj_selector"
+              android:text="提交"
+              android:textColor="#444444"
+              android:textSize="14.0sp" />
+      </LinearLayout>
+  </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/contentBody"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/titleImg"
+        android:orientation="vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="8dip" >
+
+        <!-- 考卷标题 -->
+
+        <TextView
+            android:id="@+id/textpaperTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/titleTag"
+            android:textColor="@color/progressTitleColor" />
+        <!-- 考卷信息 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/progressTitleColor" >
+
+            <!-- 总考试时间 -->
+
+            <TextView
+                android:id="@+id/testpaperInfoTotalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/progressTitleColor" />
+            <!-- 总分 -->
+
+            <TextView
+                android:id="@+id/testpaperInfoTotalScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:textColor="@color/progressTitleColor" />
+            <!-- 考试用时 -->
+
+            <Chronometer
+                android:id="@+id/testpaperInfoElapsedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:textColor="@color/progressTitleColor" />
+        </LinearLayout>
+
+        <!-- 进度 -->
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/testProcessTag"
+                android:textColor="@color/progressTitleColor" />
+
+            <ProgressBar
+                android:id="@+id/testProgressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="12dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="1dip"
+                android:max="100"
+                android:progressDrawable="@anim/progressbar" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/message_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:divider="#f6f7f7"
+            android:dividerHeight="2px" >
+        </ListView>
+        
+    </LinearLayout> <!-- 主界面考卷信息 END -->
+    
+   <LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/menubg"
+		android:layout_alignParentBottom="true"
+		android:orientation="horizontal"
+	>
+	
+     <Button
+          android:id="@+id/noDoQuestion"
+          android:layout_width="80dp"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_centerVertical="true"
+          android:layout_marginTop="5dp"
+          android:layout_marginLeft="104dp"
+          android:background="@null"
+          android:drawableTop="@drawable/icon_finish"
+          android:text="未做"
+          android:textColor="#444444"
+          android:textSize="14.0sp" />
+     
+          <Button
+          android:id="@+id/imgBack"
+          android:layout_width="80dp"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_centerVertical="true"
+          android:layout_marginTop="5dp"
+          android:layout_marginLeft="300dp"
+          android:background="@null"
+          android:drawableTop="@drawable/back1"
+          android:text="退出"
+          android:textColor="#444444"
+          android:textSize="14.0sp" />
+        
+	</LinearLayout>
+
+</RelativeLayout>

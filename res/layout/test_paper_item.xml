@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 创建存放一行数据的组件 -->
+<TableLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:background="#c3eafe"
+  android:layout_height="wrap_content">
+ <TableRow android:background="#ffffff" >
+ 
+  <TextView
+  	android:id="@+id/testPaperName"
+  	android:gravity="center"
+  	android:layout_height="wrap_content"
+  	android:layout_width="@dimen/test_paper_item_name_width"
+  	android:textColor="#000000"
+  ></TextView>
+  
+  <TextView
+    android:layout_marginLeft="110dp"
+  	android:id="@+id/testPaperCategory"
+  	android:gravity="center"
+  	android:layout_height="wrap_content"
+  	android:layout_width="@dimen/test_paper_item_category_width"
+  	android:textColor="#000000"
+  ></TextView>
+  
+  <ImageView
+   	android:layout_marginLeft="170dp"
+  	android:id="@+id/doImage"
+  	android:layout_width="@dimen/test_paper_item_doImage_width"    
+    android:layout_height="@dimen/test_paper_item_doImage_height" 
+    android:contentDescription="@string/app_name"
+    android:src="@drawable/umeng_socialize_action_share_icon"
+  ></ImageView>
+  
+  </TableRow>
+</TableLayout>

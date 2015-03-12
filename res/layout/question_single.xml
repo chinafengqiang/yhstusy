@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/activityBGColor"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/titleImg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/maintopbg"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+				<Button
+	                android:id="@+id/myFavor"
+	                android:layout_width="80dp"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="45dp"
+	                android:layout_marginTop="15dp"
+	                android:background="@null"
+	                android:drawableTop="@drawable/icon_favor1"
+	                android:text="收藏此题"
+	                android:textColor="#444444"
+	                android:textSize="14.0sp" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="90dp"
+                    android:layout_weight="0.80"
+                    android:gravity="center"
+                    android:text="查看题目答案"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/titleImg"
+            android:orientation="vertical"
+            android:padding="10dip" >
+
+            <TextView
+                android:id="@+id/singleIndex"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dip"
+                android:paddingTop="8dip"
+                android:textColor="@color/processTextColor" >
+            </TextView>
+
+            <com.example.scaletest.ScaleView.ScaleView
+                android:id="@+id/singleContent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dip"
+                android:text="@string/answerTitle"
+                android:textColor="@color/processTextColor" />
+
+            <LinearLayout
+                android:id="@+id/singleAnswerLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" >
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dip"
+                android:text="@string/answerAnalysisTitle"
+                android:textColor="@color/processTextColor" />
+
+            <TextView
+                android:id="@+id/singleAnswerAnalysis"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dip"
+                android:textColor="@color/processTextColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/menubg"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/noDoQuestion"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="104dp"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:drawableTop="@drawable/icon_finish"
+                android:text="未做"
+                android:textColor="#444444"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

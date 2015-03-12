@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/miniplayer"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/navajowhite"> 
+  <com.ql.view.MySurfaceView
+      android:id="@+id/video_view"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_gravity="center"/>
+  
+    <com.ql.view.ViewfinderView
+      android:id="@+id/viewfinder_view"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:background="#00000000"/>
+
+  <ProgressBar 
+      	android:id="@+id/video_load"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_gravity="center" 
+      	style="?android:attr/progressBarStyle"
+      	/>
+      	<!-- style="?android:attr/progressBarStyleHorizontal" -->
+     
+</FrameLayout>

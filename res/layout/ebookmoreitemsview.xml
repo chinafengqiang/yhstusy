@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:paddingTop="15dip" android:paddingBottom="15dip" android:id="@+id/linemore"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" 
+		android:text="更多" android:textSize="18sp" android:gravity="center_horizontal" 
+		android:focusable="false" android:clickable="false" /> -->
+	<TextView android:id="@+id/txtPagerInfo"
+	    android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:text="1 / 10" android:textStyle="bold" android:textColor="#0000ff" android:gravity="center_horizontal" 
+		android:focusable="false" android:clickable="false" android:layout_marginRight="8dip" /> 
+	<Button android:id="@+id/btnFirst" android:text="首页" android:drawableTop="@drawable/first"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:gravity="center_horizontal" />
+	<Button android:id="@+id/btnPrev" android:text="上页" android:drawableTop="@drawable/prev"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:gravity="center_horizontal"  />
+	<Button android:id="@+id/btnNext" android:text="下页" android:drawableTop="@drawable/next"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:gravity="center_horizontal" />
+	<Button android:id="@+id/btnLast" android:text="尾页" android:drawableTop="@drawable/last"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:gravity="center_horizontal" />
+</LinearLayout> 

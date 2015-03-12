@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Strings related to login -->
+    <string name="prompt_student_no">请输入学号</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="prompt_serverIP">请输入服务地址</string>
+    <string name="action_login"><b>登录</b></string>
+    <string name="action_register"><b>注册</b></string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="menu_forgot_password">忘记密码</string>
+    <string name="login_progress_signing_in">正在登录&#8230;</string>
+    <string name="error_invalid_email">Email格式错误</string>
+    <string name="error_invalid_password">密码长度不够</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">文本框不允许为空</string>
+
+</resources>

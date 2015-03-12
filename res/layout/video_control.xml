@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="#00000000"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="5.0dip"
+        android:paddingRight="5.0dip" >
+	
+        <TextView
+            android:id="@+id/has_played"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:shadowColor="#ff000000"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="2.0"
+            android:text="00:00:00"
+            android:textColor="#ffffffff" />
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="200.0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.0"
+            android:maxHeight="7.0dip"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip"
+            android:progressDrawable="@drawable/seekbar_style"
+            android:thumb="@drawable/seek_thumb" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:shadowColor="#ff000000"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="2.0"
+            android:text="00:00:00"
+            android:textColor="#ffffffff" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5.0dip"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/bt_fullscreen"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.0"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/more_about_normal" />
+
+        <ImageButton
+            android:id="@+id/bt_stepbackward"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.0"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/stepbackward" />
+
+        <ImageButton
+            android:id="@+id/bt_pause"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.0"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:src="@drawable/pause" />
+
+        <ImageButton
+            android:id="@+id/bt_stepforward"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.0"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/stepforward" />
+
+        <ImageButton
+            android:id="@+id/bt_soundcontrol"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.0"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/soundcontrol" />
+    </LinearLayout>
+
+</LinearLayout>
