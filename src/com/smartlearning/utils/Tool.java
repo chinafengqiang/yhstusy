@@ -20,7 +20,7 @@ import com.smartlearning.ui.MediaScanner;
  * 
  * @author sara
  * 2015-03-12
- * feng
+ * fengqiang
  * 
  */
 public class Tool {
