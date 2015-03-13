@@ -19,7 +19,7 @@ import android.util.Log;
  * 上传工具类
  * 支持上传文件和参数
  * fengqiang
- * 
+ * 2015-03-13
  */
 public class UploadUtil {
 	private static UploadUtil uploadUtil;
