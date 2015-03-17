@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.feng.util.StringUtils;
 import com.smartlearning.R;
 import com.smartlearning.biz.UserManager;
 import com.smartlearning.constant.Global;
@@ -83,9 +84,20 @@ public class LoginActivity extends Activity {
 
 				name = txtStudnetNo.getText().toString().trim();
 				password = txtPassword.getText().toString().trim();
-				
 				serverIp = txtServerIp.getText().toString();
 				webPath = "http://"+ serverIp +":"+Global.Common_Port;
+				if(StringUtils.isBlank(name)){
+					CommonUtil.showToast(mContext, getString(R.string.prompt_student_no), Toast.LENGTH_LONG);
+					return;
+				}
+				if(StringUtils.isBlank(password)){
+					CommonUtil.showToast(mContext, getString(R.string.prompt_password), Toast.LENGTH_LONG);
+					return;
+				}
+				if(StringUtils.isBlank(serverIp)){
+					CommonUtil.showToast(mContext, getString(R.string.prompt_serverIP), Toast.LENGTH_LONG);
+					return;
+				}
 				login(name, password);
 			}
 		});

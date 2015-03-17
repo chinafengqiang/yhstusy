@@ -159,4 +159,17 @@
 <color name="correctAnswerColor">#FF0000</color>
 <color name="devide_line">#CBCED2</color>
 <color name="bar_bg_color">#FCFCFC</color>
+
+
+    <color name="main_bg_color">#04508b</color>
+    <color name="air">#44DAFF</color>
+    <color name="texi">#6CB5B5</color>
+    <color name="jingdian">#A7B56C</color>
+    
+    <color name="unfocused">#ffffffff</color>
+    <color name="pressed">#FFEBEDCF</color>
+    <color name="selected">#FFEBEDCF</color>
+    <color name="focused">#FFEBEDCF</color>
+    <color name="inselected">#FFe4e4e4</color>
+    <color name = "translucent_background">#00000000</color>
 </resources>
