@@ -51,12 +51,12 @@ public class HomeButton extends ImageView {
 			getResources().getColor(R.color.jingdian) };
 
 	private Bitmap[] bitmaps = {
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
+			BitmapFactory.decodeResource(getResources(), R.drawable.jxxx),
+			BitmapFactory.decodeResource(getResources(), R.drawable.ktzy),
+			BitmapFactory.decodeResource(getResources(), R.drawable.xxda),
+			BitmapFactory.decodeResource(getResources(), R.drawable.jxzl),
+			BitmapFactory.decodeResource(getResources(), R.drawable.zyks),
+			BitmapFactory.decodeResource(getResources(), R.drawable.othermore),
 			//BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
 
 	};

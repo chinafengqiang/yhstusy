@@ -31,6 +31,7 @@ import com.smartlearning.model.User;
 import com.smartlearning.model.UserInfo;
 import com.smartlearning.utils.CommonUtil;
 import com.smartlearning.utils.HttpUtil;
+import com.smartlearning.utils.SpUtil;
 
 public class LoginActivity extends Activity {
 
@@ -74,7 +75,8 @@ public class LoginActivity extends Activity {
 		txtServerIp = (EditText) findViewById(R.id.serverIp);
 		
 		
-		sp = getSharedPreferences("userInfo", MODE_PRIVATE);// sp存储
+		//sp = getSharedPreferences("userInfo", MODE_PRIVATE);// sp存储
+		sp = SpUtil.getSharePerference(mContext);
 		// 跳转界面
 		txtStudnetNo.setText(sp.getString("name", ""));
 		txtServerIp.setText(sp.getString("serverIp", ""));
@@ -196,7 +198,7 @@ public class LoginActivity extends Activity {
 					
 					editor.commit();
 					
-					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					Intent intent = new Intent(LoginActivity.this, FMainActivity.class);
 					startActivity(intent);
 					closeDialog();
 					finish();
@@ -252,7 +254,7 @@ public class LoginActivity extends Activity {
 					//本地数据
 					localInsert(userInfo);
 	
-					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					Intent intent = new Intent(LoginActivity.this, FMainActivity.class);
 					startActivity(intent);
 					finish();
 				}else{

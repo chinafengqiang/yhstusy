@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class SpUtil {
-	private static final String NAME="IMM_IPHONE";
+	private static final String NAME="YH_SPAD_SP";
 	private static SpUtil instance;
 	static{
 		instance=new SpUtil();

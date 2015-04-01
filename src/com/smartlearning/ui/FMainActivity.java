@@ -96,6 +96,15 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 				Toast.makeText(mContext,"click",Toast.LENGTH_LONG).show();
 			}
 		});
+		
+		jxzlBtn.setOnHomeClick(new HomeClickListener() {
+			@Override
+			public void onclick() {
+				Intent intent = new Intent(mContext,
+						BookCategoryListActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	
 	
