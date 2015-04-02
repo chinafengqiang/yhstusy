@@ -45,8 +45,8 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 	@InjectView(R.id.relative) RelativeLayout relativeLayout;
 	
 	// 引导图片资源
-	private static final int[] pics = { R.drawable.home2, R.drawable.home3,
-			R.drawable.home2, R.drawable.home3 };
+	private static final int[] pics = { R.drawable.main_show1, R.drawable.main_show2,
+			R.drawable.main_show1, R.drawable.main_show2 };
 
 	// 底部小店图片
 	private ImageView[] dots;
@@ -101,7 +101,7 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 			@Override
 			public void onclick() {
 				Intent intent = new Intent(mContext,
-						BookCategoryListActivity.class);
+						FBookCategoryActivity.class);
 				startActivity(intent);
 			}
 		});

@@ -79,4 +79,7 @@
     <string name="comm_dialog_positive">确定</string>
     <string name="get_data_from_fail">网络通讯失败！</string>
      <string name="LoadContent"><strong>请稍候……</strong></string>
+     
+     <!-- 教学分类 -->
+     <string name="jxzl_book_category_title">资料分类</string>
 </resources>
