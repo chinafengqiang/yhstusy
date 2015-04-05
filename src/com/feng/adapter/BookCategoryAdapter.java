@@ -1,9 +1,13 @@
 package com.feng.adapter;
 
+import com.feng.vo.BookCategory;
+import com.feng.vo.BookCategoryEnum;
 import com.smartlearning.R;
+import com.smartlearning.ui.FBookPartActivity;
 import com.smartlearning.utils.CommonUtil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +16,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 public class BookCategoryAdapter extends BaseAdapter {  
 	 private Context context;  
-	   
-	 public BookCategoryAdapter(Context context) {  
-	  this.context=context;  
+	 private List<BookCategory> bookCategoryList;
+	 
+	 
+	 public BookCategoryAdapter(Context context,List<BookCategory> bookCategoryList) {  
+		 this.context=context;  
+		 this.bookCategoryList = bookCategoryList;
 	 }  
-	   
+
 	 private Integer[] images = {  
 	   //九宫格图片的设置  
 	   R.drawable.bc_53,  
@@ -35,7 +45,10 @@ public class BookCategoryAdapter extends BaseAdapter {
 	 //get the number  
 	 @Override  
 	 public int getCount() {  
-	  return images.length;  
+		 int count = 0;
+		 if(bookCategoryList != null)
+			 count = bookCategoryList.size();
+		 return count;  
 	 }  
 	 
 	 @Override  
@@ -64,13 +77,20 @@ public class BookCategoryAdapter extends BaseAdapter {
 	  }  
 	    
 	  wrapper.imageView = (ImageView)view.findViewById(R.id.MainActivityImage);  
-	  wrapper.imageView.setBackgroundResource(images[position]);  
-	  //wrapper.textView = (TextView)view.findViewById(R.id.MainActivityText);  
-	 // wrapper.textView.setText(texts[position]);  
+	 
+	  final BookCategory category = bookCategoryList.get(position);
+	  final int id = category.getId();
+	  final int image = BookCategoryEnum.getValue(id+"");
+	  final String name = category.getName();
+	  
+	  wrapper.imageView.setBackgroundResource(image);  
 	  wrapper.imageView.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			CommonUtil.showToast(context, position+"", Toast.LENGTH_LONG);
+			Intent intent = new Intent(context,FBookPartActivity.class);
+			intent.putExtra("categoryId",id);
+			intent.putExtra("categoryName",name);
+			context.startActivity(intent);
 		}
 	  });
 	  return view;  

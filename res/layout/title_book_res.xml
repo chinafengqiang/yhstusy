@@ -5,10 +5,41 @@
     >
 
    <LinearLayout
+        android:id="@+id/title_book_chapter"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/titlebar_left"
+        android:clickable="true"
+        android:onClick="toggleMenu"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_format_list_numbered_white_36dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_text"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/title_book_chapter"
+        android:background="@drawable/titlebar_right"
+        android:gravity="center"
+        android:text="我的设置"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+   <LinearLayout
         android:id="@+id/title_back"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:background="@drawable/titlebar_left"
         android:clickable="true"
         android:gravity="center_vertical|center_horizontal"
@@ -18,20 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:src="@drawable/btn_back" />
+            android:src="@drawable/ic_arrow_back_white_24dp" />
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/title_text"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/title_back"
-        android:background="@drawable/titlebar_right"
-        android:gravity="center"
-        android:text="我的设置"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
-
 </RelativeLayout>

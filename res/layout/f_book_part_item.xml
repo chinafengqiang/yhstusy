@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!--九宫格每一格的布局--> 
+<RelativeLayout 
+ xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    > 
+
+
+    <ImageView  
+        android:id="@+id/book_part_img"  
+        android:layout_width="155dp"  
+        android:layout_height="220dp"  
+        android:layout_alignParentLeft="true"  
+        android:layout_alignParentRight="true"  
+        android:src="@drawable/book_part" />  
+  
+    <TextView  
+        android:id="@+id/book_part_desc_text"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_marginTop="80dp"  
+        android:text="语文第一册"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true" /> 
+
+
+
+</RelativeLayout> 

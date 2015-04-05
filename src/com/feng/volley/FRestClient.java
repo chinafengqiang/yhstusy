@@ -3,6 +3,7 @@ package com.feng.volley;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -11,10 +12,12 @@ import com.android.volley.toolbox.Volley;
 public class FRestClient {
 	public static final String TAG = FRestClient.class.getSimpleName();
 	
+	public static final int TIME_OUT = 5;//秒
+	
 	private static FRestClient mInstance;
 	private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private Context mCtx;
+    private static Context mCtx;
     
     private FRestClient(Context context){
     	this.mCtx = context;
@@ -49,6 +52,8 @@ public class FRestClient {
 	public <T> void addToRequestQueue(Request<T> req, String tag) {
 	    // set the default tag if tag is empty
 	    req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+	    req.setRetryPolicy(new DefaultRetryPolicy(TIME_OUT*1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
+	    		DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 	    getRequestQueue().add(req);
 	}
 
