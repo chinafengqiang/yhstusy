@@ -5,14 +5,22 @@
     android:orientation="vertical" 
      android:background="#800080"
     >
-
+	<TextView 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:text="目录"
+	    android:textColor="#ffffff"
+	    android:layout_marginTop="30dp"
+	    android:textSize="18sp"
+	    />
     <ListView
         android:id="@+id/treeList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:dividerHeight="1dip" 
         android:divider="@color/white"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         >
     </ListView>
 

@@ -1,17 +1,30 @@
 package com.smartlearning.ui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.Request.Method;
+import com.feng.adapter.BookPartAdapter;
 import com.feng.tree.TreeElementBean;
 import com.feng.tree.TreeViewAdapter;
 import com.feng.view.SlidingMenu;
+import com.feng.vo.BookChapterListVO;
+import com.feng.vo.BookPartListVO;
+import com.feng.volley.FRestClient;
+import com.feng.volley.FastJsonRequest;
 import com.smartlearning.R;
+import com.smartlearning.constant.Global;
+import com.smartlearning.utils.CommonUtil;
 import com.smartlearning.utils.SpUtil;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +36,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FBookResActivity extends Activity{
 	private static final String TAG = FBookResActivity.class.getSimpleName();
@@ -41,7 +55,7 @@ public class FBookResActivity extends Activity{
 	
 	
 	//nodelist
-	private ArrayList<TreeElementBean> nodeList = new ArrayList<TreeElementBean>();
+	//private ArrayList<TreeElementBean> nodeList = new ArrayList<TreeElementBean>();
 	//樹形數據適配器
 	private TreeViewAdapter treeViewAdapter = null;
 	
@@ -90,73 +104,49 @@ public class FBookResActivity extends Activity{
 	
 	private void initTree(){
 		
-		initTreeData(nodeList);
+		final ProgressDialog pDialog = new ProgressDialog(mContext);
+		pDialog.setMessage("Loading...");
+		pDialog.show(); 
 		
-        treeViewAdapter = new TreeViewAdapter(this, R.layout.f_book_res_left_menu_item,nodeList);
-        listView.setAdapter(treeViewAdapter);
-        listView.setOnItemClickListener(new OnItemClickListener(){
+		String tag_json_obj = "json_obj_req";
+		final String url = "http://"+ serverIp +":"+Global.Common_Port+"/api/getBookChapter.html?partId="+partId;
 
-			public void onItemClick(AdapterView<?> adapter, View view, int position,long id) {
-				treeViewAdapter.onClick(position, nodeList, treeViewAdapter);
+		FastJsonRequest<BookChapterListVO>   fastRequest = new FastJsonRequest<BookChapterListVO>(Method.GET,url, BookChapterListVO.class,null, new Response.Listener<BookChapterListVO>() {
+
+			@Override
+			public void onResponse(BookChapterListVO chapterVO) {
+				pDialog.dismiss();
+				if(chapterVO != null){
+					final ArrayList<TreeElementBean> nodeList = (ArrayList<TreeElementBean>) chapterVO.getBookChapterList();
+					treeViewAdapter = new TreeViewAdapter(mContext, R.layout.f_book_res_left_menu_item,nodeList,url);
+			        listView.setAdapter(treeViewAdapter);
+			        listView.setOnItemClickListener(new OnItemClickListener(){
+						public void onItemClick(AdapterView<?> adapter, View view, int position,long id) {
+							treeViewAdapter.onClick(position, nodeList, treeViewAdapter);
+						}
+			        });
+				}
 			}
-        });
+		},
+		new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				 VolleyLog.d(TAG, "Error: " + error.getMessage());
+				 //获取本地分类
+				 CommonUtil.showToast(mContext, "local category",Toast.LENGTH_SHORT);
+				 pDialog.dismiss();
+			}
+		}
+	    );
+		
+		FRestClient.getInstance(mContext).addToRequestQueue(fastRequest,tag_json_obj);
+
+		
+        
 	}
 	
 	
-	 private void initTreeData(ArrayList<TreeElementBean> nodeList){
-	    	TreeElementBean pdfOutlineElement1=new TreeElementBean("01", "关键类", false	, false, "00", 0,false);
-			TreeElementBean pdfOutlineElement2=new TreeElementBean("02", "应用程序组件", false	, true, "00", 0,false);
-			TreeElementBean pdfOutlineElement3=new TreeElementBean("03", "Activity和任务", false	, true, "00", 0,false);
-			TreeElementBean pdfOutlineElement4=new TreeElementBean("04", "激活组件：intent", true	, false, "02", 1,false);
-			TreeElementBean pdfOutlineElement5=new TreeElementBean("05", "关闭组件", true	, false, "02", 1,false);
-			TreeElementBean pdfOutlineElement6=new TreeElementBean("06", "manifest文件", true	, false, "02", 1,false);
-			TreeElementBean pdfOutlineElement7=new TreeElementBean("07", "Intent过滤器", true	, false, "02", 1,false);
-			TreeElementBean pdfOutlineElement8=new TreeElementBean("08", "Affinity（吸引力）和新任务", true	, false, "03", 1,false);
-			TreeElementBean pdfOutlineElement9=new TreeElementBean("09", "加载模式", true	, true, "03", 1,false);
-			TreeElementBean pdfOutlineElement10=new TreeElementBean("10", "孩子1", true	, true, "09", 2,false);
-			TreeElementBean pdfOutlineElement11=new TreeElementBean("11", "孩子2", true	, true, "09", 2,false);
-			TreeElementBean pdfOutlineElement12=new TreeElementBean("12", "孩子2的孩子1", true	, false, "11", 3,false);
-			TreeElementBean pdfOutlineElement13=new TreeElementBean("13", "孩子2的孩子2", true	, false, "11", 3,false);
-			TreeElementBean pdfOutlineElement14=new TreeElementBean("14", "孩子1的孩子1", true	, false, "10", 3,false);
-			TreeElementBean pdfOutlineElement15=new TreeElementBean("15", "孩子1的孩子2", true	, false, "10", 3,false);
-			TreeElementBean pdfOutlineElement16=new TreeElementBean("16", "孩子1的孩子3", true	, false, "10", 3,false);
-			TreeElementBean pdfOutlineElement17=new TreeElementBean("17", "孩子1的孩子4", true	, false, "10", 3,false);
-			TreeElementBean pdfOutlineElement18=new TreeElementBean("18", "孩子1的孩子5", true	, false, "10", 3,false);
-			TreeElementBean pdfOutlineElement19=new TreeElementBean("19", "孩子1的孩子6", true	, false, "10", 3,false);
-			TreeElementBean pdfOutlineElement20=new TreeElementBean("20", "孩子3", true	, true, "09", 2,false);
-			TreeElementBean pdfOutlineElement21=new TreeElementBean("21", "孩子3的孩子1", true	, false, "20", 3,false);
-			TreeElementBean pdfOutlineElement22=new TreeElementBean("22", "孩子3的孩子2", true	, true, "20", 3,false);
-			//String id, String outlineTitle,boolean mhasParent, boolean mhasChild, String parent, int level,boolean expanded
-			TreeElementBean pdfOutlineElement23=new TreeElementBean("23", "孩子3的孩子2的孩子1", true	, false, "22", 4,false);
-			TreeElementBean pdfOutlineElement24=new TreeElementBean("24", "孩子3的孩子2的孩子2", true	, false, "22", 4,false);
-			TreeElementBean pdfOutlineElement25=new TreeElementBean("25", "孩子3的孩子2的孩子3", true	, false, "22", 4,false);
-			TreeElementBean pdfOutlineElement26=new TreeElementBean("26", "孩子3的孩子2的孩子4", true	, false, "22", 4,false);
-			
-			nodeList.add(pdfOutlineElement1);
-			nodeList.add(pdfOutlineElement2);
-			nodeList.add(pdfOutlineElement4);
-			nodeList.add(pdfOutlineElement5);
-			nodeList.add(pdfOutlineElement6);
-			nodeList.add(pdfOutlineElement7);
-			nodeList.add(pdfOutlineElement3);
-			nodeList.add(pdfOutlineElement8);
-			nodeList.add(pdfOutlineElement9);
-			nodeList.add(pdfOutlineElement10);
-			nodeList.add(pdfOutlineElement11);
-			nodeList.add(pdfOutlineElement12);
-			nodeList.add(pdfOutlineElement13);
-			nodeList.add(pdfOutlineElement14);
-			nodeList.add(pdfOutlineElement15);
-			nodeList.add(pdfOutlineElement16);
-			nodeList.add(pdfOutlineElement17);
-			nodeList.add(pdfOutlineElement18);
-			nodeList.add(pdfOutlineElement19);
-			nodeList.add(pdfOutlineElement20);
-			nodeList.add(pdfOutlineElement21);
-			nodeList.add(pdfOutlineElement22);
-			nodeList.add(pdfOutlineElement23);
-			nodeList.add(pdfOutlineElement24);
-			nodeList.add(pdfOutlineElement25);
-			nodeList.add(pdfOutlineElement26);
-	    }
+	
 }

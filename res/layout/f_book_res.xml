@@ -21,15 +21,9 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#fff"
-            android:onClick="toggleMenu"
             android:orientation="vertical"
             >
            <include android:id="@+id/bc_title" layout="@layout/title_book_res" /> 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="toggleMenu"
-                android:text="切换菜单" />
             
 
         </LinearLayout>

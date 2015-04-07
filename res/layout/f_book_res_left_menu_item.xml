@@ -7,12 +7,12 @@
 	>
 
 	<ImageView android:id="@+id/icon" android:layout_width="wrap_content"
-		android:layout_height="50dp" android:layout_marginRight="6.0dip"
+		android:layout_height="60dp" android:layout_marginRight="6.0dip"
 		android:layout_alignParentTop="true" android:layout_alignParentBottom="true" />
 
 	<TextView android:textAppearance="?android:textAppearanceMedium"
 		android:gravity="center_vertical" android:id="@+id/text" android:textColor="#ffffff" 
-		android:layout_width="fill_parent" android:layout_height="50dp"
+		android:layout_width="fill_parent" android:layout_height="60dp"
 		android:singleLine="true" android:layout_toRightOf="@id/icon"
 		android:textSize="18sp"
 		android:layout_alignParentTop="true" android:layout_alignParentBottom="true" />

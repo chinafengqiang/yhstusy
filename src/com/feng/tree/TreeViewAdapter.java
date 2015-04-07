@@ -4,8 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.Request.Method;
+import com.feng.vo.BookChapterListVO;
+import com.feng.volley.FRestClient;
+import com.feng.volley.FastJsonRequest;
 import com.smartlearning.R;
+import com.smartlearning.constant.Global;
+import com.smartlearning.utils.CommonUtil;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,10 +27,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 
 @SuppressWarnings("rawtypes")
@@ -39,9 +51,11 @@ public class TreeViewAdapter extends ArrayAdapter {
 	private Bitmap expand;
 	private Context context;
 	
+	private String reqUrl;
+	
 	@SuppressWarnings("unchecked")
 	public TreeViewAdapter(Context context, int textViewResourceId,
-			List<TreeElementBean> list) {
+			List<TreeElementBean> list,String reqUrl) {
 		super(context, textViewResourceId, list);
 		
 		this.context = context;
@@ -57,6 +71,8 @@ public class TreeViewAdapter extends ArrayAdapter {
 				R.drawable.ic_add_circle_outline_white_24dp);
 		expand = BitmapFactory.decodeResource(context.getResources(),
 				R.drawable.ic_remove_circle_outline_white_24dp);
+		
+		this.reqUrl = reqUrl;
 	}
 
 	public int getCount() {
@@ -106,7 +122,7 @@ public class TreeViewAdapter extends ArrayAdapter {
 	public void onClick(int position,ArrayList<TreeElementBean> subNodeList,TreeViewAdapter treeViewAdapter){
 		TreeElementBean element=rootEleList.get(position);
 		if (!element.isHasChild()) {
-			Toast.makeText(context, element.getId(),Toast.LENGTH_LONG).show();
+			Toast.makeText(context, element.getId()+"  "+element.getUpNodeId(),Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -127,8 +143,7 @@ public class TreeViewAdapter extends ArrayAdapter {
 			treeViewAdapter.notifyDataSetChanged();
 			
 		} else {
-			rootEleList.get(position).setExpanded(true);
-			
+			/*rootEleList.get(position).setExpanded(true);
 			for (TreeElementBean elet : subNodeList) {
 				int j=1;
 				if (elet.getUpNodeId()==rootEleList.get(position).getId()) {
@@ -136,8 +151,9 @@ public class TreeViewAdapter extends ArrayAdapter {
 					rootEleList.add(position+j, elet);
 					j++;
 				}			
-			}
-			treeViewAdapter.notifyDataSetChanged();
+			}*/
+			
+			loadTree(element,treeViewAdapter,position);
 		}
 	}
 	
@@ -176,4 +192,58 @@ public class TreeViewAdapter extends ArrayAdapter {
     protected static String format (int str){
     	return String.format("%1$,02d", str);
     }
+    
+    private void loadTree(final TreeElementBean element,final TreeViewAdapter treeViewAdapter,final int position){
+    	final ProgressDialog pDialog = new ProgressDialog(context);
+		pDialog.setMessage("Loading...");
+		pDialog.show(); 
+		
+		int plevel = element.getLevel();
+		int pid = Integer.parseInt(element.getId());
+		
+		String tag_json_obj = "json_obj_req";
+		String url = reqUrl+"&pid="+pid+"&plevel="+plevel;
+		
+		int isAddRes = element.getIsAddRes();
+		if(isAddRes == 1){
+			String[] urlArr = url.split("getBookChapter.html");
+			url = urlArr[0]+"getBookResCategory.html?partId="+pid+"&plevel="+plevel;
+		}
+
+		FastJsonRequest<BookChapterListVO>   fastRequest = new FastJsonRequest<BookChapterListVO>(Method.GET,url, BookChapterListVO.class,null, new Response.Listener<BookChapterListVO>() {
+
+			@Override
+			public void onResponse(BookChapterListVO chapterVO) {
+				pDialog.dismiss();
+				if(chapterVO != null){
+					List<TreeElementBean> nodeList = chapterVO.getBookChapterList();
+					int n = 1;
+					for (TreeElementBean elet : nodeList) {
+						//elet.setExpanded(elet.isExpanded());
+						rootEleList.add(position+n, elet);
+						n++;
+					}
+				}
+				element.setExpanded(true);
+				treeViewAdapter.notifyDataSetChanged();
+			}
+		},
+		new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				 VolleyLog.d("TreeViewAdapter", "Error: " + error.getMessage());
+				 //获取本地分类
+				 CommonUtil.showToast(context, "local category",Toast.LENGTH_SHORT);
+				 pDialog.dismiss();
+			}
+		}
+	    );
+		
+		FRestClient.getInstance(context).addToRequestQueue(fastRequest,tag_json_obj);
+    }
+    
 }
+
+

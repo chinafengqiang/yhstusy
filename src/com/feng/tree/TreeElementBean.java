@@ -20,6 +20,8 @@ public class TreeElementBean {
 	//�q���y����
 	private ArrayList<TreeElementBean> childNodes = new ArrayList<TreeElementBean>();  
 
+	private int isAddRes;
+	
 	public String getId() {
 		return id;
 	}
@@ -90,6 +92,18 @@ public class TreeElementBean {
    }
 
 
+	public int getIsAddRes() {
+		return isAddRes;
+	}
+
+	public void setIsAddRes(int isAddRes) {
+		this.isAddRes = isAddRes;
+	}
+
+	public TreeElementBean(){
+		
+	}
+	
 	public TreeElementBean(String id, String nodeName,
 			boolean hasParent, boolean hasChild, String upNodeId, int level,
 			boolean expanded) {
