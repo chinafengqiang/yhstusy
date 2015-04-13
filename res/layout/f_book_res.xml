@@ -25,7 +25,11 @@
             >
            <include android:id="@+id/bc_title" layout="@layout/title_book_res" /> 
             
-
+    	<FrameLayout
+        android:id="@+id/book_res_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
         </LinearLayout>
     </LinearLayout>
 

@@ -151,6 +151,11 @@ public class SlidingMenu extends HorizontalScrollView
 			isOpen = false;
 		}
 	}
+	
+	public void hide(){
+		this.scrollTo(mMenuWidth, 0);
+		isOpen = false;
+	}
 
 	/**
 	 * 切换菜单状态
@@ -159,7 +164,8 @@ public class SlidingMenu extends HorizontalScrollView
 	{
 		if (isOpen)
 		{
-			closeMenu();
+			//closeMenu();
+			hide();
 		} else
 		{
 			openMenu();

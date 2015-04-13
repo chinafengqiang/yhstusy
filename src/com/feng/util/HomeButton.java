@@ -48,7 +48,10 @@ public class HomeButton extends ImageView {
 			getResources().getColor(R.color.purple),
 			getResources().getColor(R.color.air),
 			getResources().getColor(R.color.texi),
-			getResources().getColor(R.color.jingdian) };
+			getResources().getColor(R.color.jingdian),
+			getResources().getColor(R.color.green),
+	
+	};
 
 	private Bitmap[] bitmaps = {
 			BitmapFactory.decodeResource(getResources(), R.drawable.jxxx),
@@ -57,7 +60,8 @@ public class HomeButton extends ImageView {
 			BitmapFactory.decodeResource(getResources(), R.drawable.jxzl),
 			BitmapFactory.decodeResource(getResources(), R.drawable.zyks),
 			BitmapFactory.decodeResource(getResources(), R.drawable.othermore),
-			//BitmapFactory.decodeResource(getResources(), R.drawable.home_info),
+			BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_white_36dp),
+			BitmapFactory.decodeResource(getResources(), R.drawable.ic_sms_white_36dp),
 
 	};
 
@@ -93,7 +97,7 @@ public class HomeButton extends ImageView {
 				.getDefaultDisplay().getHeight();
 		if (big) {
 			//screenH = screenW;
-			screenH = (sreenHd - w*240/670 - 60)/3;
+			screenH = (sreenHd - w*240/670 - 60)/4;
 		} else {
 			screenH = screenW / 2 - 4;
 		}

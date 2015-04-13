@@ -13,6 +13,8 @@ public class TreeElementBean {
 	private boolean hasChild ;
 	//�����yid
 	private String upNodeId;
+	
+	private String upNodeName;
 	//���ۓW�J
 	private boolean expanded;
 	//����
@@ -21,6 +23,9 @@ public class TreeElementBean {
 	private ArrayList<TreeElementBean> childNodes = new ArrayList<TreeElementBean>();  
 
 	private int isAddRes;
+	
+	private String allIds;
+	private String allNames;
 	
 	public String getId() {
 		return id;
@@ -100,6 +105,41 @@ public class TreeElementBean {
 		this.isAddRes = isAddRes;
 	}
 
+	
+	
+	public String getUpNodeName() {
+		return upNodeName;
+	}
+
+	public void setUpNodeName(String upNodeName) {
+		this.upNodeName = upNodeName;
+	}
+	
+	
+
+	public String getAllIds() {
+		return allIds;
+	}
+
+	public void setAllIds(String allIds) {
+		this.allIds = allIds;
+	}
+
+	public String getAllNames() {
+		return allNames;
+	}
+
+	public void setAllNames(String allNames) {
+		this.allNames = allNames;
+	}
+
+	public void setAlls(String[] alls){
+		if(alls != null && alls.length == 2){
+			this.setAllIds(alls[0]+","+this.id);
+			this.setAllNames(alls[1]+","+this.nodeName);
+		}
+	}
+	
 	public TreeElementBean(){
 		
 	}

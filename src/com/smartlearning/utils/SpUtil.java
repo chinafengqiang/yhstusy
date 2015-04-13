@@ -55,4 +55,12 @@ public class SpUtil {
 		editor.putBoolean(key, value);
 		editor.commit();
 	}
+	
+	public static void removeSharedPerference(SharedPreferences sp){
+		sp.edit().clear().commit(); 
+	}
+	
+	public static void removeSharedPerference(SharedPreferences sp,String key){
+		sp.edit().remove(key).commit();
+	}
 }

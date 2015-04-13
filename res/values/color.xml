@@ -172,4 +172,8 @@
     <color name="focused">#FFEBEDCF</color>
     <color name="inselected">#FFe4e4e4</color>
     <color name = "translucent_background">#00000000</color>
+    
+    <color name="y_btn_color">#009933</color> 
+    <color name="edit_btn_color">#ffa442</color>
+	<color name="edit_btn_color_gradient">#ff801a</color>
 </resources>

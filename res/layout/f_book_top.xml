@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+<LinearLayout 
+	    	android:orientation="horizontal" 
+	    	android:background="#F5F5F5"
+	    	android:layout_width="match_parent" 
+	    	android:layout_height="wrap_content" 
+	    	android:id="@+id/lllayout"
+	    	>
+    	
+        
+        <LinearLayout 
+            android:id="@+id/onlineRes_ll"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/guide_round"
+            android:clickable="true"
+            android:saveEnabled="false"
+            android:layout_width="match_parent" 
+    		android:layout_height="wrap_content" 
+            >
+            <TextView 
+                android:padding="10dp"
+                android:id="@+id/onlineRes"
+                android:text="在线资料库"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent" 
+    			android:layout_height="wrap_content"
+                />
+            
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/myRes_ll"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/guide_round"
+            android:focusable="false"
+            android:layout_width="match_parent" 
+    		android:layout_height="wrap_content" 
+            >
+            <TextView 
+                android:padding="10dip"
+                android:id="@+id/myRes"
+                android:text="我的资料库"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent" 
+    			android:layout_height="wrap_content"
+                />
+            
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

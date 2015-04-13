@@ -82,4 +82,29 @@
      
      <!-- 教学分类 -->
      <string name="jxzl_book_category_title">资料分类</string>
+     <string name="book_crete_time">创建时间：</string>
+     <string name="book_status">状态：</string>
+     <string name="book_download">已下载到本地</string>
+     <string name="book_not_download">未下载</string>
+     <string name="book_category">所属分类：</string>
+     
+      <string name="get_online_category_fail">获取在线资料库失败，请点击我的资料库进行查看资料。</string>
+     
+      <string name="local_book_res_isnull">我的资料库中无资料存在</string>
+      <string name="local_book_part_isnull">我的资料库中无分册存在</string>
+      <string name="local_book_chapter_isnull">我的资料库中无目录存在</string>
+      <string name="local_book_index">我的</string>
+      
+       <!--个人中心 -->
+     <string name="setting_user_title">学员中心</string>
+     <string name="setting_exit">退出登录</string>
+     <string name="setting_userinfo">个人信息</string>
+     <string name="edit_password">修改密码</string>
+     <string name="setting_update">版本升级</string>
+     <string name="setting_exit_cfg">确定要退出？</string>
+     <string name="setting_exit_btn">确定</string>
+     <string name="contact_btn_cance">取消</string>
+     <string name="username_index">用户名：</string>
+     <string name="truename_index">姓名：</string>
+     
 </resources>

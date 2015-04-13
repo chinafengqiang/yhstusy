@@ -178,6 +178,7 @@ public class LoginActivity extends Activity {
 				CommonUtil.showToast(mContext,"只能允许一个帐号登录本机！", Toast.LENGTH_LONG);
 			} else {
 				//loginSystem(username, password);
+				CommonUtil.showToast(mContext,"本地无用户存在！", Toast.LENGTH_LONG);
 			}
 		} else {
 			Log.i("DBAccess", "本地加载。。");
@@ -274,7 +275,7 @@ public class LoginActivity extends Activity {
 			editor.putString("user", userInfo.getId().toString());
 			editor.putString("name", userInfo.getName());
 			editor.putLong("classId", userInfo.getClassId());
-			
+			editor.putString("truename",userInfo.getActualName());
 			editor.commit();
 		}
 

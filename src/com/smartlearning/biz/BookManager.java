@@ -5,6 +5,10 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
+import com.feng.tree.TreeElementBean;
+import com.feng.vo.BookCategory;
+import com.feng.vo.BookPart;
+import com.feng.vo.BookRes;
 import com.smartlearning.dao.IBook;
 import com.smartlearning.dao.impl.BookService;
 import com.smartlearning.model.Advise;
@@ -217,6 +221,31 @@ public class BookManager {
 	
 	public List<BookCategoryVo> getEBooksCategory(){
 		return bookService.getEBooksCategoryBySQL();
+	}
+	
+	
+	public void insertBook(int userId,BookRes book){
+		bookService.insertBook(userId, book);
+	}
+	
+	public List<BookRes> getBookResList(int userId){
+		return bookService.getUserBookDB(userId);
+	}
+	
+	public List<BookCategory> getBookCategory(int userId){
+		return bookService.getBookCategory(userId);
+	}
+	
+	public List<BookPart> getBookPart(int categoryId){
+		return bookService.getBookPart(categoryId);
+	}
+	
+	public List<TreeElementBean> getBookChapterTree(int partId,int pid){
+		return bookService.getBookChapterTree(partId, pid);
+	}
+	
+	public List<BookRes> getBookRes(int userId,String resTag){
+		return bookService.getBookRes(userId, resTag);
 	}
 	
 }

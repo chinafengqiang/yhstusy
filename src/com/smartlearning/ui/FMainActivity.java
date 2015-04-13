@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.feng.myinterface.HomeClickListener;
 import com.feng.util.BitmapUtils;
 import com.feng.util.HomeButton;
 import com.smartlearning.R;
+import com.smartlearning.utils.FileUtil;
 import com.smartlearning.utils.SpUtil;
 
 public class FMainActivity extends Activity implements OnClickListener,OnPageChangeListener{
@@ -61,7 +63,10 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 	@InjectView(R.id.xxda) HomeButton xxdaBtn;
 	@InjectView(R.id.zycs) HomeButton zycsBtn;
 	//@InjectView(R.id.userSetting) HomeButton userSettingBtn;
+	@InjectView(R.id.xyzx) HomeButton xyzxBtn;
+	@InjectView(R.id.online) HomeButton onlineBtn;
 	@InjectView(R.id.othermore) HomeButton othermoreBtn;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,26 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 		setListener();
 		
 		init();
+		
+		initFileWork();
+	}
+	
+	private void initFileWork(){
+		String rootPath = Environment.getExternalStorageDirectory().getPath()
+				+ "/myHomeWork";
+		FileUtil.getFileDir(rootPath);
+
+		String rootPath1 = Environment.getExternalStorageDirectory().getPath()
+				+ "/myBook";
+		FileUtil.getFileDir(rootPath1);
+
+		String rootPath2 = Environment.getExternalStorageDirectory().getPath()
+				+ "/myCoursePlan";
+		FileUtil.getFileDir(rootPath2);
+
+		String rootPath3 = Environment.getExternalStorageDirectory().getPath()
+				+ "/myVideo";
+		FileUtil.getFileDir(rootPath3);
 	}
 	
 	private void initLogin(){
@@ -102,6 +127,34 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 			public void onclick() {
 				Intent intent = new Intent(mContext,
 						FBookCategoryActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		othermoreBtn.setOnHomeClick(new HomeClickListener() {
+			@Override
+			public void onclick() {
+				Intent intent = new Intent(mContext,
+						OnlineForumActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		xyzxBtn.setOnHomeClick(new HomeClickListener() {
+			
+			@Override
+			public void onclick() {
+				Intent intent = new Intent(mContext,
+						FUserSettingActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		onlineBtn.setOnHomeClick(new HomeClickListener() {
+			@Override
+			public void onclick() {
+				Intent intent = new Intent(mContext,
+						OnlineForumActivity.class);
 				startActivity(intent);
 			}
 		});

@@ -12,7 +12,7 @@ public interface DB {
 	
 //	public static final String DATABASE_NAME= "elearning";
 	
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 	
 	public static final String dbPath = android.os.Environment.getExternalStorageDirectory().getPath() + "/elearningDB";
 	public static final String DATABASE_NAME = dbPath + "/" + "elearning.db";
@@ -257,12 +257,15 @@ public interface DB {
 						"time, name, pdf_url, image_url, category_name, class_id) values(%s, '%s', '%s', '%s',%s, '%s', %s) ";// 插入
 				public static final String SELECT = "select * from ebook where {0}";// 查询
 				public static final String SELECT1 = "select * from ebook where %s";// 查询
+				public static final String SELECT_NEW = "select id,_id,time,name,pdf_url,category_name,class_id from ebook where %s";// 查询
 				public static final String SELECT_ALL = "select * from ebook order by _id";// 查询
 			//	public static final String UPDATE = " update ebook set isRead = %s where _id = %s;";
 				public static final String DELETE = " delete FROM ebook where %s";
 				public static final String SELECT_COUNT = "select count(*) from ebook where {0}";
 				public static final String DELETE_ALL = " delete FROM ebook";
 				public static final String GET_CATEGORY = "select distinct category_name from ebook";
+				public static final String SELECT_BOOK_RES = "select id,_id,name,time,pdf_url from ebook where %s";
+				
 			}
 		}
 		
@@ -314,6 +317,93 @@ public interface DB {
 				public static final String DELETE = " delete FROM evideos where %s";
 				public static final String SELECT_COUNT = "select count(*) from evideos where {0}";
 				public static final String DELETE_ALL = " delete FROM evideos";
+			}
+		}
+		
+		
+		/**
+		 * 电子书分册
+		 */
+		public interface BOOKPART {
+			public static final String TABLENAME = "book_part";
+
+			public interface FIELDS {
+				public static final String ID = "id";
+				public static final String _ID = "_id";
+				public static final String NAME = "name";
+				public static final String CATEGORY_ID = "category_id";
+				public static final String CATEGORY_NAME="category_name";
+				public static final String USER_ID = "user_id";
+				public static final String EXT="ext";
+			}
+
+			public interface SQL {
+				public static final String CREATE = "create table if not exists book_part (" +
+						"id integer PRIMARY KEY AUTOINCREMENT, " +
+						"_id int," +
+						"name varchar(100), " +
+						"category_id int, " +
+						"category_name varchar(200), " +
+						"user_id int, " +
+						"ext varchar(100));" ;
+				
+				public static final String DROP = "drop table if exists book_part";
+				public static final String INSERT = "insert into book_part " +
+						"(_id, " +
+						"name,category_id,category_name,user_id,ext ) " +
+						"values(%s, '%s', %s, '%s',%s,'%s') ";// 插入
+				public static final String SELECT = "select * from book_part where {0}";// 查询
+				public static final String SELECT1 = "select * from book_part where %s";// 查询
+				public static final String DELETE = " delete FROM book_part where %s";
+				public static final String SELECT_COUNT = "select count(*) from book_part where {0}";
+				public static final String DELETE_ALL = " delete FROM book_part";
+				public static final String SELECT_ONLY_ID = "select "+FIELDS._ID+" FROM "+BOOKPART.TABLENAME+" where {0}";
+				public static final String SELECT_CATEGORY = "SELECT DISTINCT category_id,category_name from book_part where %s";
+				public static final String SELECT_PART = "SELECT * from book_part where %s";
+				
+				
+			}
+		}
+		
+		/**
+		 * 电子书章节
+		 */
+		public interface BOOKCHAPTER {
+			public static final String TABLENAME = "book_chapter";
+
+			public interface FIELDS {
+				public static final String ID = "id";
+				public static final String _ID = "_id";
+				public static final String NAME = "name";
+				public static final String PID = "pid";
+				public static final String PART_ID = "part_id";
+				public static final String PART_NAME="part_name";
+				public static final String CAN_ADD_RES = "can_add_res";
+				public static final String EXT="ext";
+			}
+
+			public interface SQL {
+				public static final String CREATE = "create table if not exists book_chapter (" +
+						"id integer PRIMARY KEY AUTOINCREMENT, " +
+						"_id int," +
+						"name varchar(100), " +
+						"pid int, " +
+						"part_id int, " +
+						"part_name varchar(200), " +
+						"can_add_res int, " +
+						"ext varchar(100));" ;
+				
+				public static final String DROP = "drop table if exists book_chapter";
+				public static final String INSERT = "insert into book_chapter " +
+						"(_id, " +
+						"name,pid,part_id,part_name,can_add_res,ext ) " +
+						"values(%s, '%s', %s,%s,'%s',%s,'%s') ";// 插入
+				public static final String SELECT = "select * from book_chapter where {0}";// 查询
+				public static final String SELECT1 = "select * from book_chapter where %s";// 查询
+				public static final String DELETE = " delete FROM book_chapter where %s";
+				public static final String SELECT_COUNT = "select count(*) from book_chapter where {0}";
+				public static final String DELETE_ALL = " delete FROM book_chapter";
+				public static final String SELECT_ONLY_ID = "select "+FIELDS._ID+" FROM "+BOOKCHAPTER.TABLENAME+" where {0}";
 			}
 		}
 		

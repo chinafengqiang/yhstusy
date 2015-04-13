@@ -27,11 +27,20 @@ public class BookPartAdapter extends BaseAdapter{
 	 private Context context;  
 	 private List<BookPart> bookPartList;
 	 
+	 private int categoryId;
+	 private String categoryName;
 	 
 	 public BookPartAdapter(Context context,List<BookPart> bookPartList) {  
 		 this.context=context;  
 		 this.bookPartList = bookPartList;
 	 }  
+	 
+	 public BookPartAdapter(Context context,List<BookPart> bookPartList,int categoryId,String categoryName) {  
+		 this.context=context;  
+		 this.bookPartList = bookPartList;
+		 this.categoryId = categoryId;
+		 this.categoryName = categoryName;
+	 } 
 	@Override
 	public int getCount() {
 		 int count = 0;
@@ -69,6 +78,11 @@ public class BookPartAdapter extends BaseAdapter{
 		  final int id = part.getId();
 		  final String name = part.getName();
 		  
+		  //存放文件所有的分类名称和ID
+		  String allNames = categoryName+","+name;
+		  String allIds = categoryId+","+id;
+		  final String[] alls = new String[]{allIds,allNames};
+		  
 		  wrapper.textView.setText(name);
 		  wrapper.imageView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -76,6 +90,7 @@ public class BookPartAdapter extends BaseAdapter{
 				Intent intent = new Intent(context,FBookResActivity.class);
 				intent.putExtra("partId",id);
 				intent.putExtra("partName",name);
+				intent.putExtra("book_alls", alls);
 				context.startActivity(intent);
 			}
 		  });

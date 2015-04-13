@@ -15,11 +15,11 @@ public class DBHelper {
 	
 	private SQLiteHelper helper = null;
 	
-	SQLiteDatabase db = null;
+	
+	
 	
 	public DBHelper(Context context) {
 		helper = new SQLiteHelper(context);
-		db = helper.getWritableDatabase();
 	}
 	
 	/**
@@ -83,7 +83,9 @@ public class DBHelper {
 	 */
 	public void update(String table, ContentValues values, String whereClause,
 			String[] whereArgs) {
+		SQLiteDatabase db = null;
 		try {
+			db = this.helper.getWritableDatabase();
 			db.update(table, values, whereClause, whereArgs);
 		} catch (SQLException ex) {
 			throw ex;
@@ -104,7 +106,7 @@ public class DBHelper {
 		
 		try
 		{
-			db = helper.getReadableDatabase();
+			 db = this.helper.getReadableDatabase();
 			 cursor=db.rawQuery(sql,null);
 		}catch(SQLException ex){
 			throw ex;
@@ -128,8 +130,27 @@ public class DBHelper {
 			}
 			return result;
 		} finally {
+			//db.close();
+		}
+	}
+	
+	public int getSelectInt(String sql){
+		SQLiteDatabase db = null;
+		Cursor cursor=null;
+		int result = 0;
+		try
+		{
+			db = helper.getReadableDatabase();
+			cursor=db.rawQuery(sql,null);
+			if (cursor.moveToNext()) {
+				result = cursor.getInt(0);
+			}
+		}catch(SQLException ex){
+			throw ex;
+		}finally{
 			db.close();
 		}
+		return result;
 	}
 	
 	/**

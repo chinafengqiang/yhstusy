@@ -18,10 +18,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.feng.tree.TreeElementBean;
+import com.feng.util.LocalBooResDB;
+import com.feng.vo.BookCategory;
+import com.feng.vo.BookPart;
+import com.feng.vo.BookRes;
 import com.smartlearning.common.HttpUtil;
 import com.smartlearning.constant.ServerIP;
 import com.smartlearning.dao.IBook;
 import com.smartlearning.db.DB;
+import com.smartlearning.db.DB.TABLES.BOOKCHAPTER;
+import com.smartlearning.db.DB.TABLES.BOOKPART;
 import com.smartlearning.db.DB.TABLES.EBOOK;
 import com.smartlearning.db.DBHelper;
 import com.smartlearning.model.Advise;
@@ -824,6 +831,245 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 			helper.closeDataBase();
 		}
 	}
+
+
+	@Override
+	public void insertBook(int userId,BookRes book) {
+		
+		String allIds = book.getAllIds();
+		String allNames = book.getAllNames();
+		BookCategory category = new BookCategory();
+		BookPart part = new BookPart();
+		List<TreeElementBean> chapterList = new ArrayList<>();
+		
+		LocalBooResDB.getLocalBookInfo(allIds, allNames, category, part, chapterList);
+		
+		insertPart(userId,category,part);
+		
+		String resTag = insertChapter(part, chapterList);
+		
+		insertBookRes(userId,resTag,book);
+		
+		
+	}
+	
+	private void insertPart(int userId,BookCategory category,BookPart part){
+		int partId = part.getId();
+		String sql = MessageFormat.format(DB.TABLES.BOOKPART.SQL.SELECT_ONLY_ID,DB.TABLES.BOOKPART.FIELDS._ID+" = "+partId+" and "+DB.TABLES.BOOKPART.FIELDS.USER_ID+" = "+userId);
+		int result = this.helper.getSelectInt(sql);
+		if(result  == partId)
+			return;
+		ContentValues values = new ContentValues();
+		values.put(BOOKPART.FIELDS._ID, part.getId());
+		values.put(BOOKPART.FIELDS.NAME,part.getName());
+		values.put(BOOKPART.FIELDS.CATEGORY_ID,category.getId());
+		values.put(BOOKPART.FIELDS.CATEGORY_NAME,category.getName());
+		values.put(BOOKPART.FIELDS.USER_ID,userId);
+		this.helper.insert(BOOKPART.TABLENAME, values);
+	}
+	
+	private String insertChapter(BookPart part,List<TreeElementBean> chapterList){
+		List<ContentValues> valuesList = new ArrayList<>(chapterList.size());
+		ContentValues values = null;
+		String chapterTag = "";
+		String cteTag = "";
+		
+		for(TreeElementBean ele : chapterList){
+			values = new ContentValues();
+			int chapterId = Integer.parseInt(ele.getId());
+			
+			int canAddRes = ele.getIsAddRes();
+			if(canAddRes == 1){
+				chapterTag = ele.getId();
+			}
+			if(canAddRes == 2){
+				cteTag = ele.getId();
+				continue;
+			}
+			
+	
+			String sql = MessageFormat.format(DB.TABLES.BOOKCHAPTER.SQL.SELECT_ONLY_ID,DB.TABLES.BOOKCHAPTER.FIELDS._ID+" = "+chapterId);
+			int result = this.helper.getSelectInt(sql);
+			if(result  == chapterId)
+				continue;
+			values.put(BOOKCHAPTER.FIELDS._ID,ele.getId());
+			values.put(BOOKCHAPTER.FIELDS.NAME,ele.getNodeName());
+			values.put(BOOKCHAPTER.FIELDS.PID,ele.getUpNodeId());
+			values.put(BOOKCHAPTER.FIELDS.PART_ID,part.getId());
+			values.put(BOOKCHAPTER.FIELDS.PART_NAME,part.getName());
+			values.put(BOOKCHAPTER.FIELDS.CAN_ADD_RES,canAddRes);
+			valuesList.add(values);
+		}
+		this.helper.insertBacth(BOOKCHAPTER.TABLENAME, valuesList);
+		return chapterTag+"#"+cteTag;
+	}
+
+	
+	private void insertBookRes(int userId,String tag,BookRes book){
+		ContentValues values = new ContentValues();
+		values.put(EBOOK.FIELDS._ID,book.getResId());
+		values.put(EBOOK.FIELDS.NAME, book.getResName());
+		values.put(EBOOK.FIELDS.TIME, book.getResCreateTime());
+		values.put(EBOOK.FIELDS.PDF_URL,book.getResUrl());
+		
+		values.put(EBOOK.FIELDS.CATEGORY_NAME, tag);
+		values.put(EBOOK.FIELDS.CLASS_ID, userId);
+		this.helper.insert(EBOOK.TABLENAME, values);
+	}
+
+	@Override
+	public List<BookRes> getUserBookDB(int userId) {
+		String condition = " class_id = "+userId+" order by _id";
+		String sql = String.format(DB.TABLES.EBOOK.SQL.SELECT_NEW, condition);
+		List<BookRes> bookList = new ArrayList<BookRes>();
+		
+		try {
+			Cursor cursor = helper.SELECT(sql);
+			while (cursor.moveToNext()) {
+				BookRes book = new BookRes();
+				
+				book.setResId(cursor.getInt(cursor.getColumnIndex(EBOOK.FIELDS._ID)));
+				book.setResName(cursor.getString(cursor.getColumnIndex(EBOOK.FIELDS.NAME)));
+				book.setResCreateTime(cursor.getString(cursor.getColumnIndex(EBOOK.FIELDS.TIME)));
+				book.setResUrl(cursor.getString(cursor.getColumnIndex(EBOOK.FIELDS.PDF_URL)));
+				book.setAllNames(cursor.getString(cursor.getColumnIndex(EBOOK.FIELDS.CATEGORY_NAME)));
+				
+				bookList.add(book);
+				
+			}
+			cursor.close();
+			return bookList;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			helper.closeDataBase();
+		}
+	}
+	
+
+	public List<BookCategory> getBookCategory(int userId){
+		String sql = String.format(DB.TABLES.BOOKPART.SQL.SELECT_CATEGORY,DB.TABLES.BOOKPART.FIELDS.USER_ID+" = "+userId);
+		List<BookCategory> cList = new ArrayList<BookCategory>();
+		Cursor cursor = null;
+		try {
+    		cursor = helper.SELECT(sql);
+			BookCategory category = null;
+			while (cursor.moveToNext()) {
+				category = new BookCategory();
+				
+				category.setId(cursor.getInt(cursor.getColumnIndex(BOOKPART.FIELDS.CATEGORY_ID)));;
+				category.setName(cursor.getString(cursor.getColumnIndex(BOOKPART.FIELDS.CATEGORY_NAME)));
+				
+				cList.add(category);
+				
+			}
+			return cList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
+
+
+	@Override
+	public List<BookPart> getBookPart(int categoryId) {
+		String sql = String.format(DB.TABLES.BOOKPART.SQL.SELECT_PART,DB.TABLES.BOOKPART.FIELDS.CATEGORY_ID+" = "+categoryId);
+		List<BookPart> resList = new ArrayList<BookPart>();
+		Cursor cursor = null;
+		try {
+    		cursor = helper.SELECT(sql);
+    		BookPart part = null;
+			while (cursor.moveToNext()) {
+				part = new BookPart();
+				part.setId(cursor.getInt(cursor.getColumnIndex(BOOKPART.FIELDS._ID)));;
+				part.setName(cursor.getString(cursor.getColumnIndex(BOOKPART.FIELDS.NAME)));
+				part.setCategoryId(cursor.getInt(cursor.getColumnIndex(BOOKPART.FIELDS.CATEGORY_ID)));
+				resList.add(part);
+			}
+			
+			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
+
+
+	@Override
+	public List<TreeElementBean> getBookChapterTree(int partId, int pid) {
+		String sql = String.format(DB.TABLES.BOOKCHAPTER.SQL.SELECT1,DB.TABLES.BOOKCHAPTER.FIELDS.PART_ID+" = "+partId+" and "+DB.TABLES.BOOKCHAPTER.FIELDS.PID+" = "+pid);
+		List<TreeElementBean> resList = new ArrayList<TreeElementBean>();
+		Cursor cursor = null;
+		boolean hasParent = true;
+		if(pid == 0)
+			hasParent = false;
+		boolean hasChild = true;
+		try {
+    		cursor = helper.SELECT(sql);
+    		TreeElementBean ele = null;
+			while (cursor.moveToNext()) {
+				ele = new TreeElementBean();
+				ele.setId(cursor.getInt(cursor.getColumnIndex(BOOKCHAPTER.FIELDS._ID))+"");
+				ele.setNodeName(cursor.getString(cursor.getColumnIndex(BOOKCHAPTER.FIELDS.NAME)));
+				ele.setExpanded(false);
+				ele.setLevel(0);
+				ele.setHasChild(hasChild);
+				ele.setHasParent(hasParent);
+				ele.setIsAddRes(cursor.getInt(cursor.getColumnIndex(BOOKCHAPTER.FIELDS.CAN_ADD_RES)));
+				ele.setUpNodeId(cursor.getInt(cursor.getColumnIndex(BOOKCHAPTER.FIELDS.PID))+"");
+				resList.add(ele);
+			}
+			
+			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
+
+
+	@Override
+	public List<BookRes> getBookRes(int userId, String resTag) {
+		String sql = String.format(DB.TABLES.EBOOK.SQL.SELECT_BOOK_RES,DB.TABLES.EBOOK.FIELDS.CLASS_ID+" = "+userId+" and "+DB.TABLES.EBOOK.FIELDS.CATEGORY_NAME+" = '"+resTag+"'");
+		List<BookRes> resList = new ArrayList<BookRes>();
+		Cursor cursor = null;
+		try {
+    		cursor = helper.SELECT(sql);
+    		BookRes res = null;
+			while (cursor.moveToNext()) {
+				res = new BookRes();
+				res.setLocalFile(true);
+				res.setResCreateTime(cursor.getString(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS.TIME)));
+				res.setResId(cursor.getInt(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS._ID)));
+				res.setResName(cursor.getString(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS.NAME)));
+				res.setResUrl(cursor.getString(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS.PDF_URL)));
+				resList.add(res);
+			}
+			
+			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
+	
+	
 	
 	
 }

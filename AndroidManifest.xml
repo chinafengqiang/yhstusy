@@ -82,6 +82,16 @@
         </activity>
         
         <activity
+            android:name="com.smartlearning.ui.FUserSettingActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.main" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
             android:name="com.smartlearning.ui.RegisterActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

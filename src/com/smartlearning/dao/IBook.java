@@ -2,6 +2,11 @@ package com.smartlearning.dao;
 
 import java.util.List;
 
+import com.feng.tree.TreeElementBean;
+import com.feng.vo.BookCategory;
+import com.feng.vo.BookChapterListVO;
+import com.feng.vo.BookPart;
+import com.feng.vo.BookRes;
 import com.smartlearning.model.Advise;
 import com.smartlearning.model.Book;
 import com.smartlearning.model.BookCategoryVo;
@@ -132,4 +137,16 @@ public interface IBook {
 	public List<EBook> getByPager(String condtion,PageInfo pageInfo);
 	
 	public List<BookCategoryVo> getEBooksCategoryBySQL(); 
+	
+	public void insertBook(int userId,BookRes book);
+	
+	public List<BookRes> getUserBookDB(int userId);
+	
+	public List<BookCategory> getBookCategory(int userId);
+	
+	public List<BookPart> getBookPart(int categoryId);
+	
+	public List<TreeElementBean> getBookChapterTree(int partId,int pid);
+	
+	public List<BookRes> getBookRes(int userId,String resTag);
 }

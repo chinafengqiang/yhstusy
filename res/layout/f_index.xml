@@ -83,7 +83,7 @@
                 <com.feng.util.HomeButton
                     android:id="@+id/info"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     ptr:backcolor="0"
                     ptr:big="true"
                     ptr:home="0"
@@ -93,7 +93,7 @@
                 <com.feng.util.HomeButton
                     android:id="@+id/ktzy"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
                     ptr:backcolor="1"
                     ptr:big="true"
@@ -104,12 +104,22 @@
                 <com.feng.util.HomeButton
                     android:id="@+id/xxda"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
                     ptr:backcolor="2"
                     ptr:big="true"
                     ptr:home="2"
                     ptr:text="学习档案"
+                    ptr:textSize="24sp" />
+             <com.feng.util.HomeButton
+                    android:id="@+id/xyzx"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="6"
+                    ptr:big="true"
+                    ptr:home="6"
+                    ptr:text="学员中心"
                     ptr:textSize="24sp" />
             </LinearLayout>
 
@@ -124,7 +134,7 @@
                 <com.feng.util.HomeButton
                     android:id="@+id/jxzl"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     ptr:backcolor="3"
                     ptr:big="true"
                     ptr:home="3"
@@ -134,7 +144,7 @@
                 <com.feng.util.HomeButton
                     android:id="@+id/zycs"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
                     ptr:backcolor="4"
                     ptr:big="true"
@@ -142,21 +152,21 @@
                     ptr:text="作业测试"
                     ptr:textSize="24sp" />
 
-                <!--  <com.feng.util.HomeButton
-                    android:id="@+id/userSetting"
+                 <com.feng.util.HomeButton
+                    android:id="@+id/online"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
-                    ptr:backcolor="5"
-                    ptr:big="false"
-                    ptr:home="5"
-                    ptr:text="个人中心"
-                    ptr:textSize="24sp" />-->
+                    ptr:backcolor="7"
+                    ptr:big="true"
+                    ptr:home="7"
+                    ptr:text="在线交流"
+                    ptr:textSize="24sp" />
 
                 <com.feng.util.HomeButton
                     android:id="@+id/othermore"
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
                     ptr:backcolor="5"
                     ptr:big="true"

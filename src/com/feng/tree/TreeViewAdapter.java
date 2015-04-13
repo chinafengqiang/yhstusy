@@ -8,11 +8,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
+import com.baidu.cyberplayer.utils.B;
+import com.feng.fragment.BookResListFragment;
+import com.feng.view.SlidingMenu;
 import com.feng.vo.BookChapterListVO;
 import com.feng.volley.FRestClient;
 import com.feng.volley.FastJsonRequest;
 import com.smartlearning.R;
+import com.smartlearning.biz.BookManager;
 import com.smartlearning.constant.Global;
+import com.smartlearning.fragment.BookFragment;
 import com.smartlearning.utils.CommonUtil;
 
 import android.app.ProgressDialog;
@@ -23,6 +28,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
+import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +61,15 @@ public class TreeViewAdapter extends ArrayAdapter {
 	private Context context;
 	
 	private String reqUrl;
+	private String[] alls;
+	
+	private int partId;
+	private boolean isLocal = false;
+	private List<TreeElementBean> chapterList = null;
 	
 	@SuppressWarnings("unchecked")
 	public TreeViewAdapter(Context context, int textViewResourceId,
-			List<TreeElementBean> list,String reqUrl) {
+			List<TreeElementBean> list,String reqUrl,String[] alls,int partId) {
 		super(context, textViewResourceId, list);
 		
 		this.context = context;
@@ -63,6 +77,7 @@ public class TreeViewAdapter extends ArrayAdapter {
 		for(TreeElementBean element : list){
 			int level = element.getLevel();
 			if(level==0){
+				element.setAlls(alls);
 				rootEleList.add(element);
 			}
 		}
@@ -73,6 +88,11 @@ public class TreeViewAdapter extends ArrayAdapter {
 				R.drawable.ic_remove_circle_outline_white_24dp);
 		
 		this.reqUrl = reqUrl;
+		this.partId = partId;
+		
+		if(reqUrl.equals("")){
+			isLocal = true;
+		}
 	}
 
 	public int getCount() {
@@ -119,11 +139,26 @@ public class TreeViewAdapter extends ArrayAdapter {
 
 	}
 	
-	public void onClick(int position,ArrayList<TreeElementBean> subNodeList,TreeViewAdapter treeViewAdapter){
+	public void onClick(int position,ArrayList<TreeElementBean> subNodeList,TreeViewAdapter treeViewAdapter
+			,FragmentTransaction ft,int bookResContent,SlidingMenu mMenu,TextView titleText){
 		TreeElementBean element=rootEleList.get(position);
 		if (!element.isHasChild()) {
-			Toast.makeText(context, element.getId()+"  "+element.getUpNodeId(),Toast.LENGTH_LONG).show();
-			return;
+			int partId = Integer.parseInt(element.getUpNodeId());
+			int categoryId = Integer.parseInt(element.getId());
+			String pidName = element.getUpNodeName();
+			String name = element.getNodeName();
+			String allIds = element.getAllIds();
+			String allNames = element.getAllNames();
+			titleText.setText(pidName);
+			Fragment fg = BookResListFragment.newInstance(partId,categoryId,name,allIds,allNames);
+			ft.replace(bookResContent,fg,"BookResListFragment");
+			ft.commit();
+			
+			//mMenu.closeMenu();
+			//mMenu.toggle();
+			mMenu.hide();
+			
+			//return;
 		}
 		
 		if (rootEleList.get(position).isExpanded()) {
@@ -194,56 +229,106 @@ public class TreeViewAdapter extends ArrayAdapter {
     }
     
     private void loadTree(final TreeElementBean element,final TreeViewAdapter treeViewAdapter,final int position){
-    	final ProgressDialog pDialog = new ProgressDialog(context);
-		pDialog.setMessage("Loading...");
-		pDialog.show(); 
+ 
+		final int plevel = element.getLevel();
+		final int pid = Integer.parseInt(element.getId());
+		final String name = element.getNodeName();
+		final String allIds = element.getAllIds();
+		final String allNames = element.getAllNames();
+		final int isAddRes = element.getIsAddRes();
 		
-		int plevel = element.getLevel();
-		int pid = Integer.parseInt(element.getId());
-		
-		String tag_json_obj = "json_obj_req";
-		String url = reqUrl+"&pid="+pid+"&plevel="+plevel;
-		
-		int isAddRes = element.getIsAddRes();
-		if(isAddRes == 1){
-			String[] urlArr = url.split("getBookChapter.html");
-			url = urlArr[0]+"getBookResCategory.html?partId="+pid+"&plevel="+plevel;
-		}
+		if(isLocal){
+			  class GetLocalBookChapter extends AsyncTask<Boolean,Integer,Boolean>{
+			    	@Override
+					protected Boolean doInBackground(Boolean... params) {
+			    		if(isAddRes == 1){
+			    			chapterList = InitTreeCategory.getCategoryTree(pid, plevel);
+			    		}else{
+							BookManager bookManager = new BookManager(context);
+							chapterList = bookManager.getBookChapterTree(partId, pid);
+			    		}
 
-		FastJsonRequest<BookChapterListVO>   fastRequest = new FastJsonRequest<BookChapterListVO>(Method.GET,url, BookChapterListVO.class,null, new Response.Listener<BookChapterListVO>() {
-
-			@Override
-			public void onResponse(BookChapterListVO chapterVO) {
-				pDialog.dismiss();
-				if(chapterVO != null){
-					List<TreeElementBean> nodeList = chapterVO.getBookChapterList();
-					int n = 1;
-					for (TreeElementBean elet : nodeList) {
-						//elet.setExpanded(elet.isExpanded());
-						rootEleList.add(position+n, elet);
-						n++;
+						return true;
 					}
-				}
-				element.setExpanded(true);
-				treeViewAdapter.notifyDataSetChanged();
-			}
-		},
-		new Response.ErrorListener() {
 
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				// TODO Auto-generated method stub
-				 VolleyLog.d("TreeViewAdapter", "Error: " + error.getMessage());
-				 //获取本地分类
-				 CommonUtil.showToast(context, "local category",Toast.LENGTH_SHORT);
-				 pDialog.dismiss();
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+					}
+
+					@Override
+					protected void onPostExecute(Boolean result) {
+						super.onPostExecute(result);
+						if(chapterList != null && chapterList.size() > 0){
+							int n = 1;
+							for (TreeElementBean elet : chapterList) {
+								elet.setUpNodeName(name);
+								elet.setLevel(plevel+1);
+								elet.setAllIds(allIds+","+elet.getId());
+								elet.setAllNames(allNames+","+elet.getNodeName());
+								rootEleList.add(position+n, elet);
+								n++;
+							}
+						}
+						element.setExpanded(true);
+						treeViewAdapter.notifyDataSetChanged();
+					}
+					
+				}
+			  
+			  new GetLocalBookChapter().execute(true);
+		}else{
+			
+		   	final ProgressDialog pDialog = new ProgressDialog(context);
+			pDialog.setMessage("Loading...");
+			pDialog.show(); 
+			
+			String tag_json_obj = "json_obj_req";
+			String url = reqUrl+"&pid="+pid+"&plevel="+plevel;
+			if(isAddRes == 1){
+				String[] urlArr = url.split("getBookChapter.html");
+				url = urlArr[0]+"getBookResCategory.html?partId="+pid+"&plevel="+plevel;
 			}
+
+			FastJsonRequest<BookChapterListVO>   fastRequest = new FastJsonRequest<BookChapterListVO>(Method.GET,url, BookChapterListVO.class,null, new Response.Listener<BookChapterListVO>() {
+
+				@Override
+				public void onResponse(BookChapterListVO chapterVO) {
+					pDialog.dismiss();
+					if(chapterVO != null){
+						List<TreeElementBean> nodeList = chapterVO.getBookChapterList();
+						int n = 1;
+						for (TreeElementBean elet : nodeList) {
+							//elet.setExpanded(elet.isExpanded());
+							elet.setUpNodeName(name);
+							elet.setAllIds(allIds+","+elet.getId());
+							elet.setAllNames(allNames+","+elet.getNodeName());
+							rootEleList.add(position+n, elet);
+							n++;
+						}
+					}
+					element.setExpanded(true);
+					treeViewAdapter.notifyDataSetChanged();
+				}
+			},
+			new Response.ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					// TODO Auto-generated method stub
+					 VolleyLog.d("TreeViewAdapter", "Error: " + error.getMessage());
+					 //获取本地分类
+					 CommonUtil.showToast(context,context.getString(R.string.get_online_category_fail),Toast.LENGTH_SHORT);
+					 pDialog.dismiss();
+				}
+			}
+		    );
+			
+			FRestClient.getInstance(context).addToRequestQueue(fastRequest,tag_json_obj);
+	    }
 		}
-	    );
 		
-		FRestClient.getInstance(context).addToRequestQueue(fastRequest,tag_json_obj);
-    }
-    
+   
 }
 
 
