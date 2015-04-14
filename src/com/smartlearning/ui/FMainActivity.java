@@ -135,7 +135,7 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 			@Override
 			public void onclick() {
 				Intent intent = new Intent(mContext,
-						OnlineForumActivity.class);
+						Apps.class);
 				startActivity(intent);
 			}
 		});

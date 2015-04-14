@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 
 import com.smartlearning.R;
+import com.smartlearning.ui.FMainActivity;
 
 public class DialogFactory {
 	
@@ -43,18 +44,36 @@ public class DialogFactory {
 				});
 	}
 	
-	public static AlertDialog showConnectError(Context context) {
+	public static AlertDialog showConnectError(final Context context) {
 		return createAlert(context,
 				R.string.alert_connect_error_title,
 				R.string.alert_connect_error_message,
-				R.string.alert_connect_error_pos,null);
+				R.string.alert_connect_error_pos,
+				new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(context,FMainActivity.class);
+				context.startActivity(intent);
+			}
+
+		});
 	}
 	
-	public static AlertDialog showConnectException(Context context) {
+	public static AlertDialog showConnectException(final Context context) {
 		return createAlert(context,
 				R.string.alert_connect_exception_title,
 				R.string.alert_connect_exception_message,
-				R.string.alert_connect_exception_pos,null);
+				R.string.alert_connect_exception_pos,
+				new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(context,FMainActivity.class);
+						context.startActivity(intent);
+					}
+
+				});
 	}
 	
 	public static AlertDialog showNetworkSettingFailed(final Activity activity) {

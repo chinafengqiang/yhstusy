@@ -415,6 +415,13 @@ public class UserService implements IUser{
 	public void deleteAllUser() {
 		helper.ExecuteSQL(DB.TABLES.USERINFO.SQL.DELETE);
 	}
+
+	@Override
+	public void modifyPass(int userId, String pass) {
+		ContentValues values = new ContentValues();
+		values.put(USERINFO.FIELDS.USER_PASSWORD,pass);
+		helper.update(USERINFO.TABLENAME, values,USERINFO.FIELDS.USER_ID+" = ?", new String[]{userId+""});
+	}
 	
 	
 	

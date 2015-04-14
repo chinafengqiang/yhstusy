@@ -32,6 +32,7 @@ import com.smartlearning.ext.dialog.DialogFactory;
 import com.smartlearning.ext.util.OnActionListener;
 import com.smartlearning.ext.util.ResponseParam;
 import com.smartlearning.utils.NetUtil;
+import com.smartlearning.utils.SpUtil;
 
 /**
  * 初始化页面
@@ -53,9 +54,10 @@ public class InitilizeActivity extends Activity implements OnActionListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_initilize);
+		//setContentView(R.layout.activity_initilize);
+		setContentView(R.layout.f_init);
 		context = this;
-		sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+		sharedPreferences = SpUtil.getSharePerference(context);
 		String ip = sharedPreferences.getString("serverIp", null);
 		if(null == ip || ip.equals("")){
 			// 启动Login页面
@@ -139,7 +141,7 @@ public class InitilizeActivity extends Activity implements OnActionListener {
 					public void onClick(DialogInterface dialog, int which) {
 						// 启动Login页面
 						Intent intent = new Intent();
-						intent.setClass(InitilizeActivity.this, MainActivity.class);
+						intent.setClass(InitilizeActivity.this, FMainActivity.class);
 						startActivity(intent);
 						// 关闭Initilize页面
 						finish();
@@ -157,6 +159,7 @@ public class InitilizeActivity extends Activity implements OnActionListener {
 			dialog.dismiss();
 		}
 		dialog = DialogFactory.showConnectError(this);
+		
 	}
 
 	@Override
@@ -178,6 +181,7 @@ public class InitilizeActivity extends Activity implements OnActionListener {
 			}
 			dialog = DialogFactory.showNetworkSettingFailed(this);
 		}
+		
 	}
 	
 	private void sendMsg(int flag) {
@@ -288,4 +292,9 @@ public class InitilizeActivity extends Activity implements OnActionListener {
 		return versionName;
 	}
 
+	private void gotomain(){
+		Intent intent = new Intent(this,FMainActivity.class);
+		startActivity(intent);
+		finish();
+	}
 }

@@ -84,4 +84,6 @@ public interface IUser {
 	
 	public void deleteAllUser();
 	
+	public void modifyPass(int userId,String pass);
+	
 }

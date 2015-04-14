@@ -150,4 +150,8 @@ public class UserManager {
 	public void deleteAllUser(){
 		userService.deleteAllUser();
 	}
+	
+	public void modifyPass(int userId,String pass){
+		userService.modifyPass(userId, pass);
+	}
 }
