@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    >
+
+
+       <!--<ImageView 
+        android:id="@+id/image"   
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/jcjffm"
+        />-->
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="资源名称"
+        android:textColor="#2292DD"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/image"
+        android:id="@+id/videoName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+       />
+    
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建时间："
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#808080"
+        android:layout_below="@+id/videoName"
+        android:layout_toRightOf="@id/image"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/videoCrateTime"/>
+    
+     <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分类：电子白板"
+        android:textSize="16sp"
+        android:textColor="#808080"
+        android:textStyle="bold"
+        android:layout_below="@+id/videoCrateTime"
+        android:layout_toRightOf="@id/image"
+        android:gravity="center"
+        android:id="@+id/videoCategory"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+        />
+     
+         <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="主讲人："
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#808080"
+        android:layout_below="@+id/videoCategory"
+        android:layout_toRightOf="@id/image"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+         android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/videoLect"/>
+     
+          <TextView 
+       android:id="@+id/videoStatus"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentRight="true"
+       android:layout_centerVertical="true"
+       android:layout_marginRight="100dp"
+       android:text="已下载"
+       android:textSize="16sp"
+       android:textStyle="bold"
+       android:textColor="@color/red"
+       />
+
+     
+      <ImageView android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+           android:background="@drawable/triangle"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="50dp"/>
+  </RelativeLayout>      
+   

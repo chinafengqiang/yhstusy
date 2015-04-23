@@ -23,6 +23,7 @@ import com.feng.util.LocalBooResDB;
 import com.feng.vo.BookCategory;
 import com.feng.vo.BookPart;
 import com.feng.vo.BookRes;
+import com.feng.vo.VideoRes;
 import com.smartlearning.common.HttpUtil;
 import com.smartlearning.constant.ServerIP;
 import com.smartlearning.dao.IBook;
@@ -30,11 +31,13 @@ import com.smartlearning.db.DB;
 import com.smartlearning.db.DB.TABLES.BOOKCHAPTER;
 import com.smartlearning.db.DB.TABLES.BOOKPART;
 import com.smartlearning.db.DB.TABLES.EBOOK;
+import com.smartlearning.db.DB.TABLES.EVIDEOS;
 import com.smartlearning.db.DBHelper;
 import com.smartlearning.model.Advise;
 import com.smartlearning.model.Book;
 import com.smartlearning.model.BookCategoryVo;
 import com.smartlearning.model.EBook;
+import com.smartlearning.model.EVideo;
 import com.smartlearning.model.Note;
 import com.smartlearning.model.OnlineForum;
 import com.smartlearning.model.PageInfo;
@@ -654,8 +657,12 @@ public class BookService implements IBook{
 	}
 	
 	
-   
-
+	@Override
+	public void removeVideo(int id) throws Exception {
+		String condition = "_id ="+id;
+		String sql = String.format(DB.TABLES.EVIDEOS.SQL.DELETE, condition);
+		helper.ExecuteSQL(sql);
+	}
 
 
 	public void removeAllEBook(){
@@ -853,6 +860,27 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 		
 	}
 	
+	
+	
+	@Override
+	public void insertVideo(int userId, VideoRes video) {
+		String allIds = video.getAllIds();
+		String allNames = video.getAllNames();
+		BookCategory category = new BookCategory();
+		BookPart part = new BookPart();
+		List<TreeElementBean> chapterList = new ArrayList<>();
+		
+		LocalBooResDB.getLocalBookInfo(allIds, allNames, category, part, chapterList);
+		
+		insertPart(userId,category,part);
+		
+		String resTag = insertChapter(part, chapterList);
+		
+		insertVideoRes(userId,resTag,video);
+		
+	}
+
+
 	private void insertPart(int userId,BookCategory category,BookPart part){
 		int partId = part.getId();
 		String sql = MessageFormat.format(DB.TABLES.BOOKPART.SQL.SELECT_ONLY_ID,DB.TABLES.BOOKPART.FIELDS._ID+" = "+partId+" and "+DB.TABLES.BOOKPART.FIELDS.USER_ID+" = "+userId);
@@ -915,6 +943,18 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 		values.put(EBOOK.FIELDS.CATEGORY_NAME, tag);
 		values.put(EBOOK.FIELDS.CLASS_ID, userId);
 		this.helper.insert(EBOOK.TABLENAME, values);
+	}
+	
+	private void insertVideoRes(int userId,String tag,VideoRes video){
+		ContentValues values = new ContentValues();
+		values.put(EVIDEOS.FIELDS._ID,video.getResId());
+		values.put(EVIDEOS.FIELDS.NAME, video.getResName());
+		values.put(EVIDEOS.FIELDS.TIME, video.getResCreateTime());
+		values.put(EVIDEOS.FIELDS.VIDEO_URL,video.getResUrl());
+		
+		values.put(EVIDEOS.FIELDS.CATEGORY_NAME, tag);
+		values.put(EVIDEOS.FIELDS.HOUR, userId);
+		this.helper.insert(EVIDEOS.TABLENAME, values);
 	}
 
 	@Override
@@ -1068,6 +1108,40 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 			helper.closeDataBase();
 		}
 	}
+
+
+	@Override
+	public List<VideoRes> getVideoRes(int userId, String resTag) {
+		String sql = String.format(DB.TABLES.EVIDEOS.SQL.SELECT_VIDEO_RES,DB.TABLES.EVIDEOS.FIELDS.CATEGORY_NAME+" = '"+resTag+"'");
+		List<VideoRes> resList = new ArrayList<VideoRes>();
+		Cursor cursor = null;
+		try {
+    		cursor = helper.SELECT(sql);
+    		VideoRes res = null;
+			while (cursor.moveToNext()) {
+				res = new VideoRes();
+				res.setLocalFile(true);
+				res.setResCreateTime(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.TIME)));
+				res.setResId(cursor.getInt(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS._ID)));
+				res.setResName(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.NAME)));
+				res.setResUrl(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.VIDEO_URL)));
+				res.setResLectuer(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.LECTUER)));
+				resList.add(res);
+			}
+			
+			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
+	
+	
+	
 	
 	
 	

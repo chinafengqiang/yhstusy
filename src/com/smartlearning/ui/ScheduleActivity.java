@@ -24,6 +24,7 @@ import com.smartlearning.biz.BookManager;
 import com.smartlearning.biz.LessonManager;
 import com.smartlearning.constant.Global;
 import com.smartlearning.model.LessonVO;
+import com.smartlearning.utils.SpUtil;
 
 public class ScheduleActivity extends Activity {
 	private ProgressDialog pd = null;
@@ -53,7 +54,7 @@ public class ScheduleActivity extends Activity {
 		detail_return_btn = (Button) this.findViewById(R.id.detail_return_btn);
 		detail_home_btn = (Button) this.findViewById(R.id.detail_home_btn);
 		
-		sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+		sharedPreferences = SpUtil.getSharePerference(context);
 		ip = sharedPreferences.getString("serverIp", null);
 		classId = sharedPreferences.getLong("classId", 0);
 		serverIp = "http://"+ ip +":"+Global.Common_Port;
@@ -99,7 +100,7 @@ public class ScheduleActivity extends Activity {
 			lessonList.clear();
 			lessonManager = new LessonManager();
 			List<LessonVO> list = lessonManager.getPermLessons(serverIp, classId);
-			if(list != null){
+			if(list != null&&list.size()>0){
 				title = list.get(0).getLname();
 				lessonList.addAll(list);
 			}

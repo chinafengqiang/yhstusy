@@ -36,6 +36,16 @@ public class Apps extends Activity {
 	private TextView titleText;
 	
 	private PackageManager pManager;
+	
+	final static String[] APPS = {"com.rain.android.wuli",
+		"com.rainsponsor.android.huaxue",
+		"com.mduckstudio.dailywords",
+		"org.breezesoft.techolite",
+		"ning.tableofelements",
+		"com.ibox.calculators",
+		"cn.dict.android.pro",
+		"com.sun.cidian.yinghandacidian"
+		};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +103,15 @@ public class Apps extends Activity {
 			}
 		});
 	}
+	
+	public static boolean isPerm(String pkName){
+		for(String pk : APPS){
+			if(pk.equals(pkName))
+				return true;
+		}
+		return false;
+	}
+	
 	public static List<PackageInfo> getAllApps(Context context) {
 
 		List<PackageInfo> apps = new ArrayList<PackageInfo>();
@@ -102,6 +121,10 @@ public class Apps extends Activity {
 		for (int i = 0; i < packlist.size(); i++) {
 			PackageInfo pak = (PackageInfo) packlist.get(i);
 
+			String pkName = pak.packageName;
+			if(!isPerm(pkName))
+				continue;
+			
 			// 判断是否为非系统预装的应用程序
 			// 这里还可以添加系统自带的，这里就先不添加了，如果有需要可以自己添加
 			// if()里的值如果<=0则为自己装的程序，否则为系统工程自带

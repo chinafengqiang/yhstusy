@@ -55,6 +55,9 @@ public class FBookResActivity extends FragmentActivity{
 	private String[] alls;
 	
 	private int islocal = 0;
+	
+	private int moduleId = 0;//判断是电子书还是视频教程 0:电子书、1：视频教程
+	
 	private BookManager bookManager = null;
 	private List<TreeElementBean> chapterList = null;
 	
@@ -102,6 +105,8 @@ public class FBookResActivity extends FragmentActivity{
 		classId = sp.getLong("classId",0);
 		
 		islocal = sp.getInt("book_is_local",0);
+		
+		moduleId = sp.getInt("module_id",0);
 		
 		partId = getIntent().getIntExtra("partId",0);
 		partName = getIntent().getStringExtra("partName");
@@ -170,7 +175,7 @@ public class FBookResActivity extends FragmentActivity{
 					pDialog.dismiss();
 					if(chapterVO != null){
 						final ArrayList<TreeElementBean> nodeList = (ArrayList<TreeElementBean>) chapterVO.getBookChapterList();
-						treeViewAdapter = new TreeViewAdapter(mContext, R.layout.f_book_res_left_menu_item,nodeList,url,alls,partId);
+						treeViewAdapter = new TreeViewAdapter(mContext, R.layout.f_book_res_left_menu_item,nodeList,url,alls,partId,moduleId);
 				        listView.setAdapter(treeViewAdapter);
 				        listView.setOnItemClickListener(new OnItemClickListener(){
 							public void onItemClick(AdapterView<?> adapter, View view, int position,long id) {
@@ -226,7 +231,7 @@ public class FBookResActivity extends FragmentActivity{
 				CommonUtil.showToast(mContext, getString(R.string.local_book_chapter_isnull), Toast.LENGTH_LONG);
 			}else{
 				final ArrayList<TreeElementBean> nodeList = (ArrayList<TreeElementBean>)chapterList;
-				treeViewAdapter = new TreeViewAdapter(mContext, R.layout.f_book_res_left_menu_item,chapterList,"",alls,partId);
+				treeViewAdapter = new TreeViewAdapter(mContext, R.layout.f_book_res_left_menu_item,chapterList,"",alls,partId,moduleId);
 		        listView.setAdapter(treeViewAdapter);
 		        listView.setOnItemClickListener(new OnItemClickListener(){
 					public void onItemClick(AdapterView<?> adapter, View view, int position,long id) {

@@ -49,6 +49,7 @@ import com.smartlearning.model.TestPaperCategory;
 import com.smartlearning.model.TestPaperExtend;
 import com.smartlearning.model.TestPaperStautsEnum;
 import com.smartlearning.model.UserTestPaper;
+import com.smartlearning.utils.SpUtil;
 import com.smartlearning.utils.UploadUtil;
 import com.smartlearning.utils.UploadUtil.OnUploadProcessListener;
 import com.smartlearningclient.tree.TreeElement;
@@ -167,7 +168,9 @@ public class TestPaperActivity extends Activity implements OnUploadProcessListen
 
 		getId();
 		
-		sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+		//sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+		sharedPreferences = SpUtil.getSharePerference(context);
+		
 		ip = sharedPreferences.getString("serverIp", null);
 		classId = sharedPreferences.getLong("classId", 0);
 
@@ -630,9 +633,8 @@ public class TestPaperActivity extends Activity implements OnUploadProcessListen
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-		
 				Intent intent = new Intent();
-				intent.setClass(TestPaperActivity.this, MainActivity.class);
+				intent.setClass(TestPaperActivity.this, FMainActivity.class);
 				startActivity(intent);
 		}
 		return super.onKeyDown(keyCode, event);

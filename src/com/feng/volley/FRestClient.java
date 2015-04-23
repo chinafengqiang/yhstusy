@@ -52,6 +52,7 @@ public class FRestClient {
 	public <T> void addToRequestQueue(Request<T> req, String tag) {
 	    // set the default tag if tag is empty
 	    req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+	    
 	    req.setRetryPolicy(new DefaultRetryPolicy(TIME_OUT*1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 
 	    		DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 	    getRequestQueue().add(req);

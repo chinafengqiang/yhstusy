@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -49,12 +50,23 @@ public class FBookCategoryActivity  extends FragmentActivity{
 	private String serverIp;
 	private long classId;
 	
-	@InjectView(R.id.title_back) LinearLayout title;
-	@InjectView(R.id.title_text) TextView titleText;
-	@InjectView(R.id.myRes_ll) LinearLayout myRes_ll;
-	@InjectView(R.id.onlineRes_ll) LinearLayout onlineRes_ll;
-	@InjectView(R.id.onlineRes) TextView onlineRes;
-	@InjectView(R.id.myRes) TextView myRes;
+	private int isLocal = 0;
+	
+	private int moduleId = 0;
+	
+//	@InjectView(R.id.title_back) LinearLayout title;
+//	@InjectView(R.id.title_text) TextView titleText;
+//	@InjectView(R.id.myRes_ll) LinearLayout myRes_ll;
+//	@InjectView(R.id.onlineRes_ll) LinearLayout onlineRes_ll;
+//	@InjectView(R.id.onlineRes) TextView onlineRes;
+//	@InjectView(R.id.myRes) TextView myRes;
+	
+	private LinearLayout title;
+	private TextView titleText;
+	private LinearLayout myRes_ll;
+	private LinearLayout onlineRes_ll;
+	private TextView onlineRes;
+	private TextView myRes;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +75,8 @@ public class FBookCategoryActivity  extends FragmentActivity{
 		
 		setContentView(R.layout.f_book_category);
 		
-		ButterKnife.inject(this);
+		//ButterKnife.inject(this);
+		findView();
 		
 		initSp();
 		
@@ -72,22 +85,48 @@ public class FBookCategoryActivity  extends FragmentActivity{
 		//initGrid();
 	}
 	
+	private void findView(){
+		title = (LinearLayout)findViewById(R.id.title_back);
+		titleText = (TextView)findViewById(R.id.title_text);
+		myRes_ll = (LinearLayout)findViewById(R.id.myRes_ll);
+		onlineRes_ll = (LinearLayout)findViewById(R.id.onlineRes_ll);
+		onlineRes = (TextView)findViewById(R.id.onlineRes);
+		myRes = (TextView)findViewById(R.id.myRes);
+	}
+	
 	private void initSp(){
 		sp = SpUtil.getSharePerference(mContext);
 		serverIp = sp.getString("serverIp","");
 		classId = sp.getLong("classId",0);
+		isLocal = sp.getInt("book_is_local",-1);
+		moduleId = sp.getInt("module_id",0);
 	}
 	
 	private void initTitle(){
-		titleText.setText(R.string.jxzl_book_category_title);
+		int titleRes = R.string.jxzl_book_category_title;
+		int myTitle = R.string.my_jxzl_title;
+		int onlineTitle = R.string.online_jxzl_title;
+		if(moduleId == 1){
+			titleRes = R.string.ktzy_category_title;
+			myTitle = R.string.my_ktzy_title;
+			onlineTitle = R.string.online_ktzy_title;
+		}
+		
+		titleText.setText(titleRes);
+		
+		myRes.setText(myTitle);
+		onlineRes.setText(onlineTitle);
+		
 		title.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
+				//onBackPressed();
+				Intent intent = new Intent(mContext,FMainActivity.class);
+				startActivity(intent);
 			}
 		});
 		
-		setCurPoint(0);
+		//setCurPoint(1);
 		
 		myRes_ll.setOnClickListener(new View.OnClickListener() {
 			
@@ -121,7 +160,11 @@ public class FBookCategoryActivity  extends FragmentActivity{
 			}
 		});
 		
-		onlineRes_ll.performClick();
+		if(isLocal == 0){
+			onlineRes_ll.performClick();
+		}else{
+			myRes_ll.performClick();
+		}
 	}
 	
 	private void setCurPoint(int index){

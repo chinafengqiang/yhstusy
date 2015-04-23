@@ -7,6 +7,7 @@ import com.feng.vo.BookCategory;
 import com.feng.vo.BookChapterListVO;
 import com.feng.vo.BookPart;
 import com.feng.vo.BookRes;
+import com.feng.vo.VideoRes;
 import com.smartlearning.model.Advise;
 import com.smartlearning.model.Book;
 import com.smartlearning.model.BookCategoryVo;
@@ -127,6 +128,7 @@ public interface IBook {
 	 */
 	public void removeEbook(int id) throws Exception;
 	
+	public void removeVideo(int id) throws Exception;
 
 	public void Insert(EBook ebook);
 	
@@ -149,4 +151,8 @@ public interface IBook {
 	public List<TreeElementBean> getBookChapterTree(int partId,int pid);
 	
 	public List<BookRes> getBookRes(int userId,String resTag);
+	
+	public List<VideoRes> getVideoRes(int userId,String resTag);
+	
+	public void insertVideo(int userId,VideoRes video);
 }

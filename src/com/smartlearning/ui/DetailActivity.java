@@ -112,15 +112,12 @@ public class DetailActivity extends Activity{
 			case R.id.download:
 				Log.d(TAG, videoURL);
 				fileName = getDownLoadFileName();
-			//	String fileUrl = "";
-				Log.i(TAG, "ddddddddddddddddurl======"+fileName);
 				try {
 					fileUrl = URLEncoder.encode(fileName,"UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
 				String url = serverIp + "/uploadFile/file/" + fileUrl;
-				Log.i("url", "url==========="+url);
 				downloadVideos(url);
 				break;
 			default:
@@ -297,7 +294,7 @@ public class DetailActivity extends Activity{
 //		     }).setNegativeButton("取消", null).create().show();
 		}else{
 			
-			DownFileVideoTask task = new DownFileVideoTask(context,handler,fileName, pathName, videoId,DetailActivity.this);
+			DownFileVideoTask task = new DownFileVideoTask(context,handler,fileName, pathName, videoId);
 //			DownFileTask task = new DownFileTask(context,handler,fileName, pathName);
 			task.execute(url);
 			//offlineVideo(rootPath+fileName);

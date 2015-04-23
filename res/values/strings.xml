@@ -81,19 +81,29 @@
      <string name="LoadContent"><strong>请稍候……</strong></string>
      
      <!-- 教学分类 -->
-     <string name="jxzl_book_category_title">资料分类</string>
+     <string name="jxzl_book_category_title">教学资料分类</string>
+     <string name="ktzy_category_title">课堂资源分类</string>
      <string name="book_crete_time">创建时间：</string>
      <string name="book_status">状态：</string>
      <string name="book_download">已下载到本地</string>
      <string name="book_not_download">未下载</string>
      <string name="book_category">所属分类：</string>
      
+     <string name="video_lect">主讲人：</string>
+     
       <string name="get_online_category_fail">获取在线资料库失败，请点击我的资料库进行查看资料。</string>
      
-      <string name="local_book_res_isnull">我的资料库中无资料存在</string>
-      <string name="local_book_part_isnull">我的资料库中无分册存在</string>
-      <string name="local_book_chapter_isnull">我的资料库中无目录存在</string>
+      <string name="local_book_res_isnull">我的资源库中无资源存在，请点击在线资源库进行下载</string>
+      <string name="local_book_part_isnull">我的资源库中无分册存在</string>
+      <string name="local_book_chapter_isnull">我的资源库中无目录存在</string>
       <string name="local_book_index">我的</string>
+      
+      <string name="my_jxzl_title">我的资料库</string>
+      <string name="online_jxzl_title">在线资料库</string>
+      <string name="my_ktzy_title">我的资源库</string>
+      <string name="online_ktzy_title">在线资源库</string>
+      <string name="zy_info">资源信息</string>
+      
       
        <!--个人中心 -->
      <string name="setting_user_title">学员中心</string>

@@ -29,6 +29,7 @@ import com.smartlearning.R;
 import com.smartlearning.biz.BookManager;
 import com.smartlearning.constant.Global;
 import com.smartlearning.model.OnlineForum;
+import com.smartlearning.utils.SpUtil;
 
 /**
  *在线交流
@@ -84,7 +85,9 @@ public class OnlineForumActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message);
 		
-		sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+		//sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+		sharedPreferences = SpUtil.getSharePerference(this);
+		
 		ip = sharedPreferences.getString("serverIp", null);
 		classId = sharedPreferences.getLong("classId", 0);
 		

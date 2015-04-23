@@ -10,6 +10,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.baidu.cyberplayer.utils.B;
 import com.feng.fragment.BookResListFragment;
+import com.feng.fragment.VideoResListFragment;
 import com.feng.view.SlidingMenu;
 import com.feng.vo.BookChapterListVO;
 import com.feng.volley.FRestClient;
@@ -67,9 +68,11 @@ public class TreeViewAdapter extends ArrayAdapter {
 	private boolean isLocal = false;
 	private List<TreeElementBean> chapterList = null;
 	
+	private int moduleId = 0;
+	
 	@SuppressWarnings("unchecked")
 	public TreeViewAdapter(Context context, int textViewResourceId,
-			List<TreeElementBean> list,String reqUrl,String[] alls,int partId) {
+			List<TreeElementBean> list,String reqUrl,String[] alls,int partId,int moduleId) {
 		super(context, textViewResourceId, list);
 		
 		this.context = context;
@@ -93,6 +96,8 @@ public class TreeViewAdapter extends ArrayAdapter {
 		if(reqUrl.equals("")){
 			isLocal = true;
 		}
+		
+		this.moduleId = moduleId;
 	}
 
 	public int getCount() {
@@ -150,9 +155,17 @@ public class TreeViewAdapter extends ArrayAdapter {
 			String allIds = element.getAllIds();
 			String allNames = element.getAllNames();
 			titleText.setText(pidName);
-			Fragment fg = BookResListFragment.newInstance(partId,categoryId,name,allIds,allNames);
-			ft.replace(bookResContent,fg,"BookResListFragment");
-			ft.commit();
+			
+			if(moduleId == 1){
+				Fragment fg = VideoResListFragment.newInstance(partId,categoryId,name,allIds,allNames);
+				ft.replace(bookResContent,fg,"VideoResListFragment");
+				ft.commit();
+			}else{
+				Fragment fg = BookResListFragment.newInstance(partId,categoryId,name,allIds,allNames);
+				ft.replace(bookResContent,fg,"BookResListFragment");
+				ft.commit();
+			}
+
 			
 			//mMenu.closeMenu();
 			//mMenu.toggle();
@@ -242,7 +255,11 @@ public class TreeViewAdapter extends ArrayAdapter {
 			    	@Override
 					protected Boolean doInBackground(Boolean... params) {
 			    		if(isAddRes == 1){
-			    			chapterList = InitTreeCategory.getCategoryTree(pid, plevel);
+			    			if(moduleId == 1){
+			    				chapterList = InitTreeCategory.getVideoCategoryTree(pid, plevel);
+			    			}else{
+			    				chapterList = InitTreeCategory.getCategoryTree(pid, plevel);
+			    			}
 			    		}else{
 							BookManager bookManager = new BookManager(context);
 							chapterList = bookManager.getBookChapterTree(partId, pid);
@@ -285,9 +302,10 @@ public class TreeViewAdapter extends ArrayAdapter {
 			
 			String tag_json_obj = "json_obj_req";
 			String url = reqUrl+"&pid="+pid+"&plevel="+plevel;
+			
 			if(isAddRes == 1){
 				String[] urlArr = url.split("getBookChapter.html");
-				url = urlArr[0]+"getBookResCategory.html?partId="+pid+"&plevel="+plevel;
+				url = urlArr[0]+"getBookResCategory.html?partId="+pid+"&plevel="+plevel+"&type="+moduleId;
 			}
 
 			FastJsonRequest<BookChapterListVO>   fastRequest = new FastJsonRequest<BookChapterListVO>(Method.GET,url, BookChapterListVO.class,null, new Response.Listener<BookChapterListVO>() {

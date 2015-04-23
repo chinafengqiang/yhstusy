@@ -6,24 +6,24 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookResAdapter;
-import com.feng.tree.TreeElementBean;
-import com.feng.vo.BookChapterListVO;
+import com.feng.adapter.VideoResAdapter;
 import com.feng.vo.BookRes;
 import com.feng.vo.BookResListVO;
+import com.feng.vo.VideoRes;
+import com.feng.vo.VideoResListVO;
 import com.feng.volley.FRestClient;
 import com.feng.volley.FastJsonRequest;
 import com.smartlearning.R;
 import com.smartlearning.biz.BookManager;
 import com.smartlearning.constant.Global;
 import com.smartlearning.task.DownFileTask;
+import com.smartlearning.ui.DetailActivity;
+import com.smartlearning.ui.FVideoDetailActivity;
 import com.smartlearning.utils.CommonUtil;
 import com.smartlearning.utils.FileUtil;
 import com.smartlearning.utils.SpUtil;
@@ -46,12 +46,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class BookResListFragment extends Fragment{
+public class VideoResListFragment extends Fragment{
 	public static final String PART_ID = "partId";
 	public static final String CATEGORY_ID = "categoryId";
 	public static final String CATEGORY_NAME = "categoryName";
@@ -66,28 +66,30 @@ public class BookResListFragment extends Fragment{
 	private ListView listView;
 	private LinearLayout book_none;
 	
-	private BookResAdapter adapter = null;
+	private VideoResAdapter adapter = null;
 	private String fileName = "";
 	private String allIds = "";
 	private String allNames = "";
 	private String categoryName;
-	private BookRes nowDownloadEBook;
-	private List<BookRes> bookList = new ArrayList<BookRes>();
+	private VideoRes nowDownloadVideo;
+	private List<VideoRes> videoList = new ArrayList<VideoRes>();
 	
 	private BookManager bookManager = null;
 	
 	private int userId = 0;
 	private int islocal = 0;
 	
+	private VideoRes nowVideo;
+	
 	private String[] is = { "删除", "取消" };
 	String rootPath = Environment.getExternalStorageDirectory().getPath()
-			+ "/myBook";
+			+ "/myVideo";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mContext = getActivity();
-		mBaseView = inflater.inflate(R.layout.f_book_res_center, null);
+		mBaseView = inflater.inflate(R.layout.f_video_res_center, null);
 		
 		int partId = getArguments().getInt(PART_ID,0);
 		int categoryId = getArguments().getInt(CATEGORY_ID,0);
@@ -107,7 +109,7 @@ public class BookResListFragment extends Fragment{
 	}
 	
 	public static Fragment newInstance(int partId,int categoryId,String categoryName,String allIds,String allNames){
-		BookResListFragment fragment = new BookResListFragment();
+		VideoResListFragment fragment = new VideoResListFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt(PART_ID,partId);
 		bundle.putInt(CATEGORY_ID,categoryId);
@@ -123,26 +125,45 @@ public class BookResListFragment extends Fragment{
 		book_none = (LinearLayout)mBaseView.findViewById(R.id.book_none);
 	}
 	
+	public void downloadedNotify(){
+		if(nowVideo != null){
+			
+		}
+	}
+	
+	
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (resultCode) { 
+		   case 1:
+			   if(nowVideo != null){
+				   boolean isLocal = data.getBooleanExtra("isLocalFile",false);
+				   nowVideo.setLocalFile(isLocal);
+			   }
+			   if(adapter != null)
+				   adapter.notifyDataSetChanged();
+		    break;
+		default:
+		    break;
+		    }
+	}
+
 	private void setListener(){
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
-				if (id != -1) {
-					String fileUrl = "";
-					try {
-
-						nowDownloadEBook = bookList.get(position);
-						fileName = getDownLoadFileName(nowDownloadEBook.getResUrl());
-						fileUrl = URLEncoder.encode(fileName, "UTF-8");
-					} catch (UnsupportedEncodingException e1) {
-					}
-					//Log.i("fileUrl", "fileUrlfile:==================== "+ fileUrl);
-					String url = serverUrl + "/uploadFile/file/" + fileUrl;
-					downloadFiles(url);
-				}
+				nowVideo = videoList.get(position);
+				nowVideo.setCategoryName(categoryName);
+				nowVideo.setAllIds(allIds);
+				nowVideo.setAllNames(allNames);
+				Intent intent = new Intent(mContext, FVideoDetailActivity.class);
+				intent.putExtra("videoRes",nowVideo);
+				
+				startActivityForResult(intent, 0);
+				//startActivity(intent);
 			}
 		});
 		
@@ -159,21 +180,22 @@ public class BookResListFragment extends Fragment{
 					public void onClick(DialogInterface dialog, int which) {
 						switch (which) {
 						case 0:
-							BookRes ebook = bookList.get(position);
+							VideoRes ebook = videoList.get(position);
 							fileName = getDownLoadFileName(ebook.getResUrl());
-							if (ebook.isLocalFile() || FileUtil.isExists("/sdcard/myBook/" + fileName)) {
+							if (ebook.isLocalFile() || FileUtil.isExists("/sdcard/myVideo/" + fileName)) {
 								File f = new File(rootPath + "/" + fileName);
 								deleteFile(f);
 								
 								int id = ebook.getResId();
 								bookManager = new BookManager(mContext);
+								
 								try {
-									bookManager.removeEbook(id);
+									bookManager.removeVideo(id);
 								} catch (Exception e) {
 									
 								}
 								
-								bookList.remove(position);
+								videoList.remove(position);
 								
 								if(adapter != null){
 									adapter.notifyDataSetChanged();
@@ -213,7 +235,7 @@ public class BookResListFragment extends Fragment{
 				@Override
 				protected Boolean doInBackground(Boolean... params) {
 					BookManager bookManager = new BookManager(mContext);
-					bookList = bookManager.getBookRes(userId,partId+"#"+categoryId);
+					videoList = bookManager.getVideoRes(userId,partId+"#"+categoryId);
 				    return true;
 				}
 
@@ -225,12 +247,12 @@ public class BookResListFragment extends Fragment{
 				@Override
 				protected void onPostExecute(Boolean result) {
 					super.onPostExecute(result);
-					 if(bookList == null || bookList.size() == 0){
+					 if(videoList == null || videoList.size() == 0){
 					    	CommonUtil.showToast(mContext,mContext.getString(R.string.local_book_res_isnull), Toast.LENGTH_LONG);
 					    	 book_none.setVisibility(View.VISIBLE);
 					 }else{
 						  book_none.setVisibility(View.GONE);
-						  adapter = new BookResAdapter(bookList, mContext,categoryName);
+						  adapter = new VideoResAdapter(videoList, mContext,categoryName);
 						  listView.setAdapter(adapter);
 					 }
 				}
@@ -244,22 +266,22 @@ public class BookResListFragment extends Fragment{
 			pDialog.show(); 
 			
 			String tag_json_obj = "json_obj_req";
-			String url = "http://" + serverIp + ":" + Global.Common_Port+"/api/getBookRes.html?partId="+partId+"&categoryId="+categoryId;
+			String url = "http://" + serverIp + ":" + Global.Common_Port+"/api/getVideoRes.html?partId="+partId+"&categoryId="+categoryId;
 			
-			FastJsonRequest<BookResListVO>   fastRequest = new FastJsonRequest<BookResListVO>(Method.GET,url, BookResListVO.class,null, new Response.Listener<BookResListVO>() {
+			FastJsonRequest<VideoResListVO>   fastRequest = new FastJsonRequest<VideoResListVO>(Method.GET,url, VideoResListVO.class,null, new Response.Listener<VideoResListVO>() {
 
 				@Override
-				public void onResponse(BookResListVO resVO) {
+				public void onResponse(VideoResListVO resVO) {
 					pDialog.dismiss();
-					if (resVO == null || resVO.getBookResList().size() <= 0) {
-						CommonUtil.showToast(mContext, "对不起，最新电子还没公布", Toast.LENGTH_LONG);
+					if (resVO == null || resVO.getVideoResList().size() <= 0) {
+						CommonUtil.showToast(mContext, "对不起，最新视频还没公布", Toast.LENGTH_LONG);
 						return;
 					} 
 					
 					book_none.setVisibility(View.GONE);
 					
-					bookList.addAll(resVO.getBookResList());
-					adapter = new BookResAdapter(bookList, mContext,categoryName);
+					videoList.addAll(resVO.getVideoResList());
+					adapter = new VideoResAdapter(videoList, mContext,categoryName);
 					listView.setAdapter(adapter);
 				}
 			},
@@ -317,13 +339,13 @@ public class BookResListFragment extends Fragment{
 			if (extName.equalsIgnoreCase(".pdf") ) {
 				if(bookManager == null)
 					bookManager = new BookManager(mContext);
-				nowDownloadEBook.setLocalFile(true);
+				nowDownloadVideo.setLocalFile(true);
 				if(adapter != null)
 					adapter.notifyDataSetChanged();
 				
-				nowDownloadEBook.setAllIds(allIds);
-				nowDownloadEBook.setAllNames(allNames);
-				bookManager.insertBook(userId,nowDownloadEBook);
+				nowDownloadVideo.setAllIds(allIds);
+				nowDownloadVideo.setAllNames(allNames);
+				//bookManager.insertBook(userId,nowDownloadVideo);
 				
 			}else{
 				Tool.ShowMessage(mContext, "非法资料，非pdf格式");
@@ -369,4 +391,26 @@ public class BookResListFragment extends Fragment{
 			}
 		}
 	}
+	
+	/* 判断文件MimeType的method */
+	private String getMIMEType(File f) {
+		String type = "";
+		String fName = f.getName();
+		/* 取得扩展名 */
+		String end = fName
+				.substring(fName.lastIndexOf(".") + 1, fName.length())
+				.toLowerCase();
+
+		/* 按扩展名的类型决定MimeType */
+		if (end.equals("3gp") || end.equals("mp4")||end.equals("avi")||end.equals("wmv")||end.equals("flv")) {
+			type = "video";
+		}else if(end.equals("iac")){
+			type = "iac";
+		}
+		else {
+			type = "*";
+		}
+		return type;
+	}
+
 }

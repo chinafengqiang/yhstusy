@@ -118,13 +118,28 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 		infoBtn.setOnHomeClick(new HomeClickListener() {
 			@Override
 			public void onclick() {
-				Toast.makeText(mContext,"click",Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(mContext,
+						ScheduleActivity.class);
+				startActivity(intent);
 			}
 		});
 		
 		jxzlBtn.setOnHomeClick(new HomeClickListener() {
 			@Override
 			public void onclick() {
+				setModule(0);
+				
+				Intent intent = new Intent(mContext,
+						FBookCategoryActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		ktzyBtn.setOnHomeClick(new HomeClickListener() {
+			@Override
+			public void onclick() {
+				setModule(1);
+				
 				Intent intent = new Intent(mContext,
 						FBookCategoryActivity.class);
 				startActivity(intent);
@@ -155,6 +170,24 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 			public void onclick() {
 				Intent intent = new Intent(mContext,
 						OnlineForumActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		zycsBtn.setOnHomeClick(new HomeClickListener() {
+			@Override
+			public void onclick() {
+				Intent intent = new Intent(mContext,
+						TestPaperActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		xxdaBtn.setOnHomeClick(new HomeClickListener() {
+			@Override
+			public void onclick() {
+				Intent intent = new Intent(mContext,
+						StudentFileActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -275,6 +308,12 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 		setCurDot(position);
 	}
 
-	
+	private void setModule(int module_id){
+		SpUtil.removeSharedPerference(sp,"book_is_local");
+		
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putInt("module_id",module_id);
+		editor.commit();
+	}
 }
 

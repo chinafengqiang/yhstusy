@@ -9,6 +9,7 @@ import com.feng.tree.TreeElementBean;
 import com.feng.vo.BookCategory;
 import com.feng.vo.BookPart;
 import com.feng.vo.BookRes;
+import com.feng.vo.VideoRes;
 import com.smartlearning.dao.IBook;
 import com.smartlearning.dao.impl.BookService;
 import com.smartlearning.model.Advise;
@@ -169,6 +170,11 @@ public class BookManager {
 		bookService.removeEbook(id);
 	}
 	
+	
+	public void removeVideo(int id) throws Exception{
+		bookService.removeVideo(id);
+	}
+	
 	public void insertEbook(EBook ebook){
 		bookService.Insert(ebook);
 	}
@@ -228,6 +234,10 @@ public class BookManager {
 		bookService.insertBook(userId, book);
 	}
 	
+	public void insertVideo(int userId,VideoRes video){
+		bookService.insertVideo(userId, video);
+	}
+	
 	public List<BookRes> getBookResList(int userId){
 		return bookService.getUserBookDB(userId);
 	}
@@ -248,4 +258,7 @@ public class BookManager {
 		return bookService.getBookRes(userId, resTag);
 	}
 	
+	public List<VideoRes> getVideoRes(int userId,String resTag){
+		return bookService.getVideoRes(userId, resTag);
+	}
 }

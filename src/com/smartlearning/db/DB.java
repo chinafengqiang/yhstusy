@@ -317,6 +317,7 @@ public interface DB {
 				public static final String DELETE = " delete FROM evideos where %s";
 				public static final String SELECT_COUNT = "select count(*) from evideos where {0}";
 				public static final String DELETE_ALL = " delete FROM evideos";
+				public static final String SELECT_VIDEO_RES = "select id,_id,name,time,video_url,lectuer from evideos where %s";
 			}
 		}
 		

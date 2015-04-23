@@ -17,10 +17,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.smartlearning.R;
 import com.smartlearning.biz.AdviodManager;
-import com.smartlearning.ui.DetailActivity;
+import com.smartlearning.utils.CommonUtil;
 import com.smartlearning.utils.FileService;
 import com.smartlearning.utils.FileUtil;
 import com.smartlearning.utils.NetWorkTool;
@@ -40,14 +41,12 @@ public class DownFileVideoTask extends AsyncTask<String, Integer, String> {
 	private AdviodManager manager = null;
 	String rootPath = Environment.getExternalStorageDirectory().getPath() + "/myVideo/";
 	public String downloadResult;
-	private DetailActivity detailActivity;
 	
 	
-	public DownFileVideoTask(Context context, Handler handler, String fileName, String pathName, int id,DetailActivity detailActivity) {
+	public DownFileVideoTask(Context context, Handler handler, String fileName, String pathName, int id) {
 		this.context = context;
 		this.handler = handler;
 		this.id = id;
-		this.detailActivity =detailActivity;
 		fileService = new FileService(context);
 		this.fileName = fileService.getSdCardDirectory()+"/"+pathName+"/"+ fileName;
 		
@@ -87,17 +86,17 @@ public class DownFileVideoTask extends AsyncTask<String, Integer, String> {
 				msg.obj = this.fileName;
 				handler.sendMessage(msg);
 				this.isFinished = true;
-				String videoSize = size2string(this.lenghtOfFile);
+				
+				/*String videoSize = size2string(this.lenghtOfFile);
 				manager = new AdviodManager(context);
 				try {
 					manager.modifyEVideo(id, videoSize);
 				} catch (Exception e) {
-				}
+				}*/
 				
 				//detailActivity.offlinePlayVideo(fileName);
-			//	Tool.ShowMessage(context, "videoSize=123="+videoSize);
 			}else{
-				Tool.ShowMessage(context, "下载失败！");
+				CommonUtil.showToast(context, "下载失败！",Toast.LENGTH_LONG);
 			}
 		}
 		pdialog.dismiss();
@@ -110,7 +109,7 @@ public class DownFileVideoTask extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onCancelled() {
-		Tool.ShowMessage(context, "您已取消了的下载...");
+		CommonUtil.showToast(context, "您已取消了的下载...",Toast.LENGTH_LONG);
 		if (!this.isFinished){
 		   FileUtil.delFile(this.fileName);
 		}
@@ -130,7 +129,6 @@ public class DownFileVideoTask extends AsyncTask<String, Integer, String> {
 			this.lenghtOfFile = lenghtOfFile;
 			Log.d("DownFileTask", "Lenght of file: " + lenghtOfFile);
 			InputStream input = new BufferedInputStream(url.openStream());
-			Log.i("filename=======================", this.fileName);
 			OutputStream output = new FileOutputStream(this.fileName);
 			byte data[] = new byte[4096];
 			long total = 0;
