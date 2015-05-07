@@ -155,4 +155,6 @@ public interface IBook {
 	public List<VideoRes> getVideoRes(int userId,String resTag);
 	
 	public void insertVideo(int userId,VideoRes video);
+	
+	public List<BookRes> searchBookRes(String value);
 }

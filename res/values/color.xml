@@ -176,4 +176,7 @@
     <color name="y_btn_color">#009933</color> 
     <color name="edit_btn_color">#ffa442</color>
 	<color name="edit_btn_color_gradient">#ff801a</color>
+	
+	<color name="transparent">#00000000</color>
+	<color name="refresh_head_bg">#2B2B2B</color>
 </resources>

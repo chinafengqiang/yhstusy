@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -315,5 +316,12 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 		editor.putInt("module_id",module_id);
 		editor.commit();
 	}
+	
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return true;
+    }
+	
+	
 }
 

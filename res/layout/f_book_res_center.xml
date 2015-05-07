@@ -5,61 +5,7 @@
     android:orientation="vertical" 
     >
 
-   <!--<RelativeLayout
-        android:id="@+id/rl"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:background="@drawable/bg_compose_top" >
-
-        <LinearLayout
-            android:layout_width="50dip"
-            android:layout_height="60dip"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginTop="5dip"
-            android:background="@drawable/top_btn_pressed" >
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/return_btn"
-            android:layout_width="35dip"
-            android:layout_height="35dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginTop="6dip"
-            android:background="@drawable/back1" />
-
-        <TextView
-            android:id="@+id/txtTopTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="50dip"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="电子书资料"
-            android:textColor="#FFFFFF"
-            android:textSize="20dip" />
-
-        <LinearLayout
-            android:id="@+id/ll_refresh"
-            android:layout_width="80dip"
-            android:layout_height="100dip"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="5dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="5dip"
-            android:background="@drawable/top_btn_pressed"
-            android:orientation="vertical" >
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imgCreate"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="40dip"
-            android:layout_marginTop="6dip"
-            android:background="@drawable/button_refresh" />
-    </RelativeLayout>-->
+ 
 
 
     <LinearLayout
@@ -76,6 +22,9 @@
             android:cacheColorHint="#00000000"
             android:drawSelectorOnTop="false"
             android:scrollbars="none" />
+        
+ 
+        
     </LinearLayout>
 
     <LinearLayout
@@ -94,33 +43,6 @@
             android:text="请点击左侧目录获取教学资料" />
     </LinearLayout>
 
-    <!--  
-<LinearLayout android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    android:orientation="horizontal" 
-	    android:background="@drawable/bg_compose_top"
-	    android:id="@+id/videocenter_bottom_menu">
-  	<Button android:textSize="14.0sp" 
-		android:gravity="center" 
-	   	android:id="@+id/bottom_recommend" 
-		android:layout_width="50dp" 
-		android:layout_height="wrap_content" 
-		android:text="我的电子书"
-		android:background="@null"
-		android:textColor="#FFFFFF"
-		android:drawableTop="@drawable/bottom_sort_selector"
-		android:layout_weight="1" />
-  	 	<Button android:textSize="14.0sp" 
-				android:gravity="center" 
-	    		android:id="@+id/main_bottom_download" 
-				android:layout_width="50.0dip" 
-				android:layout_height="wrap_content" 
-				android:text=""
-				android:background="@null"
-				android:textColor="#FFFFFF"
-				android:layout_weight="1" />
-</LinearLayout>-->
-
+   
 
 </RelativeLayout>

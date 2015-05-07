@@ -1139,6 +1139,36 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 			helper.closeDataBase();
 		}
 	}
+
+
+	@Override
+	public List<BookRes> searchBookRes(String value) {
+		String sql = String.format(DB.TABLES.EBOOK.SQL.SELECT_BOOK_RES,DB.TABLES.EBOOK.FIELDS.NAME+" like '%"+value+"%'");
+		List<BookRes> resList = new ArrayList<BookRes>();
+		Cursor cursor = null;
+		try {
+    		cursor = helper.SELECT(sql);
+    		BookRes res = null;
+			while (cursor.moveToNext()) {
+				res = new BookRes();
+				res.setLocalFile(true);
+				res.setResCreateTime(cursor.getString(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS.TIME)));
+				res.setResId(cursor.getInt(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS._ID)));
+				res.setResName(cursor.getString(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS.NAME)));
+				res.setResUrl(cursor.getString(cursor.getColumnIndex(DB.TABLES.EBOOK.FIELDS.PDF_URL)));
+				resList.add(res);
+			}
+			
+			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
 	
 	
 	

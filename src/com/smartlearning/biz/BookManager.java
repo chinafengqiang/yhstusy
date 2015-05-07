@@ -261,4 +261,8 @@ public class BookManager {
 	public List<VideoRes> getVideoRes(int userId,String resTag){
 		return bookService.getVideoRes(userId, resTag);
 	}
+	
+	public List<BookRes> searchBookRes(String value){
+		return bookService.searchBookRes(value);
+	}
 }

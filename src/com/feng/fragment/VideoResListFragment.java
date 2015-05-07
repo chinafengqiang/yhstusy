@@ -12,6 +12,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookResAdapter;
 import com.feng.adapter.VideoResAdapter;
+import com.feng.fragment.listener.IResFragmentListener;
 import com.feng.vo.BookRes;
 import com.feng.vo.BookResListVO;
 import com.feng.vo.VideoRes;
@@ -51,7 +52,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class VideoResListFragment extends Fragment{
+public class VideoResListFragment extends Fragment implements IResFragmentListener{
 	public static final String PART_ID = "partId";
 	public static final String CATEGORY_ID = "categoryId";
 	public static final String CATEGORY_NAME = "categoryName";
@@ -81,6 +82,9 @@ public class VideoResListFragment extends Fragment{
 	
 	private VideoRes nowVideo;
 	
+	int partId;
+	int categoryId;
+	
 	private String[] is = { "删除", "取消" };
 	String rootPath = Environment.getExternalStorageDirectory().getPath()
 			+ "/myVideo";
@@ -91,8 +95,8 @@ public class VideoResListFragment extends Fragment{
 		mContext = getActivity();
 		mBaseView = inflater.inflate(R.layout.f_video_res_center, null);
 		
-		int partId = getArguments().getInt(PART_ID,0);
-		int categoryId = getArguments().getInt(CATEGORY_ID,0);
+		partId = getArguments().getInt(PART_ID,0);
+		categoryId = getArguments().getInt(CATEGORY_ID,0);
 		categoryName = getArguments().getString(CATEGORY_NAME);
 		allIds = getArguments().getString(ALL_IDS);
 		allNames = getArguments().getString(ALL_NAMES);
@@ -229,6 +233,8 @@ public class VideoResListFragment extends Fragment{
 	}
 	
 	private void loadData(final int partId,final int categoryId){
+		if(videoList != null)
+			videoList.clear();
 		if(islocal == 1){
 			class GetBookRes extends AsyncTask<Boolean,Integer,Boolean>{
 
@@ -412,5 +418,18 @@ public class VideoResListFragment extends Fragment{
 		}
 		return type;
 	}
+
+	@Override
+	public void loadData() {
+		this.loadData(partId, categoryId);
+	}
+
+	@Override
+	public void searchRes(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }

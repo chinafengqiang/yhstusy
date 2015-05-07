@@ -9,12 +9,22 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+
+
+
+
+
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookResAdapter;
+import com.feng.fragment.listener.IResFragmentListener;
 import com.feng.tree.TreeElementBean;
+import com.feng.util.StringUtils;
+import com.feng.view.CustomListView;
+import com.feng.view.CustomListView.OnRefreshListener;
 import com.feng.vo.BookChapterListVO;
 import com.feng.vo.BookRes;
 import com.feng.vo.BookResListVO;
@@ -29,6 +39,7 @@ import com.smartlearning.utils.FileUtil;
 import com.smartlearning.utils.SpUtil;
 import com.smartlearning.utils.Tool;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -51,7 +62,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class BookResListFragment extends Fragment{
+public class BookResListFragment extends Fragment implements IResFragmentListener{
 	public static final String PART_ID = "partId";
 	public static final String CATEGORY_ID = "categoryId";
 	public static final String CATEGORY_NAME = "categoryName";
@@ -64,6 +75,7 @@ public class BookResListFragment extends Fragment{
 	private SharedPreferences sp;
 	
 	private ListView listView;
+	
 	private LinearLayout book_none;
 	
 	private BookResAdapter adapter = null;
@@ -79,6 +91,11 @@ public class BookResListFragment extends Fragment{
 	private int userId = 0;
 	private int islocal = 0;
 	
+	int partId;
+	int categoryId;
+	private String searchValue = "";
+	
+	
 	private String[] is = { "删除", "取消" };
 	String rootPath = Environment.getExternalStorageDirectory().getPath()
 			+ "/myBook";
@@ -89,8 +106,8 @@ public class BookResListFragment extends Fragment{
 		mContext = getActivity();
 		mBaseView = inflater.inflate(R.layout.f_book_res_center, null);
 		
-		int partId = getArguments().getInt(PART_ID,0);
-		int categoryId = getArguments().getInt(CATEGORY_ID,0);
+		partId = getArguments().getInt(PART_ID,0);
+		categoryId = getArguments().getInt(CATEGORY_ID,0);
 		categoryName = getArguments().getString(CATEGORY_NAME);
 		allIds = getArguments().getString(ALL_IDS);
 		allNames = getArguments().getString(ALL_NAMES);
@@ -195,6 +212,8 @@ public class BookResListFragment extends Fragment{
 				return true;
 			}
 		});
+			
+
 	}
 	
 	private void initSp(){
@@ -207,6 +226,8 @@ public class BookResListFragment extends Fragment{
 	}
 	
 	private void loadData(final int partId,final int categoryId){
+		if(bookList != null)
+			bookList.clear();
 		if(islocal == 1){
 			class GetBookRes extends AsyncTask<Boolean,Integer,Boolean>{
 
@@ -225,14 +246,19 @@ public class BookResListFragment extends Fragment{
 				@Override
 				protected void onPostExecute(Boolean result) {
 					super.onPostExecute(result);
+					
+					
 					 if(bookList == null || bookList.size() == 0){
+						    if(adapter != null)
+						    	adapter.notifyDataSetChanged();
 					    	CommonUtil.showToast(mContext,mContext.getString(R.string.local_book_res_isnull), Toast.LENGTH_LONG);
-					    	 book_none.setVisibility(View.VISIBLE);
+					    	book_none.setVisibility(View.VISIBLE);
 					 }else{
 						  book_none.setVisibility(View.GONE);
 						  adapter = new BookResAdapter(bookList, mContext,categoryName);
 						  listView.setAdapter(adapter);
 					 }
+					 
 				}
 				
 			}
@@ -369,4 +395,107 @@ public class BookResListFragment extends Fragment{
 			}
 		}
 	}
+
+	@Override
+	public void loadData() {
+		if(StringUtils.isNotBlank(searchValue))
+			searchData(searchValue);
+		else
+			this.loadData(partId, categoryId);
+	}
+
+	@Override
+	public void searchRes(String value) {
+		// TODO Auto-generated method stub
+		searchData(value);
+	}
+	
+	
+	private void searchData(final String value){
+		if(bookList != null)
+			bookList.clear();
+		this.searchValue = value;
+		if(islocal == 1){
+			class GetBookRes extends AsyncTask<Boolean,Integer,Boolean>{
+
+				@Override
+				protected Boolean doInBackground(Boolean... params) {
+					BookManager bookManager = new BookManager(mContext);
+					bookList = bookManager.searchBookRes(value);
+				    return true;
+				}
+
+				@Override
+				protected void onPreExecute() {
+					super.onPreExecute();
+				}
+
+				@Override
+				protected void onPostExecute(Boolean result) {
+					super.onPostExecute(result);
+					
+					
+					 if(bookList == null || bookList.size() == 0){
+					    	CommonUtil.showToast(mContext,mContext.getString(R.string.local_book_res_isnull), Toast.LENGTH_LONG);
+					    	 book_none.setVisibility(View.VISIBLE);
+					 }else{
+						  book_none.setVisibility(View.GONE);
+						  adapter = new BookResAdapter(bookList, mContext,categoryName);
+						  listView.setAdapter(adapter);
+					 }
+					 
+				}
+				
+			}
+			
+			new GetBookRes().execute(true);
+		}else{
+			final ProgressDialog pDialog = new ProgressDialog(mContext);
+			pDialog.setMessage("Loading...");
+			pDialog.show(); 
+			
+			String reqValue = "";
+			try {
+				reqValue = java.net.URLEncoder.encode(value,"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String tag_json_obj = "json_obj_req";
+			String url = "http://" + serverIp + ":" + Global.Common_Port+"/api/searchBookRes.html?value="+reqValue;
+			
+			FastJsonRequest<BookResListVO>   fastRequest = new FastJsonRequest<BookResListVO>(Method.GET,url, BookResListVO.class,null, new Response.Listener<BookResListVO>() {
+
+				@Override
+				public void onResponse(BookResListVO resVO) {
+					pDialog.dismiss();
+					if (resVO == null || resVO.getBookResList().size() <= 0) {
+						CommonUtil.showToast(mContext, "不存在此资源", Toast.LENGTH_LONG);
+						return;
+					} 
+					
+					book_none.setVisibility(View.GONE);
+					
+					bookList.addAll(resVO.getBookResList());
+					adapter = new BookResAdapter(bookList, mContext,categoryName);
+					listView.setAdapter(adapter);
+				}
+			},
+			new Response.ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					// TODO Auto-generated method stub
+					 VolleyLog.d("BookResListFragment", "Error: " + error.getMessage());
+					 pDialog.dismiss();
+				}
+			}
+		    );
+			
+			FRestClient.getInstance(mContext).addToRequestQueue(fastRequest,tag_json_obj);
+		}
+	}
+
+	
 }

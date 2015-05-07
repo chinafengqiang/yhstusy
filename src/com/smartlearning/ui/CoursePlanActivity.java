@@ -100,7 +100,7 @@ public class CoursePlanActivity extends Activity {
 						
 						@Override
 						public void onClick(View v) {
-							Intent intent = new Intent(context,MainActivity.class);
+							Intent intent = new Intent(context,FMainActivity.class);
 							startActivity(intent);
 							
 						}

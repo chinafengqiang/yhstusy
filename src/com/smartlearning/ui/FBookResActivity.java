@@ -11,8 +11,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookPartAdapter;
+import com.feng.fragment.listener.IResFragmentListener;
 import com.feng.tree.TreeElementBean;
 import com.feng.tree.TreeViewAdapter;
+import com.feng.util.StringUtils;
+import com.feng.view.SearchBarView;
 import com.feng.view.SlidingMenu;
 import com.feng.vo.BookChapterListVO;
 import com.feng.vo.BookPartListVO;
@@ -31,6 +34,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -69,12 +73,15 @@ public class FBookResActivity extends FragmentActivity{
 	@InjectView(R.id.id_menu) SlidingMenu mMenu;
 	@InjectView(R.id.title_book_chapter) LinearLayout bookChapter;
 	@InjectView(R.id.treeList) ListView listView;
+	@InjectView(R.id.search_bar) SearchBarView  searchBarView;
 	
 	
 	//nodelist
 	//private ArrayList<TreeElementBean> nodeList = new ArrayList<TreeElementBean>();
 	//樹形數據適配器
 	private TreeViewAdapter treeViewAdapter = null;
+	
+	private IResFragmentListener mIResFragmentListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,8 @@ public class FBookResActivity extends FragmentActivity{
 		initTitle();
 		
 		initTree();
+		
+		initSearchBarView();
 	}
 	
 	
@@ -137,6 +146,39 @@ public class FBookResActivity extends FragmentActivity{
 		});
 	}
 
+	
+	private void initSearchBarView(){
+			searchBarView.setBtnSearchOnClickListener(searchListener);
+			searchBarView.setBtnRefreshOnClickListener(refreshListener);
+	}
+	
+	private OnClickListener searchListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			String value = searchBarView.getSearchValue();
+			if(StringUtils.isBlank(value)){
+				CommonUtil.showToast(mContext, "请输入要搜索的内容",Toast.LENGTH_LONG);
+				return;
+			}
+			
+			if(mIResFragmentListener != null)
+				mIResFragmentListener.searchRes(value);
+		}
+		
+	};
+	
+	private OnClickListener refreshListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			if(mIResFragmentListener != null)
+				mIResFragmentListener.loadData();
+			else
+				CommonUtil.showToast(mContext,"已完成刷新",Toast.LENGTH_LONG);
+		}
+	};
 	
 	/**
 	 * 提标框
@@ -245,5 +287,21 @@ public class FBookResActivity extends FragmentActivity{
 		}
 		
 	}
+
+	@Override
+	public void onAttachFragment(Fragment fragment) {
+		try {
+			mIResFragmentListener = (IResFragmentListener)fragment;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		super.onAttachFragment(fragment);
+	}
+
+
+
+
+	
+	
 	
 }
