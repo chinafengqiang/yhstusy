@@ -43,7 +43,7 @@
         android:textSize="24sp" />
 
    <LinearLayout
-        android:id="@+id/title_back"
+        android:id="@+id/title_refresh"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -56,11 +56,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:src="@drawable/ic_arrow_back_white_24dp" />
+            android:src="@drawable/ic_cached_white_24dp" />
        <TextView 
               android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="返回上级"
+            android:text="刷新"
             android:textColor="@color/white"
              />
     </LinearLayout>
@@ -81,9 +81,9 @@
             android:clickable="true"
             android:src="@drawable/ic_arrow_back_white_24dp" />
        <TextView 
-              android:layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="返回主页"
+            android:text="返回"
             android:textColor="@color/white"
              />
     </LinearLayout>

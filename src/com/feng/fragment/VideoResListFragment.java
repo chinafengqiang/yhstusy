@@ -77,6 +77,7 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 	
 	private BookManager bookManager = null;
 	
+	private long classId;
 	private int userId = 0;
 	private int islocal = 0;
 	
@@ -84,6 +85,9 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 	
 	int partId;
 	int categoryId;
+	
+	private String searchValue = "";
+	private boolean isSearch = false;
 	
 	private String[] is = { "删除", "取消" };
 	String rootPath = Environment.getExternalStorageDirectory().getPath()
@@ -95,11 +99,7 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 		mContext = getActivity();
 		mBaseView = inflater.inflate(R.layout.f_video_res_center, null);
 		
-		partId = getArguments().getInt(PART_ID,0);
-		categoryId = getArguments().getInt(CATEGORY_ID,0);
-		categoryName = getArguments().getString(CATEGORY_NAME);
-		allIds = getArguments().getString(ALL_IDS);
-		allNames = getArguments().getString(ALL_NAMES);
+		
 				
 		findView();
 		
@@ -107,8 +107,17 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 		
 		setListener();
 		
-		loadData(partId, categoryId);
-		
+		if(isSearch){
+			searchData(searchValue);
+		}else{
+			partId = getArguments().getInt(PART_ID,0);
+			categoryId = getArguments().getInt(CATEGORY_ID,0);
+			categoryName = getArguments().getString(CATEGORY_NAME);
+			allIds = getArguments().getString(ALL_IDS);
+			allNames = getArguments().getString(ALL_NAMES);
+			loadData(partId, categoryId);
+		}
+
 		return mBaseView;
 	}
 	
@@ -230,6 +239,7 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 		String strUserId = sp.getString("user","0");
 		userId = Integer.parseInt(strUserId);
 		islocal = sp.getInt("book_is_local",0);
+		classId = sp.getLong("classId",0);
 	}
 	
 	private void loadData(final int partId,final int categoryId){
@@ -254,6 +264,8 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 				protected void onPostExecute(Boolean result) {
 					super.onPostExecute(result);
 					 if(videoList == null || videoList.size() == 0){
+						    if(adapter != null)
+						    	adapter.notifyDataSetChanged();
 					    	CommonUtil.showToast(mContext,mContext.getString(R.string.local_book_res_isnull), Toast.LENGTH_LONG);
 					    	 book_none.setVisibility(View.VISIBLE);
 					 }else{
@@ -280,6 +292,8 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 				public void onResponse(VideoResListVO resVO) {
 					pDialog.dismiss();
 					if (resVO == null || resVO.getVideoResList().size() <= 0) {
+					    if(adapter != null)
+					    	adapter.notifyDataSetChanged();
 						CommonUtil.showToast(mContext, "对不起，最新视频还没公布", Toast.LENGTH_LONG);
 						return;
 					} 
@@ -426,10 +440,102 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 
 	@Override
 	public void searchRes(String value) {
-		// TODO Auto-generated method stub
-		
+		searchData(value);
 	}
 	
 	
+	public void setSearchValue(boolean isSearch,String searchValue){
+		this.isSearch = isSearch;
+		this.searchValue = searchValue;
+	}
+	
+	
+	private void searchData(final String value){
+		if(videoList != null)
+			videoList.clear();
+		this.searchValue = value;
+		if(islocal == 1){
+			class GetBookRes extends AsyncTask<Boolean,Integer,Boolean>{
+
+				@Override
+				protected Boolean doInBackground(Boolean... params) {
+					BookManager bookManager = new BookManager(mContext);
+					videoList = bookManager.searchVideoRes(value);
+				    return true;
+				}
+
+				@Override
+				protected void onPreExecute() {
+					super.onPreExecute();
+				}
+
+				@Override
+				protected void onPostExecute(Boolean result) {
+					super.onPostExecute(result);
+					 if(videoList == null || videoList.size() == 0){
+						    if(adapter != null)
+						    	adapter.notifyDataSetChanged();
+					    	CommonUtil.showToast(mContext,mContext.getString(R.string.local_book_res_isnull), Toast.LENGTH_LONG);
+					    	 book_none.setVisibility(View.VISIBLE);
+					 }else{
+						  book_none.setVisibility(View.GONE);
+						  adapter = new VideoResAdapter(videoList, mContext,categoryName);
+						  listView.setAdapter(adapter);
+					 }
+				}
+				
+			}
+			
+			new GetBookRes().execute(true);
+		}else{
+			final ProgressDialog pDialog = new ProgressDialog(mContext);
+			pDialog.setMessage("Loading...");
+			pDialog.show(); 
+			
+			String reqValue = "";
+			try {
+				reqValue = java.net.URLEncoder.encode(value,"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String tag_json_obj = "json_obj_req";
+			
+			String url = "http://" + serverIp + ":" + Global.Common_Port+"/api/searchVideoRes.html?value="+reqValue+"&classId="+classId;
+			
+			FastJsonRequest<VideoResListVO>   fastRequest = new FastJsonRequest<VideoResListVO>(Method.GET,url, VideoResListVO.class,null, new Response.Listener<VideoResListVO>() {
+
+				@Override
+				public void onResponse(VideoResListVO resVO) {
+					pDialog.dismiss();
+					if (resVO == null || resVO.getVideoResList().size() <= 0) {
+					    if(adapter != null)
+					    	adapter.notifyDataSetChanged();
+						CommonUtil.showToast(mContext, "对不起，最新视频还没公布", Toast.LENGTH_LONG);
+						return;
+					} 
+					
+					book_none.setVisibility(View.GONE);
+					
+					videoList.addAll(resVO.getVideoResList());
+					adapter = new VideoResAdapter(videoList, mContext,categoryName);
+					listView.setAdapter(adapter);
+				}
+			},
+			new Response.ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					// TODO Auto-generated method stub
+					 VolleyLog.d("BookResListFragment", "Error: " + error.getMessage());
+					 pDialog.dismiss();
+				}
+			}
+		    );
+			
+			FRestClient.getInstance(mContext).addToRequestQueue(fastRequest,tag_json_obj);
+		}
+	}
 
 }

@@ -11,6 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookPartAdapter;
+import com.feng.fragment.BookResListFragment;
+import com.feng.fragment.VideoResListFragment;
 import com.feng.fragment.listener.IResFragmentListener;
 import com.feng.tree.TreeElementBean;
 import com.feng.tree.TreeViewAdapter;
@@ -67,7 +69,7 @@ public class FBookResActivity extends FragmentActivity{
 	
 	private ProgressDialog pd;
 	
-	@InjectView(R.id.title_back) LinearLayout title;
+	@InjectView(R.id.title_refresh) LinearLayout titleRefresh;
 	@InjectView(R.id.title_back_index) LinearLayout titleBackIndex;
 	@InjectView(R.id.title_text) TextView titleText;
 	@InjectView(R.id.id_menu) SlidingMenu mMenu;
@@ -129,19 +131,24 @@ public class FBookResActivity extends FragmentActivity{
 			titleText.setText(partName);
 		}
 		
-		title.setOnClickListener(new OnClickListener() {
+		titleRefresh.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
+				if(mIResFragmentListener != null){
+					mIResFragmentListener.loadData();
+				}else{
+					CommonUtil.showToast(mContext,"已完成刷新",Toast.LENGTH_LONG);
+				}
 			}
 		});
 		
 		titleBackIndex.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(mContext,FBookCategoryActivity.class);
-				startActivity(intent);
+				//Intent intent = new Intent(mContext,FBookPartActivity.class);
+				//startActivity(intent);
 				//finish();
+				onBackPressed();
 			}
 		});
 	}
@@ -149,7 +156,7 @@ public class FBookResActivity extends FragmentActivity{
 	
 	private void initSearchBarView(){
 			searchBarView.setBtnSearchOnClickListener(searchListener);
-			searchBarView.setBtnRefreshOnClickListener(refreshListener);
+			//searchBarView.setBtnRefreshOnClickListener(refreshListener);
 	}
 	
 	private OnClickListener searchListener = new OnClickListener() {
@@ -163,22 +170,39 @@ public class FBookResActivity extends FragmentActivity{
 				return;
 			}
 			
-			if(mIResFragmentListener != null)
+			if(mIResFragmentListener != null){
 				mIResFragmentListener.searchRes(value);
+			}else{
+				FragmentManager fm = getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+				if(moduleId == 1){
+					VideoResListFragment vf = new VideoResListFragment();
+					vf.setSearchValue(true, value);
+					ft.replace(R.id.book_res_content,vf,"VideoResListFragment");
+					ft.commit();
+				}else{
+					BookResListFragment bf = new BookResListFragment();
+					bf.setSearchValue(true, value);
+					ft.replace(R.id.book_res_content,bf,"BookResListFragment");
+					ft.commit();
+				}
+
+			}
 		}
 		
 	};
 	
-	private OnClickListener refreshListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			if(mIResFragmentListener != null)
-				mIResFragmentListener.loadData();
-			else
-				CommonUtil.showToast(mContext,"已完成刷新",Toast.LENGTH_LONG);
-		}
-	};
+//	private OnClickListener refreshListener = new OnClickListener() {
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			if(mIResFragmentListener != null){
+//				mIResFragmentListener.loadData();
+//			}else{
+//				CommonUtil.showToast(mContext,"已完成刷新",Toast.LENGTH_LONG);
+//			}
+//		}
+//	};
 	
 	/**
 	 * 提标框
@@ -224,7 +248,7 @@ public class FBookResActivity extends FragmentActivity{
 								FragmentManager fm = getSupportFragmentManager();
 								FragmentTransaction ft = fm.beginTransaction();
 								treeViewAdapter.onClick(position, nodeList, treeViewAdapter,ft,R.id.book_res_content
-										,mMenu,titleText);
+										,mMenu,titleText); 
 							}
 				        });
 					}

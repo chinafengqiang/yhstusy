@@ -1169,6 +1169,37 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 			helper.closeDataBase();
 		}
 	}
+
+
+	@Override
+	public List<VideoRes> searchVideoRes(String value) {
+		String sql = String.format(DB.TABLES.EVIDEOS.SQL.SELECT_VIDEO_RES,DB.TABLES.EVIDEOS.FIELDS.NAME+" like '%"+value+"%'");
+		List<VideoRes> resList = new ArrayList<VideoRes>();
+		Cursor cursor = null;
+		try {
+    		cursor = helper.SELECT(sql);
+    		VideoRes res = null;
+			while (cursor.moveToNext()) {
+				res = new VideoRes();
+				res.setLocalFile(true);
+				res.setResCreateTime(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.TIME)));
+				res.setResId(cursor.getInt(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS._ID)));
+				res.setResName(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.NAME)));
+				res.setResUrl(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.VIDEO_URL)));
+				res.setResLectuer(cursor.getString(cursor.getColumnIndex(DB.TABLES.EVIDEOS.FIELDS.LECTUER)));
+				resList.add(res);
+			}
+			
+			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
 	
 	
 	

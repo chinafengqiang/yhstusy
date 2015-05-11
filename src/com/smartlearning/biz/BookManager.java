@@ -265,4 +265,8 @@ public class BookManager {
 	public List<BookRes> searchBookRes(String value){
 		return bookService.searchBookRes(value);
 	}
+	
+	public List<VideoRes> searchVideoRes(String value){
+		return bookService.searchVideoRes(value);
+	}
 }

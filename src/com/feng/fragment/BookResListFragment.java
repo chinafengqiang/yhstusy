@@ -82,7 +82,7 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 	private String fileName = "";
 	private String allIds = "";
 	private String allNames = "";
-	private String categoryName;
+	private String categoryName = "";
 	private BookRes nowDownloadEBook;
 	private List<BookRes> bookList = new ArrayList<BookRes>();
 	
@@ -90,10 +90,12 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 	
 	private int userId = 0;
 	private int islocal = 0;
+	private long classId;
 	
 	int partId;
 	int categoryId;
 	private String searchValue = "";
+	private boolean isSearch = false;
 	
 	
 	private String[] is = { "删除", "取消" };
@@ -106,19 +108,25 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 		mContext = getActivity();
 		mBaseView = inflater.inflate(R.layout.f_book_res_center, null);
 		
-		partId = getArguments().getInt(PART_ID,0);
-		categoryId = getArguments().getInt(CATEGORY_ID,0);
-		categoryName = getArguments().getString(CATEGORY_NAME);
-		allIds = getArguments().getString(ALL_IDS);
-		allNames = getArguments().getString(ALL_NAMES);
-				
+		
 		findView();
 		
 		initSp();
 		
 		setListener();
 		
-		loadData(partId, categoryId);
+		if(isSearch){
+			searchData(searchValue);
+		}else{
+			partId = getArguments().getInt(PART_ID,0);
+			categoryId = getArguments().getInt(CATEGORY_ID,0);
+			categoryName = getArguments().getString(CATEGORY_NAME);
+			allIds = getArguments().getString(ALL_IDS);
+			allNames = getArguments().getString(ALL_NAMES);
+			loadData(partId, categoryId);
+		}
+		
+			
 		
 		return mBaseView;
 	}
@@ -132,6 +140,7 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 		bundle.putString(ALL_IDS,allIds);
 		bundle.putString(ALL_NAMES,allNames);
 		fragment.setArguments(bundle);
+		fragment.isSearch = false;
 		return fragment;
 	}
 	
@@ -223,6 +232,7 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 		String strUserId = sp.getString("user","0");
 		userId = Integer.parseInt(strUserId);
 		islocal = sp.getInt("book_is_local",0);
+		classId = sp.getLong("classId",0);
 	}
 	
 	private void loadData(final int partId,final int categoryId){
@@ -278,6 +288,8 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 				public void onResponse(BookResListVO resVO) {
 					pDialog.dismiss();
 					if (resVO == null || resVO.getBookResList().size() <= 0) {
+						 if(adapter != null)
+						    	adapter.notifyDataSetChanged();
 						CommonUtil.showToast(mContext, "对不起，最新电子还没公布", Toast.LENGTH_LONG);
 						return;
 					} 
@@ -398,10 +410,12 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 
 	@Override
 	public void loadData() {
-		if(StringUtils.isNotBlank(searchValue))
+		if(StringUtils.isNotBlank(searchValue)){
 			searchData(searchValue);
-		else
+			this.searchValue = "";
+		}else{
 			this.loadData(partId, categoryId);
+		}
 	}
 
 	@Override
@@ -461,9 +475,8 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			String tag_json_obj = "json_obj_req";
-			String url = "http://" + serverIp + ":" + Global.Common_Port+"/api/searchBookRes.html?value="+reqValue;
+			String url = "http://" + serverIp + ":" + Global.Common_Port+"/api/searchBookRes.html?value="+reqValue+"&classId="+classId;
 			
 			FastJsonRequest<BookResListVO>   fastRequest = new FastJsonRequest<BookResListVO>(Method.GET,url, BookResListVO.class,null, new Response.Listener<BookResListVO>() {
 
@@ -471,6 +484,8 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 				public void onResponse(BookResListVO resVO) {
 					pDialog.dismiss();
 					if (resVO == null || resVO.getBookResList().size() <= 0) {
+						if(adapter != null)
+							adapter.notifyDataSetChanged();
 						CommonUtil.showToast(mContext, "不存在此资源", Toast.LENGTH_LONG);
 						return;
 					} 
@@ -497,5 +512,10 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 		}
 	}
 
+	
+	public void setSearchValue(boolean isSearch,String searchValue){
+		this.isSearch = isSearch;
+		this.searchValue = searchValue;
+	}
 	
 }

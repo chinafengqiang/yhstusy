@@ -18,7 +18,7 @@ public class SearchBarView extends RelativeLayout{
 	
 	private Context mContext;
 	private EditText etSearch;
-	private Button btnSearch,btnRefrsh;
+	private Button btnSearch;
 	private ImageView ivDeleteText;
 	private RelativeLayout deleteTextRl;
 	
@@ -38,7 +38,6 @@ public class SearchBarView extends RelativeLayout{
 		LayoutInflater.from(mContext).inflate(R.layout.f_search, this);
 		etSearch = (EditText)findViewById(R.id.etSearch);
 		btnSearch = (Button)findViewById(R.id.btnSearch);
-		btnRefrsh = (Button)findViewById(R.id.btnRefrsh);
 		ivDeleteText = (ImageView)findViewById(R.id.ivDeleteText);
 		deleteTextRl = (RelativeLayout)findViewById(R.id.deleteTextRl);
 	   ivDeleteText.setOnClickListener(new OnClickListener() {
@@ -86,9 +85,7 @@ public class SearchBarView extends RelativeLayout{
 		 btnSearch.setOnClickListener(listener);
 	 }
 	 
-	 public void setBtnRefreshOnClickListener(OnClickListener listener){
-		 btnRefrsh.setOnClickListener(listener);
-	 }
+
 	 
 	 public String getSearchValue(){
 		 return etSearch.getText().toString().trim();

@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class BookResAdapter extends BaseAdapter{
 	private Context context = null;
 	private List<BookRes> list = null;
-	private String categoryName;
+	private String categoryName = "";
 	
 	public BookResAdapter(Context context) {
 		this.context = context;

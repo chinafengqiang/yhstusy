@@ -5,6 +5,7 @@ public class BookRes {
 	private String resName;
 	private String resUrl;
 	private String resCreateTime;
+	private int categoryId;
 	
 	
 	private boolean isLocalFile = false;
@@ -55,5 +56,12 @@ public class BookRes {
 	public void setResCreateTime(String resCreateTime) {
 		this.resCreateTime = resCreateTime;
 	}
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+	
 	
 }
