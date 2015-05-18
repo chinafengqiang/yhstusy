@@ -118,12 +118,14 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 		if(isSearch){
 			searchData(searchValue);
 		}else{
-			partId = getArguments().getInt(PART_ID,0);
-			categoryId = getArguments().getInt(CATEGORY_ID,0);
-			categoryName = getArguments().getString(CATEGORY_NAME);
-			allIds = getArguments().getString(ALL_IDS);
-			allNames = getArguments().getString(ALL_NAMES);
-			loadData(partId, categoryId);
+			if(getArguments() != null){
+				partId = getArguments().getInt(PART_ID,0);
+				categoryId = getArguments().getInt(CATEGORY_ID,0);
+				categoryName = getArguments().getString(CATEGORY_NAME);
+				allIds = getArguments().getString(ALL_IDS);
+				allNames = getArguments().getString(ALL_NAMES);
+				loadData(partId, categoryId);
+			}
 		}
 		
 			
@@ -359,8 +361,11 @@ public class BookResListFragment extends Fragment implements IResFragmentListene
 				if(adapter != null)
 					adapter.notifyDataSetChanged();
 				
-				nowDownloadEBook.setAllIds(allIds);
-				nowDownloadEBook.setAllNames(allNames);
+				String nowAllIds = nowDownloadEBook.getAllIds();
+				if(StringUtils.isBlank(nowAllIds)&&StringUtils.isNotBlank(allIds)){
+					nowDownloadEBook.setAllIds(allIds);
+					nowDownloadEBook.setAllNames(allNames);
+				}
 				bookManager.insertBook(userId,nowDownloadEBook);
 				
 			}else{

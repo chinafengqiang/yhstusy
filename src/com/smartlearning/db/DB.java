@@ -400,7 +400,7 @@ public interface DB {
 						"name,pid,part_id,part_name,can_add_res,ext ) " +
 						"values(%s, '%s', %s,%s,'%s',%s,'%s') ";// 插入
 				public static final String SELECT = "select * from book_chapter where {0}";// 查询
-				public static final String SELECT1 = "select * from book_chapter where %s";// 查询
+				public static final String SELECT1 = "select * from book_chapter where %s order by _id";// 查询
 				public static final String DELETE = " delete FROM book_chapter where %s";
 				public static final String SELECT_COUNT = "select count(*) from book_chapter where {0}";
 				public static final String DELETE_ALL = " delete FROM book_chapter";

@@ -13,6 +13,7 @@ import com.android.volley.Request.Method;
 import com.feng.adapter.BookResAdapter;
 import com.feng.adapter.VideoResAdapter;
 import com.feng.fragment.listener.IResFragmentListener;
+import com.feng.util.StringUtils;
 import com.feng.vo.BookRes;
 import com.feng.vo.BookResListVO;
 import com.feng.vo.VideoRes;
@@ -110,12 +111,14 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 		if(isSearch){
 			searchData(searchValue);
 		}else{
-			partId = getArguments().getInt(PART_ID,0);
-			categoryId = getArguments().getInt(CATEGORY_ID,0);
-			categoryName = getArguments().getString(CATEGORY_NAME);
-			allIds = getArguments().getString(ALL_IDS);
-			allNames = getArguments().getString(ALL_NAMES);
-			loadData(partId, categoryId);
+			if(getArguments() != null){
+				partId = getArguments().getInt(PART_ID,0);
+				categoryId = getArguments().getInt(CATEGORY_ID,0);
+				categoryName = getArguments().getString(CATEGORY_NAME);
+				allIds = getArguments().getString(ALL_IDS);
+				allNames = getArguments().getString(ALL_NAMES);
+				loadData(partId, categoryId);
+			}
 		}
 
 		return mBaseView;
@@ -170,8 +173,12 @@ public class VideoResListFragment extends Fragment implements IResFragmentListen
 					int position, long id) {
 				nowVideo = videoList.get(position);
 				nowVideo.setCategoryName(categoryName);
-				nowVideo.setAllIds(allIds);
-				nowVideo.setAllNames(allNames);
+				
+				String nowAllIds = nowVideo.getAllIds();
+				if(StringUtils.isBlank(nowAllIds)&&StringUtils.isNotBlank(allIds)){
+					nowVideo.setAllIds(allIds);
+					nowVideo.setAllNames(allNames);
+				}
 				Intent intent = new Intent(mContext, FVideoDetailActivity.class);
 				intent.putExtra("videoRes",nowVideo);
 				

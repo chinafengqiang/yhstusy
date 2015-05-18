@@ -6,6 +6,7 @@ public class BookRes {
 	private String resUrl;
 	private String resCreateTime;
 	private int categoryId;
+
 	
 	
 	private boolean isLocalFile = false;

@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.feng.tree.TreeElementBean;
 import com.feng.util.LocalBooResDB;
+import com.feng.util.StringUtils;
 import com.feng.vo.BookCategory;
 import com.feng.vo.BookPart;
 import com.feng.vo.BookRes;
@@ -845,6 +846,8 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 		
 		String allIds = book.getAllIds();
 		String allNames = book.getAllNames();
+		if(StringUtils.isBlank(allIds))
+			return;
 		BookCategory category = new BookCategory();
 		BookPart part = new BookPart();
 		List<TreeElementBean> chapterList = new ArrayList<>();
@@ -866,6 +869,8 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 	public void insertVideo(int userId, VideoRes video) {
 		String allIds = video.getAllIds();
 		String allNames = video.getAllNames();
+		if(StringUtils.isBlank(allIds))
+			return;
 		BookCategory category = new BookCategory();
 		BookPart part = new BookPart();
 		List<TreeElementBean> chapterList = new ArrayList<>();
