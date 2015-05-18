@@ -11,6 +11,7 @@ import com.android.volley.Request.Method;
 import com.baidu.cyberplayer.utils.B;
 import com.feng.fragment.BookResListFragment;
 import com.feng.fragment.VideoResListFragment;
+import com.feng.util.BadgeView;
 import com.feng.view.SlidingMenu;
 import com.feng.vo.BookChapterListVO;
 import com.feng.volley.FRestClient;
@@ -119,7 +120,19 @@ public class TreeViewAdapter extends ArrayAdapter {
 			holder.text = (TextView) convertView.findViewById(R.id.text);
 			holder.icon = (ImageView) convertView.findViewById(R.id.icon);
 			convertView.setTag(holder);
+			if(isLocal){
+				int isAddRes = rootEleList.get(position).getIsAddRes();
+				int count = rootEleList.get(position).getResCount();
+				if(isAddRes == 2 && count > 0){
+					BadgeView badge = new BadgeView(context, holder.text);  
+			        badge.setText(count+"");  
+			        badge.setBadgePosition(BadgeView.POSITION_CENTER);  
+			        badge.show();
+				}
+			}
 
+	  
+			
 		int level = rootEleList.get(position).getLevel();
 			holder.icon.setPadding(25 * (level + 1), holder.icon
 				.getPaddingTop(), 0, holder.icon.getPaddingBottom());
@@ -249,7 +262,7 @@ public class TreeViewAdapter extends ArrayAdapter {
 		final String allIds = element.getAllIds();
 		final String allNames = element.getAllNames();
 		final int isAddRes = element.getIsAddRes();
-		
+		final BookManager bookManager = new BookManager(context);
 		if(isLocal){
 			  class GetLocalBookChapter extends AsyncTask<Boolean,Integer,Boolean>{
 			    	@Override
@@ -258,10 +271,10 @@ public class TreeViewAdapter extends ArrayAdapter {
 			    			if(moduleId == 1){
 			    				chapterList = InitTreeCategory.getVideoCategoryTree(pid, plevel);
 			    			}else{
-			    				chapterList = InitTreeCategory.getCategoryTree(pid, plevel);
+			    				//chapterList = InitTreeCategory.getCategoryTree(pid, plevel);
+			    				chapterList = InitTreeCategory.getCategoryTree(pid, plevel,bookManager);
 			    			}
 			    		}else{
-							BookManager bookManager = new BookManager(context);
 							chapterList = bookManager.getBookChapterTree(partId, pid);
 			    		}
 

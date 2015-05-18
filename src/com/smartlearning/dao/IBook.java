@@ -1,10 +1,12 @@
 package com.smartlearning.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.feng.tree.TreeElementBean;
 import com.feng.vo.BookCategory;
 import com.feng.vo.BookChapterListVO;
+import com.feng.vo.BookLocalVO;
 import com.feng.vo.BookPart;
 import com.feng.vo.BookRes;
 import com.feng.vo.VideoRes;
@@ -159,4 +161,6 @@ public interface IBook {
 	public List<BookRes> searchBookRes(String value);
 	
 	public List<VideoRes> searchVideoRes(String value);
+	
+	public HashMap<String,Integer> getResLocalCount(String whereSql);
 }

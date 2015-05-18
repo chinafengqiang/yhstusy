@@ -1,7 +1,10 @@
 package com.feng.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import com.smartlearning.biz.BookManager;
 
 public class InitTreeCategory {
 	public static final int[] IDS = {63,77,78,79};
@@ -9,6 +12,40 @@ public class InitTreeCategory {
 	
 	public static final int[] VIDEO_IDS = {100,101};
 	public static final String[] VIDEO_NAMES = {"课前导读","优秀录像"}; 
+	
+	public static List<TreeElementBean> getCategoryTree(int partId,int plevel,BookManager bookManager){
+		List<TreeElementBean> resList = new ArrayList<>(IDS.length);
+		TreeElementBean ele;
+		String whereSql = "";
+		for(int i = 0;i<IDS.length;i++){
+			whereSql += "category_name = '"+partId+"#"+IDS[i]+"'";
+			if(i != IDS.length-1){
+				whereSql += " or ";
+			}
+		}
+		
+		HashMap<String,Integer> res = bookManager.getResLocalCount(whereSql);
+		
+		for(int i = 0;i<IDS.length;i++){
+			ele = new TreeElementBean();
+			ele.setId(IDS[i]+"");
+			ele.setNodeName(NAMES[i]);
+			ele.setExpanded(true);
+			ele.setHasChild(false);
+			ele.setHasParent(true);
+			ele.setIsAddRes(2);
+			ele.setLevel(plevel+1);
+			ele.setUpNodeId(partId+"");
+			
+			Integer count = res.get(partId+"#"+IDS[i]);
+			if(count != null){
+				ele.setResCount(count);
+			}
+			resList.add(ele);
+		}
+		return resList;
+	}
+	
 	
 	
 	public static List<TreeElementBean> getCategoryTree(int partId,int plevel){

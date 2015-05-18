@@ -27,6 +27,8 @@ public class TreeElementBean {
 	private String allIds;
 	private String allNames;
 	
+	private int resCount = 0;
+	
 	public String getId() {
 		return id;
 	}
@@ -156,4 +158,14 @@ public class TreeElementBean {
 		this.level = level;
 		this.expanded = expanded;
 	}
+
+	public int getResCount() {
+		return resCount;
+	}
+
+	public void setResCount(int resCount) {
+		this.resCount = resCount;
+	}
+	
+	
 }

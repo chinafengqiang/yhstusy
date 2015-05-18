@@ -22,6 +22,7 @@ import com.feng.tree.TreeElementBean;
 import com.feng.util.LocalBooResDB;
 import com.feng.util.StringUtils;
 import com.feng.vo.BookCategory;
+import com.feng.vo.BookLocalVO;
 import com.feng.vo.BookPart;
 import com.feng.vo.BookRes;
 import com.feng.vo.VideoRes;
@@ -1196,6 +1197,28 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 			}
 			
 			return resList;
+		} catch (Exception e) {
+			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
+			return null;
+		} finally {
+			if(cursor != null)
+				cursor.close();
+			helper.closeDataBase();
+		}
+	}
+
+
+	@Override
+	public HashMap<String,Integer> getResLocalCount(String whereSql) {
+		String sql = "select category_name,count(*) as count from ebook e where "+whereSql+" GROUP BY category_name";
+		HashMap<String,Integer> res = new HashMap<String, Integer>();
+		Cursor cursor = null;
+		try {
+    			cursor = helper.SELECT(sql);
+			while (cursor.moveToNext()) {
+				res.put(cursor.getString(cursor.getColumnIndex("category_name")), cursor.getInt(cursor.getColumnIndex("count")));
+			}
+			return res;
 		} catch (Exception e) {
 			Log.e("getCategory",e.getMessage()+"::"+e.getLocalizedMessage());
 			return null;

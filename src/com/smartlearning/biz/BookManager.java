@@ -1,5 +1,6 @@
 package com.smartlearning.biz;
 
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -268,5 +269,9 @@ public class BookManager {
 	
 	public List<VideoRes> searchVideoRes(String value){
 		return bookService.searchVideoRes(value);
+	}
+	
+	public HashMap<String,Integer> getResLocalCount(String whereSql){
+		return bookService.getResLocalCount(whereSql);
 	}
 }
