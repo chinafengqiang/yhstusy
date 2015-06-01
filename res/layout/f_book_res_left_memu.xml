@@ -5,7 +5,15 @@
     android:orientation="vertical" 
      android:background="#800080"
     >
-	<TextView 
+
+    
+    <RelativeLayout 
+            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_marginTop="20dp"
+        >
+        	<TextView 
+        android:id="@+id/titleText"	    
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
@@ -13,7 +21,36 @@
 	    android:textColor="#ffffff"
 	    android:layout_marginTop="30dp"
 	    android:textSize="18sp"
+	    android:layout_centerInParent="true"
 	    />
+        	
+        	  <LinearLayout
+        	      
+        android:id="@+id/chapter_refresh"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_cached_white_24dp" />
+       <TextView 
+              android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刷新"
+            android:textColor="@color/white"
+             />
+    </LinearLayout>
+        
+    </RelativeLayout>
+    
+
+	
+	
     <ListView
         android:id="@+id/treeList"
         android:layout_width="wrap_content"

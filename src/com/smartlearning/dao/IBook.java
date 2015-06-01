@@ -163,4 +163,5 @@ public interface IBook {
 	public List<VideoRes> searchVideoRes(String value);
 	
 	public HashMap<String,Integer> getResLocalCount(String whereSql);
+	
 }

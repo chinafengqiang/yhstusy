@@ -16,7 +16,7 @@ public class InitTreeCategory {
 	public static List<TreeElementBean> getCategoryTree(int partId,int plevel,BookManager bookManager){
 		List<TreeElementBean> resList = new ArrayList<>(IDS.length);
 		TreeElementBean ele;
-		String whereSql = "";
+		String whereSql = " from ebook e where  ";
 		for(int i = 0;i<IDS.length;i++){
 			whereSql += "category_name = '"+partId+"#"+IDS[i]+"'";
 			if(i != IDS.length-1){
@@ -66,9 +66,18 @@ public class InitTreeCategory {
 		return resList;
 	}
 	
-	public static List<TreeElementBean> getVideoCategoryTree(int partId,int plevel){
+	public static List<TreeElementBean> getVideoCategoryTree(int partId,int plevel,BookManager bookManager){
 		List<TreeElementBean> resList = new ArrayList<>(VIDEO_IDS.length);
 		TreeElementBean ele;
+		String whereSql = " from evideos e where  ";
+		for(int i = 0;i<VIDEO_IDS.length;i++){
+			whereSql += "category_name = '"+partId+"#"+VIDEO_IDS[i]+"'";
+			if(i != VIDEO_IDS.length-1){
+				whereSql += " or ";
+			}
+		}
+		
+		HashMap<String,Integer> res = bookManager.getResLocalCount(whereSql);
 		for(int i = 0;i<VIDEO_IDS.length;i++){
 			ele = new TreeElementBean();
 			ele.setId(VIDEO_IDS[i]+"");
@@ -79,6 +88,12 @@ public class InitTreeCategory {
 			ele.setIsAddRes(2);
 			ele.setLevel(plevel+1);
 			ele.setUpNodeId(partId+"");
+			
+			Integer count = res.get(partId+"#"+IDS[i]);
+			if(count != null){
+				ele.setResCount(count);
+			}
+			
 			resList.add(ele);
 		}
 		return resList;

@@ -7,7 +7,7 @@
     android:layout_height="fill_parent" 
       
     > 
-<include android:id="@+id/bc_title" layout="@layout/titlebar_left" />
+<include android:id="@+id/bc_title" layout="@layout/titlebar_left_refash" />
        
  <GridView 
   android:id="@+id/bookPartGrid" 

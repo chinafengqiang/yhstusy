@@ -53,6 +53,7 @@ public class FBookPartActivity extends Activity{
 	@InjectView(R.id.bookPartGrid) GridView gridView;
 	@InjectView(R.id.title_back) LinearLayout title;
 	@InjectView(R.id.title_text) TextView titleText;
+	@InjectView(R.id.title_refresh) LinearLayout title_refresh;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,13 @@ public class FBookPartActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
+			}
+		});
+		
+		title_refresh.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				initGrid();
 			}
 		});
 	}

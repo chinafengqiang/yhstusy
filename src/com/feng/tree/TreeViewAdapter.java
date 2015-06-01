@@ -269,7 +269,7 @@ public class TreeViewAdapter extends ArrayAdapter {
 					protected Boolean doInBackground(Boolean... params) {
 			    		if(isAddRes == 1){
 			    			if(moduleId == 1){
-			    				chapterList = InitTreeCategory.getVideoCategoryTree(pid, plevel);
+			    				chapterList = InitTreeCategory.getVideoCategoryTree(pid, plevel,bookManager);
 			    			}else{
 			    				//chapterList = InitTreeCategory.getCategoryTree(pid, plevel);
 			    				chapterList = InitTreeCategory.getCategoryTree(pid, plevel,bookManager);

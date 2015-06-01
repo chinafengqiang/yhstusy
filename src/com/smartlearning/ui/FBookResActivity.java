@@ -76,6 +76,7 @@ public class FBookResActivity extends FragmentActivity{
 	@InjectView(R.id.title_book_chapter) LinearLayout bookChapter;
 	@InjectView(R.id.treeList) ListView listView;
 	@InjectView(R.id.search_bar) SearchBarView  searchBarView;
+	@InjectView(R.id.chapter_refresh) LinearLayout chapter_refresh;
 	
 	
 	//nodelist
@@ -149,6 +150,14 @@ public class FBookResActivity extends FragmentActivity{
 				//startActivity(intent);
 				//finish();
 				onBackPressed();
+			}
+		});
+		
+		chapter_refresh.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				initTree();
 			}
 		});
 	}

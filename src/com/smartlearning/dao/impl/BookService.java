@@ -1210,11 +1210,11 @@ public List<BookCategoryVo> getEBooksCategoryBySQL() {
 
 	@Override
 	public HashMap<String,Integer> getResLocalCount(String whereSql) {
-		String sql = "select category_name,count(*) as count from ebook e where "+whereSql+" GROUP BY category_name";
+		String sql = "select category_name,count(*) as count "+whereSql+" GROUP BY category_name";
 		HashMap<String,Integer> res = new HashMap<String, Integer>();
 		Cursor cursor = null;
 		try {
-    			cursor = helper.SELECT(sql);
+    		cursor = helper.SELECT(sql);
 			while (cursor.moveToNext()) {
 				res.put(cursor.getString(cursor.getColumnIndex("category_name")), cursor.getInt(cursor.getColumnIndex("count")));
 			}
