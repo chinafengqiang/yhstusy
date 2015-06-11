@@ -140,5 +140,8 @@
     <string name="p2refresh_doing_end_refresh">加载中&#8230;</string>
     <string name="p2refresh_refresh_lasttime">最近更新&#160;&#058;&#160;</string>
     <string name="tv_loading">正在努力加载,请稍后...</string>
-     
+    
+    <!-- 在线交流 -->
+    <string name="online_title">在线交流</string>
+    <string name="reply">回复</string>
 </resources>

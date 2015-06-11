@@ -36,6 +36,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL(DB.TABLES.BOOKPART.SQL.CREATE);
 		db.execSQL(DB.TABLES.BOOKCHAPTER.SQL.CREATE);
+		db.execSQL(DB.TABLES.ONLINEMSG.SQL.CREATE);
 	}
 
 	

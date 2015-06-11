@@ -408,6 +408,52 @@ public interface DB {
 			}
 		}
 		
+		
+		/**
+		 * 在线交流
+		 */
+		public interface ONLINEMSG {
+			public static final String TABLENAME = "online_msg";
+
+			public interface FIELDS {
+				public static final String ID = "id";
+				public static final String _ID = "_id";
+				public static final String MESSAGE = "message";
+				public static final String M_TIME = "m_time";
+				public static final String FROM_USER="from_user";
+				public static final String TO_USER = "to_user";
+				public static final String TO_USERNAME = "to_username";
+				public static final String IMAGE_PATH = "image_path";
+				public static final String EXT="ext";
+			}
+
+			public interface SQL {
+				public static final String CREATE = "create table if not exists online_msg (" +
+						"id integer PRIMARY KEY AUTOINCREMENT, " +
+						"_id int," +
+						"message varchar(256), " +
+						"m_time varchar(30), " +
+						"from_user varchar(100), " +
+						"to_user varchar(100), " +
+						"to_username varchar(100), " +
+						"image_path varchar(200), " +
+						"ext varchar(100));" ;
+				
+				public static final String DROP = "drop table if exists online_msg";
+				public static final String INSERT = "insert into online_msg " +
+						"(_id, " +
+						"message,m_time,from_user,to_user,to_username,image_path,ext ) " +
+						"values(%s, '%s', %s, '%s','%s','%s','%s','%s') ";// 插入
+				public static final String SELECT = "select * from online_msg where {0}";// 查询
+				public static final String SELECT1 = "select * from online_msg where %s";// 查询
+				public static final String DELETE = " delete FROM online_msg where %s";
+				public static final String SELECT_COUNT = "select count(*) from online_msg where {0}";
+				public static final String DELETE_ALL = " delete FROM online_msg";
+				public static final String SELECT_PART = "SELECT * from online_msg where %s";
+				
+			}
+		}
+		
 	}
 
 }

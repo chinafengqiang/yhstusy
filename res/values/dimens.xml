@@ -10,4 +10,15 @@
     <dimen name="test_paper_item_doImage_width">50px</dimen>
     <dimen name="test_paper_item_doImage_height">40px</dimen>
     
+    <dimen name="activity_main_tab_title_height">45dp</dimen>
+    <dimen name="activity_main_bottom_bar">55dp</dimen>
+    
+    <dimen name="activity_btn_reg_height_login_and_register">20dp</dimen>
+    <dimen name="activity_btn_height_login_and_register">40dp</dimen>
+    
+    <dimen name="activity_Textsize10_4.0">10sp</dimen>
+    <dimen name="activity_Textsize12_4.0">12sp</dimen>
+    <dimen name="activity_Textsize15_4.0">15sp</dimen>
+    <dimen name="activity_Textsize20_4.0">20sp</dimen>
+    
 </resources>

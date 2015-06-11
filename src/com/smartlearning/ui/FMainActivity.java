@@ -103,6 +103,10 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 		String rootPath3 = Environment.getExternalStorageDirectory().getPath()
 				+ "/myVideo";
 		FileUtil.getFileDir(rootPath3);
+		
+		String rootPath4 = Environment.getExternalStorageDirectory().getPath()
+				+ "/myOnline";
+		FileUtil.getFileDir(rootPath4);
 	}
 	
 	private void initLogin(){
@@ -170,7 +174,7 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 			@Override
 			public void onclick() {
 				Intent intent = new Intent(mContext,
-						OnlineForumActivity.class);
+						FOnlineActivity.class);
 				startActivity(intent);
 			}
 		});
