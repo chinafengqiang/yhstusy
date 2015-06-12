@@ -10,17 +10,28 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
 import com.feng.adapter.CommentAdapter;
 import com.feng.adapter.CommentReplyAdapter;
 import com.feng.util.BitmapUtils;
+import com.feng.util.FormFile;
+import com.feng.util.SocketHttpRequester;
+import com.feng.util.StringUtils;
 import com.feng.util.Utils;
 import com.feng.view.FaceRelativeLayout;
+import com.feng.vo.ChatMsgEntity;
+import com.feng.vo.MessageInfo;
 import com.smartlearning.R;
+import com.smartlearning.constant.Global;
+import com.smartlearning.utils.SpUtil;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.gesture.Prediction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -29,6 +40,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -78,6 +90,13 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 	private Context mContext;
 	private InputMethodManager imm;
 	private ImageButton chat_picture;
+	private String sendToObj = "";//指定发送给的用户
+	private String sendImagePath = "";//发送图片的地址
+	private SharedPreferences preferences ;
+	private String serverIp;
+	private long classId;
+	private int userId;
+	private String truename = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,24 +109,25 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 		
 		initSpinner();
 		
+		initSp();
+		
 		initList();
 		initView();
 		initCommentData();
 	}
+	
+	private void initSp(){
+		//初始化preferences
+		preferences = SpUtil.getSharePerference(mContext);
+		serverIp = preferences.getString("serverIp","");
+		classId = preferences.getLong("classId",0);
+		String uid = preferences.getString("user","0");
+		userId = Integer.parseInt(uid);
+		truename = preferences.getString("truename","my");
+	}
 
 	private void initCommentData() {
-		// TODO Auto-generated method stub
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("content", "测试1");
-		list_comment.add(map);
-		// list_comment_child.add(list_comment);
-		// List<HashMap<String, Object>> list = new ArrayList<HashMap<String,
-		// Object>>();
-		// HashMap<String, Object> map2 = new HashMap<String, Object>();
-		// map2.put("content", "测试2");
-		// list.add(map2);
-		// list_comment_child.add(list);
-		list_comment_child.add(new ArrayList<HashMap<String, Object>>());
+		//TODO 服务器获取列表
 		commentReplyAdapter = null;
 		commentAdapter = new CommentAdapter(this, list_comment,
 				list_comment_child, myOnitemcListener, commentReplyAdapter);
@@ -115,19 +135,19 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 	}
 
 	private void initList() {
-		// TODO Auto-generated method stub
 		list_comment = new ArrayList<HashMap<String, Object>>();
 		list_comment_child = new ArrayList<List<HashMap<String, Object>>>();
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
 		lv_user_comments = (ListView) this.findViewById(R.id.lv_comments);
 		//btn_comment = (Button) this.findViewById(R.id.btn_main_send);
 		tv_reply = (TextView) this.findViewById(R.id.tv_user_reply);
 		
 		chat_picture = (ImageButton)this.findViewById(R.id.chat_picture);
 
+		et_sendmessage = (EditText) findViewById(R.id.et_sendmessage);
+		
 		//btn_comment.setOnClickListener(this);
 		
 		Utils.handlerInput=new Handler(){
@@ -153,73 +173,14 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			int position = (Integer) v.getTag();
-			System.out.println("-----------" + position);
-			showDialog(position);
-
+			
 		}
 	};
 
-	protected Dialog onCreateDialog(final int id) {
-		final Dialog customDialog = new Dialog(this);
-		LayoutInflater inflater = getLayoutInflater();
-		View mView = inflater.inflate(R.layout.dialog_comment, null);
-		edt_reply = (EditText) mView.findViewById(R.id.edt_comments);
-		btn_reply = (Button) mView.findViewById(R.id.btn_send);
-
-		customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		customDialog.setContentView(mView);
-		customDialog.show();
-
-		btn_reply.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				switch (id) {
-				case ONE_COMMENT_CODE:
-					if (!edt_reply.getText().toString().equals("")) {
-						HashMap<String, Object> comment = new HashMap<String, Object>();
-						comment.put("content", edt_reply.getText().toString());
-						list_comment.add(comment);
-						list_comment_child
-								.add(new ArrayList<HashMap<String, Object>>());
-						commentAdapter.clearList();
-						commentAdapter.updateList(list_comment,
-								list_comment_child);
-						commentAdapter.notifyDataSetChanged();
-
-						customDialog.dismiss();
-						edt_reply.setText("");
-					}
-					break;
-				default:
-					if (!edt_reply.getText().toString().equals("")) {
-						HashMap<String, Object> comment = new HashMap<String, Object>();
-						comment.put("content", edt_reply.getText().toString());
-						// list_comment.add(comment);
-						list_comment_child.get(id).add(comment);
-
-						commentAdapter.clearList();
-						commentAdapter.updateList(list_comment,
-								list_comment_child);
-						commentAdapter.notifyDataSetChanged();
-
-						customDialog.dismiss();
-						edt_reply.setText("");
-					}
-					break;
-				}
-			}
-		});
-		return customDialog;
-
-	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		/*case R.id.btn_main_send:
 			extracted();
@@ -242,7 +203,6 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 		title.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				FOnlineActivity.this.finish();
 			}
 		});
@@ -250,6 +210,7 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 	
 	private static final String[] m={"全体人员","数学","语文","英语","政治","历史","地理","物理","化学","生物"};
 	private void initSpinner(){
+		sendToObj = "";
 		
 	  	spinner = (Spinner) findViewById(R.id.Spinner);
         //将可选内容与ArrayAdapter连接起来
@@ -268,6 +229,7 @@ public class FOnlineActivity extends Activity implements OnClickListener{
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				//Toast.makeText(mContext, m[position],Toast.LENGTH_LONG).show();
+				sendToObj = m[position];
 			}
 
 			@Override
@@ -299,10 +261,10 @@ public int clickPosition=-1;
 			break;*/
 		case R.id.btn_send:
 			// 发送消息
+			Utils.handlerInput.sendEmptyMessage(Utils.CLOSE_INPUT);
 			String sendMsg=et_sendmessage.getText().toString();
-			if(sendMsg.length()>0){
-			  //TODO	sendMessage("0",sendMsg,true);
-			}
+			sendMessage("0", sendMsg,sendImagePath,sendToObj,true);
+			
 			break;
 		case R.id.chatView:
 			// 关闭表情,点击标题栏时
@@ -416,9 +378,13 @@ public int clickPosition=-1;
 					Bitmap bm = BitmapFactory.decodeFile(bmpUrl);
 					Bitmap bmz = BitmapUtils.zoomImage(bm,50.0,50.0);
 					chat_picture.setImageBitmap(bmz);
+					
+					sendImagePath = bmpUrl;
+					
 				}
 				
 			}else{
+				sendImagePath = "";
 				chat_picture.setImageDrawable(getResources().getDrawable(R.drawable.chat_op_picture));
 			}
 
@@ -446,5 +412,75 @@ public int clickPosition=-1;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	/**
+	 * 发送消息
+	 */
+	public void sendMessage(String id,String sendMsg,String imagePath,String sendToObj,final boolean isNew) {
+		String contString =sendMsg ;
+		if (contString.length() > 0 || StringUtils.isNotBlank(imagePath)) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("content",sendMsg);
+			map.put("imagePath",imagePath);
+			map.put("sendToObj", sendToObj);
+			map.put("fromUser",truename);
+			list_comment.add(map);
+			list_comment_child.add(new ArrayList<HashMap<String, Object>>());
+			
+			if(commentAdapter != null){
+				commentAdapter.clearList();
+				commentAdapter.updateList(list_comment,
+						list_comment_child);
+				commentAdapter.notifyDataSetChanged();
+			}
+			
+			et_sendmessage.setText("");
+			sendImagePath = "";
+			chat_picture.setImageDrawable(getResources().getDrawable(R.drawable.chat_op_picture));
+			
+			//聊天信息的发送到服务器
+			sendDataToServer(map);
+		}
+		
+		
+		
+	}
+	
+	private void sendDataToServer(HashMap<String, Object> message){
+		String content = (String)message.get("content");
+		String imagePath = (String)message.get("imagePath");
+		if(StringUtils.isNotBlank(imagePath)){
+			new UploadMessage(content, imagePath).start();
+		}
+	}
+	
+	
+	class UploadMessage extends Thread{
+		private String message;
+		private String imagePath;
+		String url = "http://"+ serverIp +":"+Global.Common_Port+"/api/saveMessage.html";
+		public UploadMessage(String message,String imagePath){
+			this.message = message;
+			this.imagePath = imagePath;
+		}
+		
+		@Override
+		public void run() {
+			super.run();
+			HashMap<String,String> params = new HashMap<String,String>();
+			params.put("msgctxt",message);
+			params.put("imagePath",imagePath);
+			try {
+				File file = new File(imagePath);
+				FormFile formFile = new FormFile(file.getName(), file,"imageFile",null);
+				SocketHttpRequester.post(url,params, formFile);
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.e("FOnline",e.getMessage());
+			}
+		}
+		
+	}
+
 	
 }

@@ -49,6 +49,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="这里是作者发的状态" />
+            
+            <ImageView
+                  android:id="@+id/imageView"
+                  android:layout_marginTop="5dp"
+			      android:layout_width="150dp"
+			      android:layout_height="150dp"
+			      android:src="@drawable/chat_bg_default"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -73,7 +81,7 @@
                     android:paddingRight="10dp"
                     android:text="@string/reply"
                     android:textColor="@color/blue"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
             </RelativeLayout>
 
             <FrameLayout
