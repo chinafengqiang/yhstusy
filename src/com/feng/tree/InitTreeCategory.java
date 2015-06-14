@@ -14,7 +14,7 @@ public class InitTreeCategory {
 	public static final String[] VIDEO_NAMES = {"课前导读","优秀录像"}; 
 	
 	public static List<TreeElementBean> getCategoryTree(int partId,int plevel,BookManager bookManager){
-		List<TreeElementBean> resList = new ArrayList<>(IDS.length);
+		List<TreeElementBean> resList = new ArrayList<TreeElementBean>(IDS.length);
 		TreeElementBean ele;
 		String whereSql = " from ebook e where  ";
 		for(int i = 0;i<IDS.length;i++){
@@ -49,7 +49,7 @@ public class InitTreeCategory {
 	
 	
 	public static List<TreeElementBean> getCategoryTree(int partId,int plevel){
-		List<TreeElementBean> resList = new ArrayList<>(IDS.length);
+		List<TreeElementBean> resList = new ArrayList<TreeElementBean>(IDS.length);
 		TreeElementBean ele;
 		for(int i = 0;i<IDS.length;i++){
 			ele = new TreeElementBean();
@@ -67,7 +67,7 @@ public class InitTreeCategory {
 	}
 	
 	public static List<TreeElementBean> getVideoCategoryTree(int partId,int plevel,BookManager bookManager){
-		List<TreeElementBean> resList = new ArrayList<>(VIDEO_IDS.length);
+		List<TreeElementBean> resList = new ArrayList<TreeElementBean>(VIDEO_IDS.length);
 		TreeElementBean ele;
 		String whereSql = " from evideos e where  ";
 		for(int i = 0;i<VIDEO_IDS.length;i++){

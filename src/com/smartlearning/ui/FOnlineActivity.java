@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import com.feng.adapter.CommentAdapter;
 import com.feng.adapter.CommentReplyAdapter;
@@ -17,6 +19,7 @@ import com.feng.util.BitmapUtils;
 import com.feng.util.FormFile;
 import com.feng.util.SocketHttpRequester;
 import com.feng.util.StringUtils;
+import com.feng.util.UploadUtil;
 import com.feng.util.Utils;
 import com.feng.view.FaceRelativeLayout;
 import com.feng.vo.ChatMsgEntity;
@@ -468,15 +471,25 @@ public int clickPosition=-1;
 		public void run() {
 			super.run();
 			HashMap<String,String> params = new HashMap<String,String>();
-			params.put("msgctxt",message);
-			params.put("imagePath",imagePath);
+			params.put("msg",message);
+			params.put("mTime",new Date().getTime()+"");
+			params.put("src",userId+"");
+			params.put("srcName",truename);
+			params.put("objectName",sendToObj);
+			params.put("classId",classId+"");
 			try {
 				File file = new File(imagePath);
-				FormFile formFile = new FormFile(file.getName(), file,"imageFile",null);
-				SocketHttpRequester.post(url,params, formFile);
-			} catch (Exception e) {
+				Map<String,File> files = new HashMap<String, File>();
+				files.put("imageFile",file);
+				String res = UploadUtil.post(url, params, files);
+				System.out.println(res);
+				if(Integer.parseInt(res) > 0){
+					//TODO 
+				}
+			} catch (IOException e) {
 				// TODO: handle exception
-				Log.e("FOnline",e.getMessage());
+				if( e != null && e.getLocalizedMessage() != null )
+					Log.e("FOnline",e.getLocalizedMessage());
 			}
 		}
 		

@@ -25,6 +25,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/iv_photo" />
+            
         </LinearLayout>
 
         <LinearLayout
@@ -55,6 +56,7 @@
                   android:layout_marginTop="5dp"
 			      android:layout_width="150dp"
 			      android:layout_height="150dp"
+			      android:visibility="gone"
 			      android:src="@drawable/chat_bg_default"
                 />
 

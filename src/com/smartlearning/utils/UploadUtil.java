@@ -122,7 +122,7 @@ public class UploadUtil {
 		
 	}
 
-	private void toUploadFile(File file, String fileKey, String RequestURL,
+	public void toUploadFile(File file, String fileKey, String RequestURL,
 			Map<String, String> param) {
 		String result = null;
 		requestTime= 0;
@@ -191,14 +191,16 @@ public class UploadUtil {
 			dos.write(params.getBytes());
 			/**上传文件*/
 			InputStream is = new FileInputStream(file);
-			onUploadProcessListener.initUpload((int)file.length());
+			if(onUploadProcessListener != null)
+				onUploadProcessListener.initUpload((int)file.length());
 			byte[] bytes = new byte[1024];
 			int len = 0;
 			int curLen = 0;
 			while ((len = is.read(bytes)) != -1) {
 				curLen += len;
 				dos.write(bytes, 0, len);
-				onUploadProcessListener.onUploadProcess(curLen);
+				if(onUploadProcessListener != null)
+					onUploadProcessListener.onUploadProcess(curLen);
 			}
 			is.close();
 			
