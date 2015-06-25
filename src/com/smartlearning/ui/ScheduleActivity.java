@@ -34,7 +34,7 @@ public class ScheduleActivity extends Activity {
 	private Button detail_home_btn = null;
 	private Context context = null;
 	String ip = "";
-	String serverIp = "";
+	private  String serverIp = "";
 	Long classId;
 	private SharedPreferences sharedPreferences;
 	private List<LessonVO> lessonList = new ArrayList<LessonVO>();
@@ -119,6 +119,7 @@ public class ScheduleActivity extends Activity {
 			 if(title != null && !"".equals(title))
 				 txtTopTitle.setText(title);
 			 table = new TableView(context, 9, 6, lessonList);
+			 table.setServerIp(serverIp);
 			 layout = (LinearLayout) findViewById(R.id.schduleLayout); 
 			 layout.addView(table);	
 		}

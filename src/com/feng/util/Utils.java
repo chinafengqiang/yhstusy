@@ -34,10 +34,14 @@ public class Utils {
 	public static final int PERSONAL_MSG_HINT = 0x05;//一个人的消息提示
 	public static final int MULTI_MSG_HINT = 0x06;//多个人的消息提示
 	public static final int UNREAD_MULTI_MSG_HINT = 0x07;//未读信息多个人的消息提示
+	
+	public static final int ONLINE_MESSAGE_PAGESIZE = 5;//在线交流每页显示数
 		
 	public static Handler handler;//用于关闭表情
 	public static Handler handlerInput;//用于软键盘
 	public static Handler updataMsg;//用于更新聊天界面的最新消息
+	public static Handler notifyMegAdapter;
+	public static Handler handlerInputAndView;//用于软键盘和聊天框
 	
 	public static final int CHANGED = 100;//跟新UI
 	public static  String CHAT_UID ;//当前聊天对象的uid

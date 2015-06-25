@@ -9,6 +9,7 @@ import java.util.Map;
 import com.feng.adapter.ImageAdapter;
 import com.feng.util.Utils;
 import com.smartlearning.R;
+import com.smartlearning.utils.CommonUtil;
 
 import android.R.color;
 import android.app.Activity;
@@ -146,6 +147,10 @@ public class FScaleImageFromSdcardActivity extends Activity implements
 			Log.d("TAG", "发送选择的图片");
 			Intent intent = new Intent();
 			Object[] data = imageAdapter.getClickList().toArray();
+			if(data != null && data.length > 1){
+				CommonUtil.showToast(mContext, "只能选择一张图片",Toast.LENGTH_SHORT);
+				break;
+			}
 			intent.putExtra("selectPicture", data);
 			Log.d("TAG", "发送选择的图片sc" + data.toString());
 			FScaleImageFromSdcardActivity.this.setResult(

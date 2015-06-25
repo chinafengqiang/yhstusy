@@ -96,9 +96,12 @@ public class FChatActivity extends Activity {
 	private Context mContext;
 	private LinearLayout title;
 	private TextView titleText;
+	private RelativeLayout rl_chat;
 	
 	private String serverIp;
 	private long classId;
+	
+	private LinearLayout title_cfm;
 	
 	@Override  
 	protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +160,7 @@ public class FChatActivity extends Activity {
 	private void initTitle(){
 		title = (LinearLayout)findViewById(R.id.title_back);
 		titleText = (TextView)findViewById(R.id.title_text);
+		title_cfm = (LinearLayout)findViewById(R.id.title_cfm);
 		titleText.setText(R.string.online_title);
 		title.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -167,6 +171,14 @@ public class FChatActivity extends Activity {
 				Utils.CHAT_UID="";
 			}
 		});
+		
+		title_cfm.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setChatEdit();
+			}
+		});
+		
 	}
 
 	/**
@@ -195,6 +207,7 @@ public class FChatActivity extends Activity {
 		ll_facechoose=(RelativeLayout) findViewById(R.id.ll_facechoose);
 		//btn_face=(ImageButton) findViewById(R.id.btn_face);
 		
+		rl_chat = (RelativeLayout)findViewById(R.id.rl_chat);
 
 		
 		mAdapter = new ChatMsgAdapter(this, mDataArrays);
@@ -464,7 +477,13 @@ public class FChatActivity extends Activity {
 	    
 	}
 	
-	
+	private void setChatEdit(){
+		int visibility = rl_chat.getVisibility();
+		if(visibility == View.GONE)
+			rl_chat.setVisibility(View.VISIBLE);
+		else
+			rl_chat.setVisibility(View.GONE);
+	}
 
 
 }

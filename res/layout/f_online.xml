@@ -2,18 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    tools:context=".FOnlineActivity"
+    xmlns:app="http://schemas.android.com/apk/res/com.smartlearning"
+     >
 	
-    		<RelativeLayout 
-        android:id="@+id/rl_layout"
-		android:layout_width="fill_parent"
-		android:layout_height="@dimen/activity_main_tab_title_height"
-		android:layout_alignParentTop="true"
-		android:gravity="center_vertical"  > 
-  			<include layout="@layout/titlebar_left"/>
-		</RelativeLayout>
+    
+            <LinearLayout
+        android:id="@+id/rl_layout" 
+        android:orientation="vertical"
+        android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:layout_alignParentTop="true" 
+        >
+  			<include layout="@layout/titlebar_online"/>
+  			<include layout="@layout/f_chat_top"/>
+    </LinearLayout>
+    
 
-    <ListView
+
+   <ListView
         android:id="@+id/lv_comments"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -22,12 +30,15 @@
         android:layout_above="@id/rl_bottom"
         android:layout_below="@id/rl_layout"
         android:background="@drawable/chat_bg_default"
-         />
+         /> 
+        
+    
      <RelativeLayout
-        android:id="@+id/rl_bottom"
+        android:id="@+id/rl_chat"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         android:background="@drawable/chat_footer_bg" >
 	     <!--    聊天输入框 -->
 	        <include

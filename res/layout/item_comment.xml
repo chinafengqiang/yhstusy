@@ -21,10 +21,10 @@
 
             <ImageView
                 android:id="@+id/iv_user_photo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:src="@drawable/iv_photo" />
+                android:src="@drawable/chat_128" />
             
         </LinearLayout>
 
@@ -69,7 +69,7 @@
                 <TextView
                     android:id="@+id/tv_user_comment_date"
                     style="@style/SmallTitleString"
-                    android:text="2015-06-10 11:00:00"
+					android:text="2015-06-10 11:00:00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true" />
@@ -77,13 +77,25 @@
                 <TextView
                     android:id="@+id/tv_user_reply"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_alignParentRight="true"
                     android:focusable="false"
                     android:paddingRight="10dp"
                     android:text="@string/reply"
                     android:textColor="@color/blue"
                     android:textSize="18sp" />
+               
+               <TextView
+                    android:id="@+id/tv_show_replys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:focusable="false"
+                    android:text="@string/show_reply"
+                    android:textColor="@color/blue"
+                    android:layout_toLeftOf="@id/tv_user_reply"
+                    android:layout_marginRight="30dp"
+                    android:textSize="18sp" /> 
+                
             </RelativeLayout>
 
             <FrameLayout

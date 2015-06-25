@@ -144,4 +144,8 @@
     <!-- 在线交流 -->
     <string name="online_title">在线交流</string>
     <string name="reply">回复</string>
+    <string name="send_msg">发送</string>
+    <string name="show_reply">查看</string>
+     <string name="close_show_reply">收起</string>
+    <string name="get_online_message_fail">获取在线信息失败。</string>
 </resources>

@@ -66,7 +66,7 @@
             android:background="@drawable/btn_click1"
       		 android:textColor="@color/login_btn_text_color"
        		android:onClick="btnClick"
-            android:text="发送"/>
+            android:text="确定"/>
 
          
      </RelativeLayout>

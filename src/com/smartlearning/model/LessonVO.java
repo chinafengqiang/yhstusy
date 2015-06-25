@@ -2,6 +2,7 @@ package com.smartlearning.model;
 
 public class LessonVO {
 	private String lname;
+	private int lid;
 	private int lnum;
 	private String ltime;
 	private String lwone;
@@ -11,6 +12,15 @@ public class LessonVO {
 	private String lwfive;
 	private String lwsix;
 	private String lwseven;
+	
+	
+	
+	public int getLid() {
+		return lid;
+	}
+	public void setLid(int lid) {
+		this.lid = lid;
+	}
 	public String getLname() {
 		return lname;
 	}

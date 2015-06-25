@@ -2,11 +2,13 @@ package com.smartlearning.ui;
 
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -14,10 +16,24 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.Request.Method;
+import com.feng.adapter.BookPartAdapter;
+import com.feng.util.StringUtils;
+import com.feng.view.Tip;
+import com.feng.vo.BookPartListVO;
+import com.feng.vo.LessonPlanVO;
+import com.feng.volley.FRestClient;
+import com.feng.volley.FastJsonRequest;
 import com.smartlearning.biz.LessonManager;
+import com.smartlearning.constant.Global;
 import com.smartlearning.model.LessonExtend;
 import com.smartlearning.model.LessonVO;
+import com.smartlearning.utils.CommonUtil;
 
 public class TableView extends ViewGroup {
 
@@ -59,6 +75,10 @@ public class TableView extends ViewGroup {
         // ����ӿؼ�
         this.context = context;
         this.addOtherView(context);
+    }
+    
+    public void setServerIp(String serverIP){
+    	this.serverIP = serverIP;
     }
     
     public TableView(Context context, int row,int col,List<LessonVO> lessonList) {
@@ -111,20 +131,50 @@ public class TableView extends ViewGroup {
     	}*/
     	if(lessonList != null){
     		for(int n = 0;n<lessonList.size();n++){
-    			LessonVO lesson = lessonList.get(n);
+    			final LessonVO lesson = lessonList.get(n);
     			String num = LESSON_NUM[lesson.getLnum()-1];
     			String time = lesson.getLtime();
     			TextView view1 = getTextView(context, num+"\n"+time);
     			view1.setTextSize(20);
     			TextView view2 = getTextView(context, lesson.getLwone());
+    			view2.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						loadLessonPlan(lesson.getLid(),lesson.getLnum(),1);
+					}
+				});
     			view2.setTextSize(20);
     			TextView view3 = getTextView(context, lesson.getLwtwo());
+    			view3.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						loadLessonPlan(lesson.getLid(),lesson.getLnum(),2);
+					}
+				});
     			view3.setTextSize(20);
     			TextView view4 = getTextView(context, lesson.getLwthree());
+    			view4.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						loadLessonPlan(lesson.getLid(),lesson.getLnum(),3);
+					}
+				});
     			view4.setTextSize(20);
     			TextView view5 = getTextView(context, lesson.getLwfour());
+    			view5.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						loadLessonPlan(lesson.getLid(),lesson.getLnum(),4);
+					}
+				});
     			view5.setTextSize(20);
     			TextView view6 = getTextView(context, lesson.getLwfive());
+    			view6.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						loadLessonPlan(lesson.getLid(),lesson.getLnum(),5);
+					}
+				});
     			view6.setTextSize(20);
     			addView(view1);
     			addView(view2);
@@ -183,6 +233,7 @@ public class TableView extends ViewGroup {
 		    			else if(count == 7){
 		    				view = getTextView(context, "第八节");	
 		    			}
+		    			
 		    	    	addView(view);
 		    	    	count ++;
 		    		}
@@ -194,6 +245,7 @@ public class TableView extends ViewGroup {
 					} else {
 						view.setBackgroundColor(Color.rgb(255, 255, 255));
 					}
+		 
 					addView(view);
 		    	}
 			} 
@@ -286,5 +338,41 @@ public class TableView extends ViewGroup {
         this.mCol = col;
     }
 
+   
+    private void loadLessonPlan(final int lessonId,final int lessonNum,final int lessonWeek){
+		final ProgressDialog pDialog = new ProgressDialog(context);
+		pDialog.setMessage("Loading...");
+		pDialog.show(); 
+		
+		String tag_json_obj = "json_obj_req";
+		String url = this.serverIP+"/api/getLessonPlan.html?lessonId="+lessonId+"&lessonNum="+lessonNum+"&lessonWeek="+lessonWeek;
+
+		FastJsonRequest<LessonPlanVO>   fastRequest = new FastJsonRequest<LessonPlanVO>(Method.GET,url, LessonPlanVO.class,null, new Response.Listener<LessonPlanVO>() {
+
+			@Override
+			public void onResponse(LessonPlanVO vo) {
+				pDialog.dismiss();
+				if(vo != null){
+					String plan = vo.getLessonPlan();
+					if(StringUtils.isNotBlank(plan))
+						new Tip(context,"\n"+plan+"\n").show();
+					else
+						new Tip(context,"\n无教学计划存在\t\n").show();
+				}
+			}
+		},
+		new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				 CommonUtil.showToast(context, "获取教学计划",Toast.LENGTH_SHORT);
+				 pDialog.dismiss();
+			}
+		}
+	    );
+		
+		FRestClient.getInstance(context).addToRequestQueue(fastRequest,tag_json_obj);
+    }
+   
 
 }
