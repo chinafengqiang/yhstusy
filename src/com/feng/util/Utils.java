@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Utils {
-	
 	public static final int GET_CAMERA =0x11;//启动相机
 	public static final int SHOW_CAMERA = 0x12;//显示照相的图片
 	public static final int SHOW_CAMERA_RESULT = 0x13;//返回相片查看后的操作
