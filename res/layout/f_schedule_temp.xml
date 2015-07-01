@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+   
+
+
+        <LinearLayout
+        android:id="@+id/llayout" 
+        android:orientation="vertical"
+        android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:layout_alignParentTop="true" 
+        >
+        <include layout="@layout/titlebar_left"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/schduleLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:gravity="center_horizontal"
+        android:layout_below="@id/llayout"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+</RelativeLayout>

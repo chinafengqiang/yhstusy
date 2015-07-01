@@ -1,5 +1,6 @@
 package com.smartlearning.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.smartlearning.model.LessonExtend;
@@ -22,4 +23,10 @@ public interface ILesson {
 	public List<LessonExtend> getLessonsByClassId(String serverIP,Long classId)throws Exception;
 	
 	public List<LessonVO> getPermLessons(String serverIP,Long classId)throws Exception;
+	
+	public List<LessonVO> getPermLessons(String serverIP,Long classId,HashMap<String,Integer> hasTempMap)throws Exception;
+	
+	public List<LessonVO> getPermLessonsTemp(String serverIP,int lessonId)throws Exception;
+	
+	
 }

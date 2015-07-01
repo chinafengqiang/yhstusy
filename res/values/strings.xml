@@ -128,6 +128,10 @@
       <!--更多应用 -->
      <string name="more_apps_title">更多应用</string>
      
+     <!--教学信息 -->
+     <string name="sch_title">教学信息</string>
+     <string name="has_temp">您有临时课程表，请点击查看</string>
+     <string name="sch_temp_title">临时课程表</string>
      
      
           <!-- Refresh -->

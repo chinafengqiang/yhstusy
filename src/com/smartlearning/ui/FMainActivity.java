@@ -124,7 +124,7 @@ public class FMainActivity extends Activity implements OnClickListener,OnPageCha
 			@Override
 			public void onclick() {
 				Intent intent = new Intent(mContext,
-						ScheduleActivity.class);
+						FScheduleActivity.class);
 				startActivity(intent);
 			}
 		});

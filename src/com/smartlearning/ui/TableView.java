@@ -47,6 +47,7 @@ public class TableView extends ViewGroup {
     private String serverIP;
     Context context = null;
     private List<LessonVO> lessonList;
+    private boolean isTemp = false;
      
     public TableView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -79,6 +80,10 @@ public class TableView extends ViewGroup {
     
     public void setServerIp(String serverIP){
     	this.serverIP = serverIP;
+    }
+    
+    public void setIsTemp(boolean isTemp){
+    	this.isTemp = isTemp;
     }
     
     public TableView(Context context, int row,int col,List<LessonVO> lessonList) {
@@ -345,7 +350,7 @@ public class TableView extends ViewGroup {
 		pDialog.show(); 
 		
 		String tag_json_obj = "json_obj_req";
-		String url = this.serverIP+"/api/getLessonPlan.html?lessonId="+lessonId+"&lessonNum="+lessonNum+"&lessonWeek="+lessonWeek;
+		String url = this.serverIP+"/api/getLessonPlan.html?lessonId="+lessonId+"&lessonNum="+lessonNum+"&lessonWeek="+lessonWeek+"&isTemp="+isTemp;
 
 		FastJsonRequest<LessonPlanVO>   fastRequest = new FastJsonRequest<LessonPlanVO>(Method.GET,url, LessonPlanVO.class,null, new Response.Listener<LessonPlanVO>() {
 

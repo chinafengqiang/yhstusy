@@ -12,6 +12,7 @@ public class LessonVO {
 	private String lwfive;
 	private String lwsix;
 	private String lwseven;
+	private boolean hasTemp = false;
 	
 	
 	
@@ -80,6 +81,12 @@ public class LessonVO {
 	}
 	public void setLwseven(String lwseven) {
 		this.lwseven = lwseven;
+	}
+	public boolean isHasTemp() {
+		return hasTemp;
+	}
+	public void setHasTemp(boolean hasTemp) {
+		this.hasTemp = hasTemp;
 	}
 	
 	

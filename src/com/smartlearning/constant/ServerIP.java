@@ -33,6 +33,13 @@ public class ServerIP {
 	 */
 	public static final String SERVLET_PERM_LESSON = SERVER_ID
 			+ "/courseController/getPermLessons.html?classId=%s";
+	
+	/**
+	 * 临时课程表
+	 */
+	public static final String SERVLET_PERM_LESSON_TEMP = SERVER_ID
+			+ "/courseController/getPermLessonsTemp.html?lessonId=%s";
+	
 	/**
 	 * 电子书
 	 */

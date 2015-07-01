@@ -471,6 +471,21 @@
             android:theme="@style/Theme.main" >
         </activity>
 
+         <activity
+            android:name="com.smartlearning.ui.FScheduleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.main" >
+        </activity>
+        
+        <activity
+            android:name="com.smartlearning.ui.FScheduleTempActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.main" >
+        </activity>
     </application>
 
     <!-- 访问网络的权限 -->

@@ -1,5 +1,6 @@
 package com.smartlearning.biz;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.smartlearning.dao.ILesson;
@@ -36,6 +37,22 @@ public class LessonManager {
 	public List<LessonVO> getPermLessons(String serverIP,Long classId){
 		try {
 			return lessonService.getPermLessons(serverIP, classId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public List<LessonVO> getPermLessons(String serverIP,Long classId,HashMap<String,Integer> hasTempMap){
+		try {
+			return lessonService.getPermLessons(serverIP, classId,hasTempMap);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public List<LessonVO> getPermLessonsTemp(String serverIP,int lessonId){
+		try {
+			return lessonService.getPermLessonsTemp(serverIP, lessonId);
 		} catch (Exception e) {
 			return null;
 		}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#F5F5F5" 
+    >
+    
+            <TextView
+                android:padding="10dip"
+                android:id="@+id/kc"
+                android:text="课程表"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+    			android:layout_height="wrap_content"
+    			android:layout_width="match_parent"
+    			android:layout_weight="1"
+    			android:background="@drawable/guide_round"
+                />
+            
+       
+            <TextView 
+                android:padding="10dp"
+                android:id="@+id/jd"
+                android:text="进度表"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+    			android:layout_height="wrap_content"
+    			android:layout_width="match_parent"
+    			android:layout_weight="1"
+    			android:background="@drawable/guide_round"
+                />
+            
+      
+            <TextView 
+                android:padding="10dp"
+                android:id="@+id/xqjh"
+                android:text="学期计划"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+    			android:layout_height="wrap_content"
+    			android:layout_width="match_parent"
+    			android:layout_weight="1"
+    			android:background="@drawable/guide_round"
+                />
+            
+       
+            <TextView 
+                android:padding="10dp"
+                android:id="@+id/jxtz"
+                android:text="教学通知"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+    			android:layout_height="wrap_content"
+    			android:layout_width="match_parent"
+    			android:layout_weight="1"
+    			android:background="@drawable/guide_round"
+                />
+            
+</LinearLayout>
