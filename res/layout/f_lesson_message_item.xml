@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    >
+
+       <ImageView 
+        android:id="@+id/image"   
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/news_128"
+        />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="标题"
+        android:textColor="#2292DD"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/image"
+        android:id="@+id/title"
+        android:layout_marginTop="10dp"/>
+    
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="内容"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/title"
+        android:layout_toRightOf="@id/image"
+        android:layout_marginTop="10dp"
+        android:id="@+id/content"/>
+    
+     <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="主讲人"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/content"
+        android:layout_toRightOf="@id/image"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/time"/>
+   
+</RelativeLayout>

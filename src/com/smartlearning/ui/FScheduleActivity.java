@@ -1,5 +1,6 @@
 package com.smartlearning.ui;
 
+import com.feng.fragment.LessonMessageFragment;
 import com.feng.fragment.ScheduleFragment;
 import com.smartlearning.R;
 import com.smartlearning.utils.SpUtil;
@@ -116,8 +117,13 @@ public class FScheduleActivity extends FragmentActivity{
 	private OnClickListener jxtzListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			setButton(v);
+			FragmentManager fm = getSupportFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			LessonMessageFragment lessonMessageFragment = new LessonMessageFragment();
+			ft.replace(R.id.schedule_content,lessonMessageFragment,"LessonMessageFragment");
+			ft.addToBackStack(null);
+			ft.commit();
 		}
 	};
 	
