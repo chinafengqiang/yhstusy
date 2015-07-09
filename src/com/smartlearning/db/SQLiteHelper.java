@@ -30,6 +30,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(DB.TABLES.EVIDEOS.SQL.CREATE);
 		db.execSQL(DB.TABLES.BOOKPART.SQL.CREATE);
 		db.execSQL(DB.TABLES.BOOKCHAPTER.SQL.CREATE);
+		db.execSQL(DB.TABLES.ONLINEMSG.SQL.CREATE);
+		db.execSQL(DB.TABLES.COURSEPLAN.SQL.CREATE);
 	}
 
 	@Override
@@ -37,6 +39,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(DB.TABLES.BOOKPART.SQL.CREATE);
 		db.execSQL(DB.TABLES.BOOKCHAPTER.SQL.CREATE);
 		db.execSQL(DB.TABLES.ONLINEMSG.SQL.CREATE);
+		db.execSQL(DB.TABLES.COURSEPLAN.SQL.CREATE);
 	}
 
 	

@@ -12,7 +12,7 @@ public interface DB {
 	
 //	public static final String DATABASE_NAME= "elearning";
 	
-	public static final int DATABASE_VERSION = 2;
+	public static final int DATABASE_VERSION = 3;
 	
 	public static final String dbPath = android.os.Environment.getExternalStorageDirectory().getPath() + "/elearningDB";
 	public static final String DATABASE_NAME = dbPath + "/" + "elearning.db";
@@ -450,6 +450,54 @@ public interface DB {
 				public static final String SELECT_COUNT = "select count(*) from online_msg where {0}";
 				public static final String DELETE_ALL = " delete FROM online_msg";
 				public static final String SELECT_PART = "SELECT * from online_msg where %s";
+				
+			}
+		}
+		
+		
+		/**
+		 * 在线交流
+		 */
+		public interface COURSEPLAN {
+			public static final String TABLENAME = "course_plan";
+
+			public interface FIELDS {
+				public static final String ID = "id";
+				public static final String _ID = "_id";
+				public static final String NAME = "name";
+				public static final String FILE_URL = "file_url";
+				public static final String START_DATE="start_date";
+				public static final String END_DATE = "end_date";
+				public static final String TYPE = "type";
+				public static final String USER_ID = "user_id";
+				public static final String CATEGORY_NAME = "category_name";
+				public static final String EXT="ext";
+			}
+
+			public interface SQL {
+				public static final String CREATE = "create table if not exists course_plan (" +
+						"id integer PRIMARY KEY AUTOINCREMENT, " +
+						"_id int," +
+						"name varchar(256), " +
+						"file_url varchar(256), " +
+						"start_date varchar(100), " +
+						"end_date varchar(100), " +
+						"category_name varchar(100), " +
+						"type int, " +
+						"user_id int, " +
+						"ext varchar(100));" ;
+				
+				public static final String DROP = "drop table if exists course_plan";
+				public static final String INSERT = "insert into course_plan " +
+						"(_id, " +
+						"name,file_url,start_date,end_date,category_name,type,user_id,ext ) " +
+						"values(%s, '%s', '%s', '%s','%s','%s',%s,%s,'%s') ";// 插入
+				public static final String SELECT = "select * from course_plan where {0}";// 查询
+				public static final String SELECT1 = "select * from course_plan where %s";// 查询
+				public static final String DELETE = " delete FROM course_plan where %s";
+				public static final String SELECT_COUNT = "select count(*) from course_plan where {0}";
+				public static final String DELETE_ALL = " delete FROM course_plan";
+				public static final String SELECT_PART = "SELECT * from course_plan where %s";
 				
 			}
 		}
