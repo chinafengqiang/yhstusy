@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.feng.util.BadgeView;
+import com.feng.vo.LessonListVO;
+import com.feng.volley.FRestClient;
+import com.feng.volley.FastJsonRequest;
 import com.smartlearning.R;
 import com.smartlearning.biz.LessonManager;
 import com.smartlearning.constant.Global;
@@ -78,7 +84,48 @@ public class ScheduleFragment extends Fragment{
 	}
 	
 	private void processLogic() {
-		new GetSchduleTask().execute(1);
+		//new GetSchduleTask().execute(1);
+		getLesson();
+	}
+	
+	private void getLesson(){
+		final ProgressDialog pDialog = new ProgressDialog(context);
+		pDialog.setMessage("Loading...");
+		pDialog.show(); 
+		String tag_json_obj = "json_obj_req";
+		String url = serverIp+"/courseController/getPermLessons.html?classId="+classId;
+		FastJsonRequest<LessonListVO>   fastRequest = new FastJsonRequest<LessonListVO>(Method.GET,url, LessonListVO.class,null, new Response.Listener<LessonListVO>() {
+
+			@Override
+			public void onResponse(LessonListVO resVO) {
+				pDialog.dismiss();
+				lessonList.clear();
+				hasTempMap.clear();
+				if(resVO  != null && resVO.getInfo().size() > 0){
+					List<LessonVO> resList = resVO.getInfo();
+					String title = resList.get(0).getLname();
+					lessonList.addAll(resList);
+					
+					if(title != null && !"".equals(title))
+						 txtTopTitle.setText(title);
+					 table = new TableView(context, 9, 6, lessonList);
+					 table.setServerIp(serverIp);
+					 layout.addView(table);	
+					 setBadge();
+				}
+			}
+		},
+		new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				CommonUtil.showToast(context, "获取课程表失败",Toast.LENGTH_LONG);
+			}
+		}
+	    );
+		
+		FRestClient.getInstance(context).addToRequestQueue(fastRequest,tag_json_obj);
 	}
 	
 	private class GetSchduleTask extends AsyncTask<Integer, Integer, Integer>{

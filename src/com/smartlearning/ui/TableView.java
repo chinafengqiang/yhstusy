@@ -1,5 +1,6 @@
 package com.smartlearning.ui;
 
+import java.util.Date;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -24,16 +25,19 @@ import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookPartAdapter;
 import com.feng.util.StringUtils;
+import com.feng.util.Utils;
 import com.feng.view.Tip;
 import com.feng.vo.BookPartListVO;
 import com.feng.vo.LessonPlanVO;
 import com.feng.volley.FRestClient;
 import com.feng.volley.FastJsonRequest;
+import com.smartlearning.R;
 import com.smartlearning.biz.LessonManager;
 import com.smartlearning.constant.Global;
 import com.smartlearning.model.LessonExtend;
 import com.smartlearning.model.LessonVO;
 import com.smartlearning.utils.CommonUtil;
+import com.smartlearning.utils.DateUtil;
 
 public class TableView extends ViewGroup {
 
@@ -106,22 +110,39 @@ public class TableView extends ViewGroup {
     }
     
     private void initLessonLayout(int row,int col){
+    	String date = DateUtil.dateToString(new Date(),true);
+    	String week = Utils.getWeek(date);
     	TextView view = getTextView(context, "序号");	
     	view.setTextSize(25);
     	addView(view);
-    	view = getTextView(context, "星期一");
+    	view = getHeadTextView(context, "星期一");
+    	view.setTextSize(25);
+    	if(week.equals("星期一")){
+    		view.setTextColor(R.color.red);
+    	}
+    	addView(view);
+    	view = getHeadTextView(context, "星期二");	
+    	view.setTextSize(25);
+       	if(week.equals("星期二")){
+    		view.setTextColor(R.color.red);
+    	}
+    	addView(view);
+    	view = getHeadTextView(context, "星期三");
+    	view.setTextSize(25);
+       	if(week.equals("星期三")){
+    		view.setTextColor(R.color.red);
+    	}
+    	addView(view);
+    	view = getHeadTextView(context, "星期四");	
+       	if(week.equals("星期四")){
+    		view.setTextColor(R.color.red);
+    	}
     	view.setTextSize(25);
     	addView(view);
-    	view = getTextView(context, "星期二");	
-    	view.setTextSize(25);
-    	addView(view);
-    	view = getTextView(context, "星期三");
-    	view.setTextSize(25);
-    	addView(view);
-    	view = getTextView(context, "星期四");	
-    	view.setTextSize(25);
-    	addView(view);
-    	view = getTextView(context, "星期五");	
+    	view = getHeadTextView(context, "星期五");	
+       	if(week.equals("星期五")){
+    		view.setTextColor(R.color.red);
+    	}
     	view.setTextSize(25);
     	addView(view);
     	
@@ -291,6 +312,15 @@ public class TableView extends ViewGroup {
     	TextView view = new TextView(context);
         view.setText(text);
         view.setTextColor(Color.rgb(79, 129, 189));
+        view.setPadding(0, 20, 0, 0);
+        view.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        return view;
+    }
+    
+    private TextView getHeadTextView(Context context,String text){
+    	TextView view = new TextView(context);
+        view.setText(text);
+        //view.setTextColor(R.color.white);
         view.setPadding(0, 20, 0, 0);
         view.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         return view;

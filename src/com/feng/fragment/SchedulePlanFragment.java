@@ -12,6 +12,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.BookResAdapter;
 import com.feng.util.StringUtils;
+import com.feng.view.XListView;
+import com.feng.view.XListView.IXListViewListener;
 import com.feng.vo.BookResListVO;
 import com.feng.vo.CoursePlanListVO;
 import com.feng.vo.CoursePlanVO;
@@ -30,12 +32,16 @@ import com.smartlearning.utils.FileUtil;
 import com.smartlearning.utils.SpUtil;
 import com.smartlearning.utils.Tool;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -47,18 +53,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnCreateContextMenuListener;
-import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
-public class SchedulePlanFragment extends Fragment{
+public class SchedulePlanFragment extends Fragment implements IXListViewListener{
 private View mBaseView;
 	
 	private Context context = null;
@@ -67,7 +71,7 @@ private View mBaseView;
 	private Long classId;
 	private int userId = 0;
 	private SharedPreferences sharedPreferences;
-	private PullToRefreshListView mPullRefreshListView; 
+	private XListView mListView;
 	
 	private SampleListAdapter mAdapter; 
 	private List<CoursePlanVO> planList = new ArrayList<CoursePlanVO>();
@@ -81,6 +85,11 @@ private View mBaseView;
 	private CoursePlanVO curCoursePlan;
 	private CoursePlanManager manager;
 	
+	private CoursePlanVO seleCoursePlan = null;
+	private String[] is = { "删除", "取消" };
+	String rootPath = Environment.getExternalStorageDirectory().getPath()
+			+ "/myCoursePlan";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -89,28 +98,13 @@ private View mBaseView;
 		initSp();
 		
 		mBaseView = inflater.inflate(R.layout.f_schedule_plan, null);
-		mPullRefreshListView = (PullToRefreshListView)mBaseView.findViewById(R.id.list_view);
-		mPullRefreshListView.setMode(Mode.PULL_FROM_END);
-		
+		mListView = (XListView) mBaseView.findViewById(R.id.xListView);
+		mListView.setPullLoadEnable(true);
 		// 设置初期数据  
 		planList.clear();
 		getPlan(false);
 		
-        
-		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
-			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-				// TODO Auto-generated method stub
-				if(offset >= total){
-					CommonUtil.showToast(context, "已经全部加载完成",Toast.LENGTH_LONG);
-					new FinishRefresh().execute();
-					return;
-				}else{
-					getPlan(true);
-				}
-			}
-			
-		});
+     
 		findView();
 		setListener();
 		processLogic();
@@ -131,11 +125,12 @@ private View mBaseView;
 	}
 	
 	private void setListener(){
-		mPullRefreshListView.setOnItemClickListener(new OnItemClickListener() {
+		mListView.setXListViewListener(this);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
 				String fileUrl = "";
 				try {
 					curCoursePlan = planList.get(position-1);
@@ -157,14 +152,62 @@ private View mBaseView;
 			}
 			
 		});
-		mPullRefreshListView.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+		
+		mListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
 			@Override
-			public void onCreateContextMenu(ContextMenu menu, View v,
-					ContextMenuInfo menuInfo) {
-				 menu.setHeaderTitle("操作");
-				 menu.add(0, 0, 0, "删除");
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					final int position, long arg3) {
+				CoursePlanVO selePlan = planList.get(position-1);
+				if(selePlan == null)
+					return true;
+				final int planId = selePlan.getId();
+				final boolean isLocal = selePlan.isLocal();
+				final String planUrl = selePlan.getFileUrl();
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setTitle("请选择操作");
+				builder.setItems(is, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (which) {
+						case 0:
+							if (isLocal) {
+								fileName = getDownLoadFileName(planUrl);
+								if(manager == null)
+									manager = new CoursePlanManager(context);
+				        		try {
+									manager.removeCoursePlan(planId,0);
+								} catch (Exception e) {
+									break;
+								}
+								File f = new File(rootPath + "/" + fileName);
+								deleteFile(f);
+								
+								planList.remove(position-1);
+
+								if(mAdapter != null){
+									mAdapter.notifyDataSetChanged();
+								}
+								
+								CommonUtil.showToast(context,is[which],Toast.LENGTH_LONG);
+							}else{
+								CommonUtil.showToast(context, "非本地文件不能进行删除操作",Toast.LENGTH_LONG);
+							}
+							break;
+						case 1:
+							CommonUtil.showToast(context,is[which],Toast.LENGTH_LONG);
+							break;
+						default:
+							break;
+						}
+					}
+				}).create().show();
+				return true;
 			}
+			
 		});
+		
+
 	}
 	
 	private void processLogic() {
@@ -215,23 +258,17 @@ private View mBaseView;
         }  
     }  
    
-    private class FinishRefresh extends AsyncTask<Void, Void, Void>{  
-        @Override  
-        protected Void doInBackground(Void... params) {  
-            return null;  
-        }  
-   
-        @Override  
-        protected void onPostExecute(Void result){  
-        	mPullRefreshListView.onRefreshComplete();  
-        }  
-    }  
+
+  
     
     private void getPlan(final boolean isRefresh){
     	int pagesize = defaultSize;
     	if(isRefresh){
     		pagesize = this.pagesize;
     	}
+		final ProgressDialog pDialog = new ProgressDialog(context);
+		pDialog.setMessage("Loading...");
+		pDialog.show(); 
     	String tag_json_obj = "json_obj_req";
 		String url = serverIp+"/api/getCoursePlan.html?classId="+classId+"&offset="+offset+"&pagesize="+pagesize;
 		offset += pagesize;
@@ -239,6 +276,7 @@ private View mBaseView;
 
 			@Override
 			public void onResponse(CoursePlanListVO resVO) {
+				pDialog.dismiss();
 				if(resVO != null&&resVO.getPlanCount() > 0){
 					total = (int)resVO.getPlanCount();
 					planList.addAll(resVO.getPlanList());
@@ -246,18 +284,19 @@ private View mBaseView;
 						mAdapter.notifyDataSetChanged();
 					}else{
 				        mAdapter = new SampleListAdapter();  
-				        mPullRefreshListView.setAdapter(mAdapter);
+				        mListView.setAdapter(mAdapter);
 					}
 
 				}
-				mPullRefreshListView.onRefreshComplete(); 
+				onLoad();
 			}
 		},
 		new Response.ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				mPullRefreshListView.onRefreshComplete();  
+				pDialog.dismiss();
+				onLoad();
 			}
 		}
 	    );
@@ -265,32 +304,7 @@ private View mBaseView;
 		FRestClient.getInstance(context).addToRequestQueue(fastRequest,tag_json_obj);
     }
     
-	// 当AdapterView被单击(触摸屏或者键盘)，则返回的Item单击事件
-	class ItemClickListener implements OnItemClickListener {
-		public void onItemClick(AdapterView<?> arg0,// The AdapterView where the
-													// click happened
-				View arg1,// The view within the AdapterView that was clicked
-				int arg2,// The position of the view in the adapter
-				long arg3// The row id of the item that was clicked
-		) {
-			String fileUrl = "";
-			try {
-				curCoursePlan = planList.get(arg2);
-				String fileurl = curCoursePlan.getFileUrl();
-				if(StringUtils.isBlank(fileurl)){
-					CommonUtil.showToast(context, "文件地址错误",Toast.LENGTH_LONG);
-					return;
-				}
-				fileName = getDownLoadFileName(curCoursePlan.getFileUrl());
-				fileUrl = URLEncoder.encode(fileName,"UTF-8");
-			} catch (UnsupportedEncodingException e1) {
-				e1.printStackTrace();
-			}
-			
-			String url = serverIp + "/uploadFile/file/" + fileUrl;
-			downloadVideos(url);
-		}
-	}
+
 	
 	//得到当前下载的文件名
 			private String getDownLoadFileName(String urls){
@@ -350,13 +364,55 @@ private View mBaseView;
 			}
 
 	
+
+
 			@Override
-			public boolean onContextItemSelected(MenuItem item) {
-				switch (item.getItemId()) {
-		        case 0:
-		        	CommonUtil.showToast(context,"delete",Toast.LENGTH_LONG);
-		        	break;
+			public void onRefresh() {
+				planList.clear();
+				offset = 0;
+				getPlan(false);
+			}
+
+			@Override
+			public void onLoadMore() {
+				if(offset >= total){
+					CommonUtil.showToast(context, "已经全部加载完成",Toast.LENGTH_LONG);
+					onLoad();
+					return;
+				}else{
+					getPlan(true);
 				}
-				return super.onContextItemSelected(item);
+			}
+			
+			private void onLoad() {
+				mListView.stopRefresh();
+				mListView.stopLoadMore();
+				mListView.setRefreshTime(getString(R.string.xlistview_refesh_time));
+			}
+			
+			/**
+			 * 删除文件
+			 * 
+			 * @param file
+			 */
+			private void deleteFile(File file) {
+				// File file = new File(filePath);
+				if (Environment.getExternalStorageState().equals(
+						Environment.MEDIA_MOUNTED)) {
+					if (file.exists()) {
+						if (file.isFile()) {
+							file.delete();
+						}
+						// 如果它是一个目录
+						else if (file.isDirectory()) {
+							// 声明目录下所有的文件 files[];
+							File files[] = file.listFiles();
+							for (int i = 0; i < files.length; i++) { // 遍历目录下所有的文件
+								deleteFile(files[i]); // 把每个文件 用这个方法进行迭代
+							}
+						}
+						file.delete();
+					}
+				}
 			}
 }

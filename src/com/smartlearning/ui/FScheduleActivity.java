@@ -5,6 +5,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.Request.Method;
 import com.feng.adapter.VideoResAdapter;
+import com.feng.fragment.CategoryPlanFragment;
 import com.feng.fragment.LessonMessageFragment;
 import com.feng.fragment.ScheduleFragment;
 import com.feng.fragment.SchedulePlanFragment;
@@ -137,8 +138,13 @@ public class FScheduleActivity extends FragmentActivity{
 	private OnClickListener xqjhListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			setButton(v);
+			FragmentManager fm = getSupportFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			CategoryPlanFragment categoryPlanFragment = new CategoryPlanFragment();
+			ft.replace(R.id.schedule_content,categoryPlanFragment,"CategoryPlanFragment");
+			ft.addToBackStack(null);
+			ft.commit();
 		}
 	};
 	
