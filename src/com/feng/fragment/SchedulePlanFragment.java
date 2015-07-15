@@ -19,10 +19,6 @@ import com.feng.vo.CoursePlanListVO;
 import com.feng.vo.CoursePlanVO;
 import com.feng.volley.FRestClient;
 import com.feng.volley.FastJsonRequest;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.smartlearning.R;
 import com.smartlearning.biz.CoursePlanManager;
 import com.smartlearning.constant.Global;
@@ -287,7 +283,10 @@ private View mBaseView;
 				        mListView.setAdapter(mAdapter);
 					}
 
+				}else{
+					CommonUtil.showToast(context, "暂无进度表存在", Toast.LENGTH_LONG);
 				}
+				
 				onLoad();
 			}
 		},

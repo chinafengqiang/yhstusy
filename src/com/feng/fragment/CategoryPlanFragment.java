@@ -241,7 +241,7 @@ public class CategoryPlanFragment  extends Fragment{
 						mAdapter = new SampleListAdapter(); 
 						listView.setAdapter(mAdapter);
 					}else{
-						CommonUtil.showToast(context, "无学科计划存在",Toast.LENGTH_LONG);
+						CommonUtil.showToast(context, "暂无学科计划存在",Toast.LENGTH_LONG);
 					}
 					
 				}
