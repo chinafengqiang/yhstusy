@@ -112,36 +112,36 @@ public class TableView extends ViewGroup {
     private void initLessonLayout(int row,int col){
     	String date = DateUtil.dateToString(new Date(),true);
     	String week = Utils.getWeek(date);
-    	TextView view = getTextView(context, "序号");	
+    	TextView view = getHeadTextView(context, "序号");	
     	view.setTextSize(25);
     	addView(view);
     	view = getHeadTextView(context, "星期一");
     	view.setTextSize(25);
     	if(week.equals("星期一")){
-    		view.setTextColor(R.color.red);
+    		view.setTextColor(Color.rgb(250, 14, 50));
     	}
     	addView(view);
     	view = getHeadTextView(context, "星期二");	
     	view.setTextSize(25);
-       	if(week.equals("星期二")){
-    		view.setTextColor(R.color.red);
+    if(week.equals("星期二")){
+    		view.setTextColor(Color.rgb(250, 14, 50));
     	}
     	addView(view);
     	view = getHeadTextView(context, "星期三");
     	view.setTextSize(25);
-       	if(week.equals("星期三")){
-    		view.setTextColor(R.color.red);
+    if(week.equals("星期三")){
+       		view.setTextColor(Color.rgb(250, 14, 50));
     	}
     	addView(view);
     	view = getHeadTextView(context, "星期四");	
-       	if(week.equals("星期四")){
-    		view.setTextColor(R.color.red);
+    if(week.equals("星期四")){
+       		view.setTextColor(Color.rgb(250, 14, 50));
     	}
     	view.setTextSize(25);
     	addView(view);
     	view = getHeadTextView(context, "星期五");	
-       	if(week.equals("星期五")){
-    		view.setTextColor(R.color.red);
+    if(week.equals("星期五")){
+       		view.setTextColor(Color.rgb(250, 14, 50));
     	}
     	view.setTextSize(25);
     	addView(view);
@@ -330,7 +330,9 @@ public class TableView extends ViewGroup {
     protected void dispatchDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setStrokeWidth(BORDER);
-        paint.setColor(Color.rgb(223, 242, 248));
+        //paint.setColor(Color.rgb(223, 242, 248));
+        paint.setColor(Color.rgb(8, 245, 2));
+        
         paint.setStyle(Style.STROKE);
         // �����ⲿ�߿�
         canvas.drawRect(STARTX, STARTY, getWidth()-STARTX, getHeight()-STARTY, paint);
